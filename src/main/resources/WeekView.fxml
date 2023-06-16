@@ -18,12 +18,12 @@
                <children>
                   <ImageView fitHeight="44.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="5.0">
                      <image>
-                        <Image url="@../../../../../../Downloads/BujoPig.PNG" />
+                        <Image url="@images/BujoPig.PNG" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="33.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" translateX="65.0" translateY="-30.0">
                      <image>
-                        <Image url="@../../../../../../Downloads/Logo.PNG" />
+                        <Image url="@images/Logo.PNG" />
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="43.0" prefWidth="194.0" style="-fx-background-color: #6F7378;" translateY="-20.0">
