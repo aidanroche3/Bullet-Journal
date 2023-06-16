@@ -18,12 +18,12 @@
                <children>
                   <ImageView fitHeight="44.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true" translateX="10.0" translateY="5.0">
                      <image>
-                        <Image url="@images/BujoPig.PNG" />
+                        <Image url="@../../../../../../Downloads/BujoPig.PNG" />
                      </image>
                   </ImageView>
                   <ImageView fitHeight="33.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" translateX="65.0" translateY="-30.0">
                      <image>
-                        <Image url="@images/Logo.PNG" />
+                        <Image url="@../../../../../../Downloads/Logo.PNG" />
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="43.0" prefWidth="194.0" style="-fx-background-color: #6F7378;" translateY="-20.0">
@@ -39,9 +39,9 @@
             </VBox>
             <HBox layoutX="194.0" prefHeight="37.0" prefWidth="594.0">
                <children>
-                  <Button fx:id="save" mnemonicParsing="false" prefHeight="37.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Save" textFill="WHITE" />
-                  <Button fx:id="open" mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Open" textFill="WHITE" />
-                  <Button fx:id="week" mnemonicParsing="false" prefHeight="61.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Week" textFill="WHITE" />
+                  <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Save" textFill="WHITE" />
+                  <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Open" textFill="WHITE" />
+                  <Button mnemonicParsing="false" prefHeight="61.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Week" textFill="WHITE" />
                   <Button mnemonicParsing="false" prefHeight="53.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Task" textFill="WHITE" />
                   <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Event" textFill="WHITE" />
                   <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="85.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Edit" textFill="WHITE" />
