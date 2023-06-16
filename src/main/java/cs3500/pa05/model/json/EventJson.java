@@ -11,6 +11,6 @@ public record EventJson(
     @JsonProperty("name") String name,
     @JsonProperty("description") String description,
     @JsonProperty("day") Day day,
-    @JsonProperty("start") LocalTime start,
+    @JsonProperty("start") String start,
     @JsonProperty("duration") Double duration) {
 }

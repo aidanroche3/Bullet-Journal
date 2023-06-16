@@ -1,0 +1,30 @@
+{
+    "preferences": {
+        "name": "Bujo Pig",
+        "task-limit": "16",
+        "event-limit": 10
+    }
+    "tasks": [
+        {
+            "name": "Educate Children",
+            "description": "Teach kid how manage finances.",
+            "day": "MONDAY",
+            "status": "COMPLETE"
+        },
+        {
+             "name": "Install Copy and Paste",
+             "description": "It wasn't installed somehow.",
+             "day": "TUESDAY",
+             "status": "INCOMPLETE"
+         }
+    ]
+    "events": [
+        {
+            "name": "Mob Boss Activities",
+            "description": "Average Bujo pig weekend",
+            "day": "SATURDAY",
+            "start": "08:32.23.38",
+            "duration": "7.6"
+        }
+    ]
+}

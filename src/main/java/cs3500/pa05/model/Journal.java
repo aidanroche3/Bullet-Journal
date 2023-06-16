@@ -8,8 +8,8 @@ import java.util.List;
 public class Journal {
 
   private String name;
-  private List<Event> events;
   private List<Task> tasks;
+  private List<Event> events;
 
   /**
    * Instantiates a journal
@@ -18,10 +18,10 @@ public class Journal {
    * @param events a list of events for the week
    * @param tasks a list of tasks for the week
    */
-  public Journal(String name, List<Event> events, List<Task> tasks) {
+  public Journal(String name, List<Task> tasks, List<Event> events) {
     this.name = name;
-    this.events = events;
     this.tasks = tasks;
+    this.events = events;
   }
 
 }
