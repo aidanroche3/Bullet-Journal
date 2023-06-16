@@ -7,5 +7,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public record PreferencesJson(
     @JsonProperty("name") String name,
-    @JsonProperty("task-limit") int taskLimit) {
+    @JsonProperty("task-limit") int taskLimit,
+    @JsonProperty("event-limit") int eventLimit) {
 }
