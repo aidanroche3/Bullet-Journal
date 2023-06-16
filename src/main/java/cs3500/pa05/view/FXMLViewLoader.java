@@ -1,8 +1,7 @@
 package cs3500.pa05.view;
 
-import cs3500.pa05.controller.SceneController;
+import cs3500.pa05.controller.Controller;
 import java.io.IOException;
-import java.nio.file.Path;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
@@ -16,9 +15,10 @@ public class FXMLViewLoader {
    *
    * @param s string
    */
-  public FXMLViewLoader(String s) {
+  public FXMLViewLoader(String s, Controller controller) {
     this.loader = new FXMLLoader();
     this.loader.setLocation(getClass().getClassLoader().getResource(s));
+    this.loader.setController(controller);
   }
 
   /**

@@ -7,8 +7,9 @@
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="200" prefWidth="200">
-      <children>
-         <Label layoutX="70.0" layoutY="34.0" text="Scene 3" />
-         <Button layoutX="66.0" layoutY="87.0" mnemonicParsing="false" text="Go Back" />
-      </children></AnchorPane>
+        <children>
+            <Label layoutX="70.0" layoutY="34.0" text="Scene 3" />
+            <Button fx:id="cancel" layoutX="69.0" layoutY="129.0" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="confirm" layoutX="125.0" layoutY="130.0" mnemonicParsing="false" text="Confirm" />
+        </children></AnchorPane>
 </Scene>

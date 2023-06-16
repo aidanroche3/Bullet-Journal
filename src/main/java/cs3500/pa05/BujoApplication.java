@@ -1,5 +1,7 @@
-package cs3500.pa05.controller;
+package cs3500.pa05;
 
+import cs3500.pa05.controller.Controller;
+import cs3500.pa05.controller.MenuController;
 import cs3500.pa05.view.FXMLViewLoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -7,7 +9,7 @@ import javafx.stage.Stage;
 /**
  *
  */
-public class WeekView extends Application {
+public class BujoApplication extends Application {
 
   /**
    *
@@ -15,16 +17,18 @@ public class WeekView extends Application {
    * the application scene can be set.
    * Applications may create other stages, if needed, but they will not be
    * primary stages.
-   * @throws Exception
+   * @throws Exception if an exception occurs
    */
   @Override
   public void start(Stage primaryStage) throws Exception {
-    FXMLViewLoader loader = new FXMLViewLoader("WeekView.fxml");
+    Controller controller = new MenuController();
+    FXMLViewLoader loader = new FXMLViewLoader("WeekView.fxml", controller);
 
     try {
       primaryStage.setScene(loader.load());
+      primaryStage.setTitle("Bujo's Bullet Journal");
 
-      primaryStage.setTitle("Welcome Screen");
+      controller.run();
 
       primaryStage.show();
     } catch (IllegalStateException e) {
@@ -38,10 +42,4 @@ public class WeekView extends Application {
     Application.launch();
   }
 
-  /**
-   *
-   */
-  public void switchScene() {
-
-  }
 }
