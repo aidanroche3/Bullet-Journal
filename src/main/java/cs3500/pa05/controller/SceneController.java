@@ -1,47 +1,24 @@
 package cs3500.pa05.controller;
 
-import cs3500.pa05.view.FXMLViewLoader;
-import javafx.application.Application;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-/**
- *
- */
-public class SceneController extends Application {
+public class SceneController {
 
-  /**
-   *
-   * @param primaryStage the primary stage for this application, onto which
-   * the application scene can be set.
-   * Applications may create other stages, if needed, but they will not be
-   * primary stages.
-   * @throws Exception
-   */
-  @Override
-  public void start(Stage primaryStage) throws Exception {
-    FXMLViewLoader loader = new FXMLViewLoader("WeekView.fxml");
+  private Stage stage;
+  private Scene scene;
 
-    try {
-      primaryStage.setScene(loader.load());
-
-      primaryStage.setTitle("Welcome Screen");
-
-      primaryStage.show();
-    } catch (IllegalStateException e) {
-      System.out.println("Unable to Load");
-    }
-  }
-  /**
-   *
-   */
-  public void run() {
-    Application.launch();
+  public void switchToTask(javafx.event.ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("NewTask.fxml"));
+    stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    scene = new Scene(root);
+    stage.setScene(scene);
+    stage.show();
   }
 
-  /**
-   *
-   */
-  public void switchScene() {
-
-  }
 }
