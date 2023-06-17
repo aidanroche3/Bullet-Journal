@@ -64,6 +64,6 @@ class JournalAdapterTest {
         + "nts\":[{\"name\":\"Event 1\",\"description\":\"Description\",\"day\":\"MO"
         + "NDAY\",\"start\":\"\",\"duration\":2.5},{\"name\":\"Event 2\",\"descripti"
         + "on\":\"Description\",\"day\":\"TUESDAY\",\"start\":\"\",\"duration\":3.0}]}",
-        JournalAdapter.toJson(journal1));
+        JournalAdapter.toJson(journal1).toString());
   }
 }
