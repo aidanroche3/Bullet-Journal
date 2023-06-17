@@ -6,7 +6,7 @@ import cs3500.pa05.model.enumerations.Day;
 /**
  * Class for representing a journal task
  */
-public class Task extends Item{
+public class Task extends Item {
 
   private CompletionStatus status;
 

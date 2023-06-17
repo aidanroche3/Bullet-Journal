@@ -16,7 +16,7 @@ public class Journal {
   /**
    * Instantiates a journal
    *
-   * @param name the name of the journal
+   * @param preferences the preferences of the journal
    * @param events a list of events for the week
    * @param tasks a list of tasks for the week
    */
