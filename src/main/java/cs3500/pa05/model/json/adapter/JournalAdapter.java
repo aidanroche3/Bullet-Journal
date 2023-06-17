@@ -21,13 +21,10 @@ public class JournalAdapter {
   /**
    * Converts a JsonNode to a Journal
    *
-   * @param node    JsonNode to convert
+   * @param journalJson    journal to convert
    * @return        Journal from JsonNode
    */
-  public static Journal toJournal(JsonNode node) {
-    ObjectMapper mapper = new ObjectMapper();
-    JournalJson journalJson = mapper.convertValue(node, JournalJson.class);
-
+  public static Journal toJournal(JournalJson journalJson) {
     PreferencesJson prefJson = journalJson.preferences();
     TaskJson[] tasksJson = journalJson.tasks();
     EventJson[] eventsJson = journalJson.events();
@@ -54,7 +51,7 @@ public class JournalAdapter {
    * @param journal    Journal to convert
    * @return           JsonNode from Journal
    */
-  public static JsonNode toJson(Journal journal) {
+  public static JournalJson toJson(Journal journal) {
     ObjectMapper mapper = new ObjectMapper();
     PreferencesJson prefJson = mapper.convertValue(journal.getPreferences(), PreferencesJson.class);
     List<Task> tasks = journal.getTasks();
@@ -70,8 +67,6 @@ public class JournalAdapter {
       eventsJson[i] = mapper.convertValue(events.get(i), EventJson.class);
     }
 
-    JournalJson journalJson = new JournalJson(prefJson, tasksJson, eventsJson);
-
-    return mapper.convertValue(journalJson, JsonNode.class);
+    return new JournalJson(prefJson, tasksJson, eventsJson);
   }
 }

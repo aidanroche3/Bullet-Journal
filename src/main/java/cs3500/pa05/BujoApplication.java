@@ -2,6 +2,7 @@ package cs3500.pa05;
 
 import cs3500.pa05.controller.Controller;
 import cs3500.pa05.controller.MenuController;
+import cs3500.pa05.controller.WelcomeSceneController;
 import cs3500.pa05.view.FxmlViewLoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -19,8 +20,8 @@ public class BujoApplication extends Application {
    */
   @Override
   public void start(Stage primaryStage) {
-    Controller controller = new MenuController();
-    FxmlViewLoader loader = new FxmlViewLoader("WeekView.fxml", controller);
+    Controller controller = new WelcomeSceneController();
+    FxmlViewLoader loader = new FxmlViewLoader("Welcome.fxml", controller);
 
     try {
       primaryStage.setScene(loader.load());

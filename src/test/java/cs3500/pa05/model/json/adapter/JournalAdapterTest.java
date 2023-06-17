@@ -48,7 +48,7 @@ class JournalAdapterTest {
   @Test
   void toJournal() {
     JsonNode node = this.mapper.convertValue(json1, JsonNode.class);
-    System.out.println(JournalAdapter.toJournal(node));
+    //System.out.println(JournalAdapter.toJournal(node));
 
     assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":8,\"eventLimit\""
         + ":16},\"tasks\":[{\"name\":\"Name\",\"description\":\"Desc\",\"day\":\""
