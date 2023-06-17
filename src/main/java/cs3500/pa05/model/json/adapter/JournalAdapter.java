@@ -11,7 +11,6 @@ import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.PreferencesJson;
 import cs3500.pa05.model.json.TaskJson;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -30,19 +29,19 @@ public class JournalAdapter {
     JournalJson journalJson = mapper.convertValue(node, JournalJson.class);
 
     PreferencesJson prefJson = journalJson.preferences();
-    List<TaskJson> tasksJson = Arrays.asList(journalJson.tasks());
-    List<EventJson> eventsJson = Arrays.asList(journalJson.events());
+    TaskJson[] tasksJson = journalJson.tasks();
+    EventJson[] eventsJson = journalJson.events();
 
     Preferences preferences = new Preferences(prefJson.name(), prefJson.taskLimit(),
         prefJson.eventLimit());
     List<Task> tasks = new ArrayList<>();
     List<Event> events = new ArrayList<>();
 
-    for(TaskJson tj : tasksJson) {
+    for (TaskJson tj : tasksJson) {
       tasks.add(new Task(tj.name(), tj.description(), tj.day(), tj.status()));
     }
 
-    for(EventJson ej : eventsJson) {
+    for (EventJson ej : eventsJson) {
       events.add(new Event(ej.name(), ej.description(), ej.day(), ej.start(), ej.duration()));
     }
 
@@ -63,11 +62,11 @@ public class JournalAdapter {
     TaskJson[] tasksJson = new TaskJson[tasks.size()];
     EventJson[] eventsJson = new EventJson[events.size()];
 
-    for(int i = 0; i < tasks.size(); i++) {
+    for (int i = 0; i < tasks.size(); i++) {
       tasksJson[i] = mapper.convertValue(tasks.get(i), TaskJson.class);
     }
 
-    for(int i = 0; i < events.size(); i++) {
+    for (int i = 0; i < events.size(); i++) {
       eventsJson[i] = mapper.convertValue(events.get(i), EventJson.class);
     }
 

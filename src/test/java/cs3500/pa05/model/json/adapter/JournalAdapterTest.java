@@ -1,6 +1,7 @@
 package cs3500.pa05.model.json.adapter;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,7 @@ class JournalAdapterTest {
   JournalJson json1;
 
   ObjectMapper mapper;
+
   @BeforeEach
   void setUp() {
     Preferences p = new Preferences("Week 1", 5, 6);
@@ -34,7 +36,7 @@ class JournalAdapterTest {
 
     try {
       json1 = BujoReader.produceJournal(Path.of("src/test/resources/BujoReaderTest.bujo"));
-    } catch(IOException e) {
+    } catch (IOException e) {
       fail();
     }
 
