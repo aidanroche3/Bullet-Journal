@@ -7,19 +7,19 @@ import java.util.List;
  */
 public class Journal {
 
-  private String name;
+  private Preferences preferences;
   private List<Task> tasks;
   private List<Event> events;
 
   /**
    * Instantiates a journal
    *
-   * @param name the name of the journal
+   * @param preferences the preferences of the journal
    * @param events a list of events for the week
    * @param tasks a list of tasks for the week
    */
-  public Journal(String name, List<Task> tasks, List<Event> events) {
-    this.name = name;
+  public Journal(Preferences preferences, List<Task> tasks, List<Event> events) {
+    this.preferences = preferences;
     this.tasks = tasks;
     this.events = events;
   }
