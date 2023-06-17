@@ -23,4 +23,8 @@ public class Task extends Item{
     this.status = status;
   }
 
+  public CompletionStatus getStatus() {
+    return this.status;
+  }
+
 }

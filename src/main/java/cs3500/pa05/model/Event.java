@@ -8,7 +8,7 @@ import java.time.LocalTime;
  */
 public class Event extends Item {
 
-  private LocalTime start;
+  private String start;
   private double duration;
 
   /**
@@ -20,10 +20,18 @@ public class Event extends Item {
    * @param start the start time of the event
    * @param duration the duration of the event
    */
-  public Event(String name, String description, Day day, LocalTime start, double duration) {
+  public Event(String name, String description, Day day, String start, double duration) {
     super(name, description, day);
     this.start = start;
     this.duration = duration;
+  }
+
+  public String getStart() {
+    return this.start;
+  }
+
+  public double getDuration() {
+    return this.duration;
   }
 
 }
