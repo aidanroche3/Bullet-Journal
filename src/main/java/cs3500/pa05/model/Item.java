@@ -24,4 +24,16 @@ public abstract class Item {
     this.day = day;
   }
 
+  public String getName() {
+    return this.name;
+  }
+
+  public String getDescription() {
+    return this.description;
+  }
+
+  public Day getDay() {
+    return this.day;
+  }
+
 }
