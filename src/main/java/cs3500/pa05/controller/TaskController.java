@@ -14,7 +14,9 @@ public class TaskController implements Controller {
 
   @Override
   public void run() {
-    cancel.setOnAction(event -> SceneChanger.switchToScene(event, "WeekView.fxml", new MenuController()));
-    confirm.setOnAction(event -> SceneChanger.switchToScene(event, "WeekView.fxml", new MenuController()));
+    cancel.setOnAction(event -> SceneChanger.switchToScene(event,
+        "WeekView.fxml", new MenuController()));
+    confirm.setOnAction(event -> SceneChanger.switchToScene(event,
+        "WeekView.fxml", new MenuController()));
   }
 }

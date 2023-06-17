@@ -18,6 +18,10 @@ public class BujoWriter {
    * @throws IOException if an IOException occurs
    */
   public static void writeJournal(Path path, JournalJson journal) throws IOException {
-    new ObjectMapper().writeValue(path.toFile(), journal);
+    if (path.toString().endsWith(".bujo")) {
+      new ObjectMapper().writeValue(path.toFile(), journal);
+    } else {
+      throw new IOException();
+    }
   }
 }

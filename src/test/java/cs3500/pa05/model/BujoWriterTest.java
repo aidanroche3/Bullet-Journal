@@ -1,9 +1,9 @@
 package cs3500.pa05.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
 import cs3500.pa05.model.json.EventJson;
@@ -28,10 +28,10 @@ class BujoWriterTest {
    */
   @BeforeEach
   void setUp() {
-    EventJson[] events = new EventJson[]
-        {new EventJson("Name", "Desc", Day.MONDAY, "", 7.7)};
-    TaskJson[] tasks = new TaskJson[]
-        {new TaskJson("Name", "Desc", Day.MONDAY, CompletionStatus.COMPLETE)};
+    EventJson[] events = new EventJson[] {
+        new EventJson("Name", "Desc", Day.MONDAY, "", 7.7)};
+    TaskJson[] tasks = new TaskJson[]{
+        new TaskJson("Name", "Desc", Day.MONDAY, CompletionStatus.COMPLETE)};
     PreferencesJson preferences = new PreferencesJson("Week 1", 8, 16);
     journal = new JournalJson(preferences, tasks, events);
   }
@@ -40,6 +40,7 @@ class BujoWriterTest {
   void writeJournal() {
     Path expected = Path.of("src/test/resources/BujoReaderTest.bujo");
     Path writeAt = Path.of("src/test/resources/BujoWriterTest.bujo");
+    Path invalid = Path.of("invalid/");
     try {
       BujoWriter.writeJournal(writeAt, journal);
       assertEquals(-1, Files.mismatch(expected, writeAt));
@@ -48,5 +49,6 @@ class BujoWriterTest {
     }
     assertThrows(IOException.class,
         () -> BujoWriter.writeJournal(Path.of("invalid directory"), journal));
+    assertThrows(IOException.class, () -> BujoWriter.writeJournal(invalid, journal));
   }
 }

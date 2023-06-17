@@ -1,6 +1,6 @@
 package cs3500.pa05.controller;
 
-import cs3500.pa05.view.FXMLViewLoader;
+import cs3500.pa05.view.FxmlViewLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,10 +17,11 @@ public class SceneChanger {
    * @param fxmlFile a string of the desired FXML file to switch to
    * @param controller a controller
    */
-  public static void switchToScene(javafx.event.ActionEvent event, String fxmlFile, Controller controller) {
-    FXMLViewLoader loader = new FXMLViewLoader(fxmlFile, controller);
+  public static void switchToScene(javafx.event.ActionEvent event,
+                                   String fxmlFile, Controller controller) {
+    FxmlViewLoader loader = new FxmlViewLoader(fxmlFile, controller);
     Scene scene = loader.load();
-    Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     stage.show();
     controller.run();

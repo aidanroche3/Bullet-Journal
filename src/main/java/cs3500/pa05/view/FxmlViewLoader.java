@@ -8,14 +8,15 @@ import javafx.scene.Scene;
 /**
  *
  */
-public class FXMLViewLoader {
+public class FxmlViewLoader {
   FXMLLoader loader;
 
   /**
    *
-   * @param s string
+   * @param s a string of the fxml path to load
+   * @param controller the controller for the scene
    */
-  public FXMLViewLoader(String s, Controller controller) {
+  public FxmlViewLoader(String s, Controller controller) {
     this.loader = new FXMLLoader();
     this.loader.setLocation(getClass().getClassLoader().getResource(s));
     this.loader.setController(controller);
