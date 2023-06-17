@@ -31,7 +31,7 @@
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="34.0" prefWidth="194.0" style="-fx-background-color: #5F6369;" translateY="-20.0">
                      <children>
-                        <Label prefHeight="25.0" prefWidth="89.0" text="untitled" textFill="WHITE">
+                        <Label fx:id="name" prefHeight="25.0" prefWidth="89.0" text="untitled" textFill="WHITE">
                            <font>
                               <Font name="Chalkboard" size="25.0" />
                            </font>
