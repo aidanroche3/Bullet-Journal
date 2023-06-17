@@ -11,6 +11,8 @@ public class Journal {
   private List<Task> tasks;
   private List<Event> events;
 
+
+
   /**
    * Instantiates a journal
    *
@@ -24,4 +26,15 @@ public class Journal {
     this.events = events;
   }
 
+  public Preferences getPreferences() {
+    return this.preferences;
+  }
+
+  public List<Task> getTasks() {
+    return this.tasks;
+  }
+
+  public List<Event> getEvents() {
+    return this.events;
+  }
 }

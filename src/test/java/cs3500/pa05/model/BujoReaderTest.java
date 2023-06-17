@@ -34,7 +34,7 @@ class BujoReaderTest {
   @Test
   void produceJournal() {
     JsonNode node = new ObjectMapper().convertValue(journal, JsonNode.class);
-    assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"task-limit\":8,\"event-limit\""
+    assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":8,\"eventLimit\""
         + ":16},\"tasks\":[{\"name\":\"Name\",\"description\":\"Desc\",\"day\":\""
         + "MONDAY\",\"status\":\"COMPLETE\"}],\"events\":[{\"name\":\"Name\",\"des"
         + "cription\":\"Desc\",\"day\":\"MONDAY\",\"start\":\"\",\"duration\":7.7}"

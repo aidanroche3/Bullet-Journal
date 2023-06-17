@@ -20,4 +20,17 @@ public class Preferences {
     this.taskLimit = taskLimit;
     this.eventLimit = eventLimit;
   }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public int getTaskLimit() {
+    return this.taskLimit;
+  }
+
+  public int getEventLimit() {
+    return eventLimit;
+  }
+
 }

@@ -26,4 +26,12 @@ public class Event extends Item {
     this.duration = duration;
   }
 
+  public String getStart() {
+    return this.start;
+  }
+
+  public double getDuration() {
+    return this.duration;
+  }
+
 }
