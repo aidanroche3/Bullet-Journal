@@ -102,13 +102,13 @@
                   </Label>
                </children>
             </GridPane>
-            <VBox layoutX="194.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
-            <VBox layoutX="298.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
-            <VBox layoutX="402.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
-            <VBox layoutX="506.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
-            <VBox layoutX="610.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
-            <VBox layoutX="714.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
-            <VBox layoutX="818.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
+            <VBox fx:id="monday" layoutX="194.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
+            <VBox fx:id="tuesday" layoutX="298.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
+            <VBox fx:id="wednesday" layoutX="402.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
+            <VBox fx:id="thursday" layoutX="506.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
+            <VBox fx:id="friday" layoutX="610.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
+            <VBox fx:id="saturday" layoutX="714.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
+            <VBox fx:id="sunday" layoutX="818.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
          </children>
       </AnchorPane>
    </root>
