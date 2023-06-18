@@ -48,6 +48,9 @@ class BujoWriterTest {
     newJo = new JournalJson(newPreferences, newTasks, newEvents);
     }
 
+  /**
+   * Tests the write journal method
+   */
   @Test
   void writeJournal() {
     Path expected = Path.of("src/test/resources/BujoReaderTest.bujo");

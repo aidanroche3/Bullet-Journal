@@ -25,7 +25,7 @@ public class BujoApplication extends Application {
 
     try {
       primaryStage.setScene(loader.load());
-      primaryStage.setTitle("Bujo's Bullet Journal");
+      primaryStage.setTitle("Welcome!");
 
       controller.run();
 

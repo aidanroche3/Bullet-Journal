@@ -41,7 +41,7 @@ public class WelcomeSceneController implements Controller {
       JournalJson journalJson = BujoReader.produceJournal(file.toPath());
       Journal journal = JsonAdapter.jsonToJournal(journalJson);
       Controller menuController = new MenuController(journal);
-      SceneChanger.switchToScene(event, "WeekView.fxml", menuController);
+      SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
     } catch (IOException e) {
       //TODO: find out what we need to do if invalid
     }

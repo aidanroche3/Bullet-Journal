@@ -86,9 +86,9 @@ public class MenuController implements Controller {
   @FXML
   public void run() {
     task.setOnAction(event -> SceneChanger.switchToScene(event,
-        "NewTask.fxml", new TaskController(journal)));
+        "NewTask.fxml", new TaskController(journal), "Add a new task"));
     event.setOnAction(event -> SceneChanger.switchToScene(event,
-        "NewEvent.fxml", new EventController(journal)));
+        "NewEvent.fxml", new EventController(journal), "Add a new event"));
     open.setOnAction(this::fileChooser);
     name.setText(journal.getPreferences().getName());
     name.setFont(WEEK_NAME_FONT);
@@ -111,9 +111,9 @@ public class MenuController implements Controller {
         JournalJson journalJson = BujoReader.produceJournal(f.toPath());
         Journal journal = JsonAdapter.jsonToJournal(journalJson);
         Controller menuController = new MenuController(journal);
-        SceneChanger.switchToScene(event, "WeekView.fxml", menuController);
+        SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
-
+        //ignore for now
       }
     }
   }

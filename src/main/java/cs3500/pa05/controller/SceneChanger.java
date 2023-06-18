@@ -18,11 +18,13 @@ public class SceneChanger {
    * @param controller a controller
    */
   public static void switchToScene(javafx.event.ActionEvent event,
-                                   String fxmlFile, Controller controller) {
+                                   String fxmlFile, Controller controller,
+                                   String sceneName) {
     FxmlViewLoader loader = new FxmlViewLoader(fxmlFile, controller);
     Scene scene = loader.load();
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
+    stage.setTitle(sceneName);
     stage.show();
     controller.run();
   }

@@ -27,8 +27,8 @@ public class EventController implements Controller {
   @Override
   public void run() {
     cancel.setOnAction(event -> SceneChanger.switchToScene(event,
-        "WeekView.fxml", new MenuController(journal)));
+        "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(event -> SceneChanger.switchToScene(event,
-        "WeekView.fxml", new MenuController(journal)));
+        "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
   }
 }

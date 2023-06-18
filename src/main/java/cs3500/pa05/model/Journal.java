@@ -37,4 +37,12 @@ public class Journal {
   public List<Event> getEvents() {
     return this.events;
   }
+
+  public void addTask(Task task) {
+    this.tasks.add(task);
+  }
+
+  public void addEvent(Event event) {
+    this.events.add(event);
+  }
 }
