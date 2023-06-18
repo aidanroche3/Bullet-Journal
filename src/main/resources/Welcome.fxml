@@ -14,9 +14,14 @@
                <Font size="80.0" />
             </font>
          </Label>
-         <Button fx:id="select" layoutX="199.0" layoutY="317.0" mnemonicParsing="false" prefHeight="135.0" prefWidth="272.0" text="Select Journal">
+         <Button fx:id="select" layoutX="396.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" text="Select Journal">
             <font>
-               <Font size="35.0" />
+               <Font size="28.0" />
+            </font>
+         </Button>
+         <Button layoutX="11.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" text="Create New Week">
+            <font>
+               <Font size="28.0" />
             </font>
          </Button>
       </children></AnchorPane>
