@@ -48,7 +48,7 @@
                <Image url="@images/mrKrabs.png" />
             </image>
          </ImageView>
-         <Label fx:id="message" layoutX="120.0" layoutY="320.0" text="" prefWidth="200.0">
+         <Label fx:id="message" layoutX="120.0" layoutY="320.0" text="" prefWidth="250.0">
              <font>
                  <Font size="10.0" />
              </font>

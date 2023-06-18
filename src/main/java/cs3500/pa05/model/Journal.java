@@ -70,6 +70,15 @@ public class Journal {
   }
 
   /**
+   * Removes a task from the task list
+   *
+   * @param index the index of the list to remove
+   */
+  public void removeTask(int index) {
+    this.tasks.remove(index);
+  }
+
+  /**
    * Adds an event to the event list
    *
    * @param event the event
@@ -85,15 +94,6 @@ public class Journal {
    */
   public void removeEvent(int index) {
     this.events.remove(index);
-  }
-
-  /**
-   * Removes a task from the task list
-   *
-   * @param index the index of the list to remove
-   */
-  public void removeTask(int index) {
-    this.tasks.remove(index);
   }
 
   /**

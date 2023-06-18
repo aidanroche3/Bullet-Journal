@@ -4,9 +4,9 @@ package cs3500.pa05.model;
  * Class for representing user preferences
  */
 public class Preferences {
-  private final String name;
-  private final int taskLimit;
-  private final int eventLimit;
+  private String name;
+  private int taskLimit;
+  private int eventLimit;
 
   /**
    * Instantiates a user preference
@@ -48,4 +48,15 @@ public class Preferences {
     return eventLimit;
   }
 
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setEventLimit(int eventLimit) {
+    this.eventLimit = eventLimit;
+  }
+
+  public void setTaskLimit(int taskLimit) {
+    this.taskLimit = taskLimit;
+  }
 }

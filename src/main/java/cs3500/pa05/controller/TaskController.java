@@ -4,6 +4,8 @@ import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -52,30 +54,43 @@ public class TaskController implements Controller {
     status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(this::updateJournal);
+    confirm.setOnAction(event -> updateJournal());
   }
 
   /**
    * Updates the journal with the new event
    *
-   * @param event an action event
    */
-  private void updateJournal(javafx.event.ActionEvent event) {
+  private void updateJournal() {
 
     String enteredDay = day.getValue();
     String chosenName = name.getText();
     String compStatus = status.getValue();
 
-    if (!(enteredDay == null || chosenName.equals("") || compStatus == null)) {
-      String chosenDesc = description.getText();
+    if(enteredDay != null) {
+      int tasksOnThisDay = 0;
       Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
-      CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());
-      Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
-      journal.addTask(task);
-      SceneChanger.switchToScene("WeekView.fxml",
-          new MenuController(journal), "Bujo's Bullet Journal");
+      for(Task t : journal.getTasks()) {
+        if(t.getDay().equals(chosenDay)) {
+          tasksOnThisDay++;
+        }
+      }
+      if(journal.getPreferences().getTaskLimit() > tasksOnThisDay) {
+        if (!(chosenName.equals("") || compStatus == null)) {
+          String chosenDesc = description.getText();
+          CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());
+          Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
+          journal.addTask(task);
+          SceneChanger.switchToScene("WeekView.fxml",
+              new MenuController(journal), "Bujo's Bullet Journal");
+        } else {
+          message.setText("Invalid Entry. Please check fields again.");
+        }
+      } else {
+        message.setText("Maximum number of tasks reached for today.");
+      }
     } else {
-      message.setText("Invalid Entry. Please check fields again.");
+      message.setText("Please select a day.");
     }
   }
 }

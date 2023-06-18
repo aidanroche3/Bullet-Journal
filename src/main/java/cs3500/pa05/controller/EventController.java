@@ -3,6 +3,8 @@ package cs3500.pa05.controller;
 import cs3500.pa05.model.Event;
 import  cs3500.pa05.model.Journal;
 import cs3500.pa05.model.enumerations.Day;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -60,38 +62,50 @@ public class EventController implements Controller {
         "Thursday", "Friday", "Saturday", "Sunday"));
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(this::updateJournal);
+    confirm.setOnAction(event -> updateJournal());
   }
 
   /**
    * Updates the journal with a new event
    *
-   * @param event an action event
    */
-  public void updateJournal(ActionEvent event) {
+  public void updateJournal() {
     String enteredDay = day.getValue();
     String chosenName = name.getText();
     String enteredStart = start.getText();
     String enteredDuration = duration.getText();
 
-    if (!(enteredDay == null
-        || chosenName.equals("")
-        || enteredStart.equals("")
-        || enteredDuration.equals(""))) {
-      try {
-        Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
-        String desc = description.getText();
-        double duration = Double.parseDouble(enteredDuration);
-        Event newEvent = new Event(chosenName, desc, chosenDay,
-            enteredStart, duration);
-        journal.addEvent(newEvent);
-        SceneChanger.switchToScene("WeekView.fxml",
-            new MenuController(journal), "Bujo's Bullet Journal");
-      } catch (NumberFormatException e) {
-        message.setText("Invalid duration. Enter a valid duration.");
+    if (enteredDay != null) {
+      int eventsOnThisDay = 0;
+      Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
+      for (Event e : journal.getEvents()) {
+        if (e.getDay().equals(chosenDay)) {
+          eventsOnThisDay++;
+        }
+      }
+      if(journal.getPreferences().getEventLimit() > eventsOnThisDay) {
+        if (!(chosenName.equals("")
+            || enteredStart.equals("")
+            || enteredDuration.equals(""))) {
+          try {
+            String desc = description.getText();
+            double duration = Double.parseDouble(enteredDuration);
+            Event newEvent = new Event(chosenName, desc, chosenDay,
+                enteredStart, duration);
+            journal.addEvent(newEvent);
+            SceneChanger.switchToScene("WeekView.fxml",
+                new MenuController(journal), "Bujo's Bullet Journal");
+          } catch (NumberFormatException err) {
+            message.setText("Invalid duration. Enter a valid duration.");
+          }
+        } else {
+          message.setText("Invalid Entry. Please check fields again.");
+        }
+      } else {
+        message.setText("Maximum number of events reached for today.");
       }
     } else {
-      message.setText("Invalid Entry. Please check fields again.");
+      message.setText("Please select a day.");
     }
   }
 }

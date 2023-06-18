@@ -58,6 +58,10 @@ public class MenuController implements Controller {
   @FXML
   private Button open;
   @FXML
+  private Button edit;
+  @FXML
+  private Button about;
+  @FXML
   private VBox monday;
   @FXML
   private VBox tuesday;
@@ -108,21 +112,21 @@ public class MenuController implements Controller {
    */
   private void setBorder() {
     border.setFont(LABEL_FONT);
-    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
+    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit() * 7) {
       task.setOnAction(event -> SceneChanger.switchToScene(
           "NewTask.fxml", new TaskController(journal), "Add a new task"));
     } else {
       border.setText("Maximum Amount of Tasks Reached for this Week.");
     }
-    if (journal.getEvents().size() < journal.getPreferences().getEventLimit()) {
+    if (journal.getEvents().size() < journal.getPreferences().getEventLimit() * 7) {
       event.setOnAction(event -> SceneChanger.switchToScene(
           "NewEvent.fxml", new EventController(journal), "Add a new event"));
     } else {
       border.setText("Maximum Amount of Events Reached for this Week.");
     }
 
-    if (journal.getTasks().size() >= journal.getPreferences().getTaskLimit()
-        && journal.getEvents().size() >= journal.getPreferences().getEventLimit()) {
+    if (journal.getTasks().size() >= journal.getPreferences().getTaskLimit() * 7
+        && journal.getEvents().size() >= journal.getPreferences().getEventLimit() * 7) {
       border.setText("Maximum Amount of Tasks and Events Reached for this Week.");
     }
   }
@@ -137,6 +141,8 @@ public class MenuController implements Controller {
         new WeekController(journal), "New Week"));
     name.setText(journal.getPreferences().getName());
     name.setFont(WEEK_NAME_FONT);
+    edit.setOnAction(event -> SceneChanger.switchToScene("Edit.fxml",
+        new EditController(journal), "Edit Tasks"));
   }
 
   /**
@@ -153,24 +159,29 @@ public class MenuController implements Controller {
     Runnable openRunnable = this::fileChooser;
     scene.getAccelerators().put(openCombo, openRunnable);
 
-    KeyCombination weekCombo = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
+    KeyCombination weekCombo = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
     Runnable weekRunnable = () -> SceneChanger.switchToScene("NewWeek.fxml",
         new WeekController(journal), "New Week");
     scene.getAccelerators().put(weekCombo, weekRunnable);
 
-    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
+    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit() * 7) {
       KeyCombination taskCombo = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
       Runnable taskRunnable = () -> SceneChanger.switchToScene(
           "NewTask.fxml", new TaskController(journal), "Add a new task");
       scene.getAccelerators().put(taskCombo, taskRunnable);
     }
 
-    if (journal.getEvents().size() < journal.getPreferences().getEventLimit()) {
+    if (journal.getEvents().size() < journal.getPreferences().getEventLimit() * 7) {
       KeyCombination eventCombo = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
       Runnable eventRunnable = () -> SceneChanger.switchToScene(
           "NewEvent.fxml", new EventController(journal), "Add a new event");
       scene.getAccelerators().put(eventCombo, eventRunnable);
     }
+
+    KeyCombination editCombo = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN);
+    Runnable editRunnable = () -> SceneChanger.switchToScene("Edit.fxml",
+        new EditController(journal), "Edit Tasks");
+    scene.getAccelerators().put(editCombo, editRunnable);
 
   }
 
