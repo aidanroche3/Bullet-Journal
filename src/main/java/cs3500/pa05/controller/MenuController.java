@@ -4,6 +4,7 @@ import cs3500.pa05.model.BujoReader;
 import cs3500.pa05.model.BujoWriter;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;
+import cs3500.pa05.model.Preferences;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.json.JournalJson;
@@ -11,6 +12,8 @@ import cs3500.pa05.model.json.adapter.JournalAdapter;
 import cs3500.pa05.view.FxmlViewLoader;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
@@ -148,12 +151,15 @@ public class MenuController implements Controller {
     }
   }
 
+
+
   /**
    * Creates new week
    */
-  private void createNewWeek(javafx.event.ActionEvent event) {
-    Journal journal
-    Controller menuController = new MenuController(journal);
+  private void createNewWeek(javafx.event.ActionEvent event, String name, Path path) {
+    Preferences preferences = new Preferences(name, 0, 0);
+    Journal newJournal = new Journal(preferences, new ArrayList<>(), new ArrayList<>(), path);
+    Controller menuController = new MenuController(newJournal);
     SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
   }
 
@@ -188,7 +194,6 @@ public class MenuController implements Controller {
     for (Task task : journal.getTasks()) {
       tasks.getChildren().add(generateTask(task));
     }
-
   }
 
   /**
