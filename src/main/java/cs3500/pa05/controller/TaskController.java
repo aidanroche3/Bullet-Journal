@@ -51,25 +51,28 @@ public class TaskController implements Controller {
     status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));
     cancel.setOnAction(event -> SceneChanger.switchToScene(event,
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(event -> updateJournal());
+    confirm.setOnAction(this::updateJournal);
   }
 
   /**
    * Updates the journal with the new event
+   *
+   * @param event an action event
    */
-  private void updateJournal() {
-    Day chosenDay = Day.valueOf(day.getValue().toString().toUpperCase());
+  private void updateJournal(javafx.event.ActionEvent event) {
+
+    String enteredDay = day.getValue();
     String chosenName = name.getText();
-    String chosenDesc = description.getText();
-    CompletionStatus chosenStatus = CompletionStatus.valueOf(status.getValue().toString().toUpperCase());
-    Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
-    journal.addTask(task);
-    //SceneChanger.switchToScene(e, "WeekView.fxml", new MenuController(journal));
+    String compStatus = status.getValue();
 
+    if (!(enteredDay == null || chosenName.equals("") || compStatus == null)) {
+      String chosenDesc = description.getText();
+      Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
+      CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());
+      Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
+      journal.addTask(task);
+      SceneChanger.switchToScene(event, "WeekView.fxml",
+          new MenuController(journal), "Bujo's Bullet Journal");
+    }
   }
-
-
-
-
-
 }

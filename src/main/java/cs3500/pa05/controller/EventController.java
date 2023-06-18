@@ -17,6 +17,11 @@ public class EventController implements Controller {
   @FXML
   private Button confirm;
 
+  /**
+   * Instantiates an EventController
+   *
+   * @param journal a journal
+   */
   public EventController(Journal journal) {
     this.journal = journal;
   }

@@ -1,15 +1,17 @@
 package cs3500.pa05.controller;
 
 import cs3500.pa05.model.BujoReader;
+import cs3500.pa05.model.BujoWriter;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.json.JournalJson;
-import cs3500.pa05.model.json.JsonAdapter;
+import cs3500.pa05.model.json.adapter.JournalAdapter;
 import cs3500.pa05.view.FxmlViewLoader;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
@@ -85,10 +87,15 @@ public class MenuController implements Controller {
    */
   @FXML
   public void run() {
-    task.setOnAction(event -> SceneChanger.switchToScene(event,
-        "NewTask.fxml", new TaskController(journal), "Add a new task"));
-    event.setOnAction(event -> SceneChanger.switchToScene(event,
-        "NewEvent.fxml", new EventController(journal), "Add a new event"));
+    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
+      task.setOnAction(event -> SceneChanger.switchToScene(event,
+          "NewTask.fxml", new TaskController(journal), "Add a new task"));
+    }
+    if (journal.getEvents().size() < journal.getPreferences().getEventLimit()) {
+      event.setOnAction(event -> SceneChanger.switchToScene(event,
+          "NewEvent.fxml", new EventController(journal), "Add a new event"));
+    }
+    save.setOnAction(event -> fileSaver());
     open.setOnAction(this::fileChooser);
     name.setText(journal.getPreferences().getName());
     name.setFont(WEEK_NAME_FONT);
@@ -109,12 +116,24 @@ public class MenuController implements Controller {
     if (f != null) {
       try {
         JournalJson journalJson = BujoReader.produceJournal(f.toPath());
-        Journal journal = JsonAdapter.jsonToJournal(journalJson);
+        Journal journal = JournalAdapter.toJournal(journalJson, f.toPath());
         Controller menuController = new MenuController(journal);
         SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
         //ignore for now
       }
+    }
+  }
+
+  /**
+   * Saves the journal
+   */
+  private void fileSaver() {
+    JournalJson journalJson = JournalAdapter.toJson(journal);
+    try {
+      BujoWriter.writeJournal(journal.getPath(), journalJson);
+    } catch (IOException e) {
+      //ignore
     }
   }
 

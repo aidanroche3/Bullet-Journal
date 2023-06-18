@@ -1,5 +1,6 @@
 package cs3500.pa05.model;
 
+import java.nio.file.Path;
 import java.util.List;
 
 /**
@@ -11,6 +12,8 @@ public class Journal {
   private List<Task> tasks;
   private List<Event> events;
 
+  private Path path;
+
 
 
   /**
@@ -20,10 +23,11 @@ public class Journal {
    * @param events a list of events for the week
    * @param tasks a list of tasks for the week
    */
-  public Journal(Preferences preferences, List<Task> tasks, List<Event> events) {
+  public Journal(Preferences preferences, List<Task> tasks, List<Event> events, Path path) {
     this.preferences = preferences;
     this.tasks = tasks;
     this.events = events;
+    this.path = path;
   }
 
   public Preferences getPreferences() {
@@ -44,5 +48,9 @@ public class Journal {
 
   public void addEvent(Event event) {
     this.events.add(event);
+  }
+
+  public Path getPath() {
+    return this.path;
   }
 }

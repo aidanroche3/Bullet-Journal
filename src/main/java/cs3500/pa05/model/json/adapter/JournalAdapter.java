@@ -10,6 +10,7 @@ import cs3500.pa05.model.json.EventJson;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.PreferencesJson;
 import cs3500.pa05.model.json.TaskJson;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class JournalAdapter {
    * @param journalJson    journal to convert
    * @return        Journal from JsonNode
    */
-  public static Journal toJournal(JournalJson journalJson) {
+  public static Journal toJournal(JournalJson journalJson, Path path) {
     PreferencesJson prefJson = journalJson.preferences();
     TaskJson[] tasksJson = journalJson.tasks();
     EventJson[] eventsJson = journalJson.events();
@@ -42,7 +43,7 @@ public class JournalAdapter {
       events.add(new Event(ej.name(), ej.description(), ej.day(), ej.start(), ej.duration()));
     }
 
-    return new Journal(preferences, tasks, events);
+    return new Journal(preferences, tasks, events, path);
   }
 
   /**

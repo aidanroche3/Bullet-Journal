@@ -3,7 +3,7 @@ package cs3500.pa05.controller;
 import cs3500.pa05.model.BujoReader;
 import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.json.JournalJson;
-import cs3500.pa05.model.json.JsonAdapter;
+import cs3500.pa05.model.json.adapter.JournalAdapter;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import java.io.File;
@@ -39,7 +39,7 @@ public class WelcomeSceneController implements Controller {
 
     try {
       JournalJson journalJson = BujoReader.produceJournal(file.toPath());
-      Journal journal = JsonAdapter.jsonToJournal(journalJson);
+      Journal journal = JournalAdapter.toJournal(journalJson, file.toPath());
       Controller menuController = new MenuController(journal);
       SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
     } catch (IOException e) {
