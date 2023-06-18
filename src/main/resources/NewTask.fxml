@@ -18,7 +18,7 @@
                 <font>
                     <Font size="27.0" />
                 </font></Label>
-            <MenuButton layoutX="166.0" layoutY="61.0" mnemonicParsing="false" text="Day">
+            <MenuButton fx:id="day" layoutX="166.0" layoutY="61.0" mnemonicParsing="false" text="Day">
                 <items>
                     <MenuItem mnemonicParsing="false" text="Monday" />
                     <MenuItem mnemonicParsing="false" text="Tuesday" />
@@ -34,14 +34,14 @@
                     <Font size="20.0" />
                 </font>
             </Label>
-            <TextField layoutX="115.0" layoutY="109.0" />
+            <TextField fx:id="name" layoutX="115.0" layoutY="109.0" />
             <Label layoutX="8.0" layoutY="160.0" prefHeight="27.0" prefWidth="107.0" text="Description:">
                 <font>
                     <Font size="20.0" />
                 </font>
             </Label>
-            <TextField layoutX="115.0" layoutY="160.0" />
-            <MenuButton layoutX="126.0" layoutY="209.0" mnemonicParsing="false" text="Completion Status">
+            <TextField fx:id="description" layoutX="115.0" layoutY="160.0" />
+            <MenuButton fx:id="status" layoutX="126.0" layoutY="209.0" mnemonicParsing="false" text="Completion Status">
                 <items>
                     <MenuItem mnemonicParsing="false" text="Incomplete" />
                     <MenuItem mnemonicParsing="false" text="Complete" />
