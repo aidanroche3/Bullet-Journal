@@ -30,7 +30,7 @@
                <Font size="20.0" />
             </font>
          </Label>
-         <TextField fx:id="description" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" />
+         <TextField fx:id="description" alignment="TOP_LEFT" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" />
          <TextField fx:id="start" layoutX="118.0" layoutY="246.0" />
          <TextField fx:id="duration" layoutX="118.0" layoutY="290.0" />
          <Label layoutX="17.0" layoutY="245.0" prefHeight="27.0" prefWidth="96.0" text="Start Time:">
@@ -48,7 +48,7 @@
                <Image url="@images/mrKrabs.png" />
             </image>
          </ImageView>
-         <Label fx:id="message" layoutX="120.0" layoutY="320.0" text="" prefWidth="250.0">
+         <Label fx:id="message" layoutX="120.0" layoutY="320.0" prefWidth="250.0" text="">
              <font>
                  <Font size="10.0" />
              </font>
