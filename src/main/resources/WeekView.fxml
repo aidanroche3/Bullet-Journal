@@ -15,7 +15,7 @@
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <root>
-      <AnchorPane prefHeight="590.0" prefWidth="921.0" style="-fx-background-color: lightblue;">
+      <AnchorPane prefHeight="712.0" prefWidth="1023.0" style="-fx-background-color: lightblue;">
          <children>
             <VBox prefHeight="590.0" prefWidth="194.0" style="-fx-background-color: #6287c4;">
                <children>
@@ -38,6 +38,7 @@
                         </Label>
                      </children>
                   </HBox>
+                  <VBox fx:id="tasks" prefHeight="479.0" prefWidth="194.0" />
                </children>
             </VBox>
             <HBox layoutX="194.0" prefHeight="37.0" prefWidth="727.0">
@@ -109,6 +110,11 @@
             <VBox fx:id="friday" layoutX="610.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
             <VBox fx:id="saturday" layoutX="714.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #b8d7f4;" />
             <VBox fx:id="sunday" layoutX="818.0" layoutY="108.0" prefHeight="482.0" prefWidth="104.0" style="-fx-background-color: #9ec8f1;" />
+            <Label fx:id="border" layoutX="-1.0" layoutY="588.0" prefHeight="148.0" prefWidth="1026.0" text="TO USER: ">
+               <font>
+                  <Font size="78.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </root>
