@@ -11,7 +11,7 @@
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="415.0" prefWidth="454.0">
       <children>
-         <Label layoutX="70.0" layoutY="29.0" text="Edit Task and Event Limit">
+         <Label layoutX="147.0" layoutY="27.0" text="Preferences">
             <font>
                <Font size="30.0" />
             </font>
@@ -26,14 +26,14 @@
                <Font size="25.0" />
             </font>
          </Button>
-         <Slider fx:id="taskSlider" blockIncrement="1.0" layoutX="121.0" layoutY="189.0" majorTickUnit="4.0" max="20.0" min="1.0" prefHeight="16.0" prefWidth="202.0" showTickLabels="true" showTickMarks="true" value="1.0" />
-         <Label fx:id="taskLimit" layoutX="169.0" layoutY="152.0" text="Task Limit: 0">
+         <Slider fx:id="taskSlider" blockIncrement="1.0" layoutX="30.0" layoutY="189.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="2" prefHeight="38.0" prefWidth="394.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+         <Label fx:id="taskLimit" layoutX="147.0" layoutY="150.0" text="Task Limit: 0">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Slider fx:id="eventSlider" blockIncrement="1.0" layoutX="121.0" layoutY="278.0" majorTickUnit="4.0" max="20.0" min="1.0" prefHeight="16.0" prefWidth="202.0" showTickLabels="true" showTickMarks="true" value="1.0" />
-         <Label fx:id="eventLimit" layoutX="166.0" layoutY="240.0" text="Event Limit: 0">
+         <Slider fx:id="eventSlider" blockIncrement="1.0" layoutX="29.0" layoutY="278.0" majorTickUnit="1.0" max="20.0" min="1.0" minorTickCount="2" prefHeight="38.0" prefWidth="394.0" showTickLabels="true" showTickMarks="true" value="1.0" />
+         <Label fx:id="eventLimit" layoutX="144.0" layoutY="240.0" text="Event Limit: 0">
             <font>
                <Font size="20.0" />
             </font>
