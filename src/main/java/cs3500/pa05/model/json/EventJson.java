@@ -2,7 +2,6 @@ package cs3500.pa05.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cs3500.pa05.model.enumerations.Day;
-import java.time.LocalTime;
 
 /**
  * Record for a JSON event

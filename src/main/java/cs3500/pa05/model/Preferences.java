@@ -21,14 +21,29 @@ public class Preferences {
     this.eventLimit = eventLimit;
   }
 
+  /**
+   * Gets the name of the week
+   *
+   * @return the name
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Gets the task limit
+   *
+   * @return the task limit
+   */
   public int getTaskLimit() {
     return this.taskLimit;
   }
 
+  /**
+   * Gets the event limit
+   *
+   * @return the event limit
+   */
   public int getEventLimit() {
     return eventLimit;
   }

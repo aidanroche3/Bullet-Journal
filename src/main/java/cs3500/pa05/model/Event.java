@@ -1,15 +1,14 @@
 package cs3500.pa05.model;
 
 import cs3500.pa05.model.enumerations.Day;
-import java.time.LocalTime;
 
 /**
  * Class for representing a journal event
  */
 public class Event extends Item {
 
-  private String start;
-  private double duration;
+  private final String start;
+  private final double duration;
 
   /**
    * Instantiates an event
@@ -26,10 +25,20 @@ public class Event extends Item {
     this.duration = duration;
   }
 
+  /**
+   * Gets the start of the event
+   *
+   * @return the start
+   */
   public String getStart() {
     return this.start;
   }
 
+  /**
+   * Gets the duration of the event
+   *
+   * @return the duration
+   */
   public double getDuration() {
     return this.duration;
   }

@@ -298,13 +298,13 @@ public class MenuController implements Controller {
     empty.setFont(LABEL_FONT);
     taskBox.getChildren().addAll(name, description, status, empty);
     taskBox.setOnMouseClicked(event ->
-      makePopup(
-          Arrays.asList(
-              "Day: " + task.getDay(),
-              "Task: " + task.getName(),
-              "Description: " + task.getDescription(),
-              "Status: " + task.getStatus().toString()),
-          color, index, Task.class));
+        makePopup(
+            Arrays.asList(
+                "Day: " + task.getDay(),
+                "Task: " + task.getName(),
+                "Description: " + task.getDescription(),
+                "Status: " + task.getStatus().toString()),
+            color, index, Task.class));
     return taskBox;
   }
 
@@ -333,14 +333,14 @@ public class MenuController implements Controller {
     String formattedDesc = desc.replaceAll("(.{25})", "$1\n");
 
     eventBox.setOnMouseClicked(e ->
-      makePopup(Arrays.asList(
-              "Day: " + event.getDay(),
-              "Event: " + event.getName(),
-              "Description: " + formattedDesc,
-              "Start Time: " + event.getStart(),
-              "Duration: " + event.getDuration() + " hours"),
-          EVENT_COLOR, index, Event.class));
-
+        makePopup(
+            Arrays.asList(
+                "Day: " + event.getDay(),
+                "Event: " + event.getName(),
+                "Description: " + formattedDesc,
+                "Start Time: " + event.getStart(),
+                "Duration: " + event.getDuration() + " hours"),
+            EVENT_COLOR, index, Event.class));
     return eventBox;
   }
 
@@ -350,7 +350,8 @@ public class MenuController implements Controller {
    * @param data a list of the item's data
    * @param color the color of the item
    */
-  private void makePopup(List<String> data, Color color, int index, Class<? extends Item> className) {
+  private void makePopup(List<String> data, Color color,
+                         int index, Class<? extends Item> className) {
     if (popup != null && popup.isShowing()) {
       return;
     }
@@ -377,7 +378,7 @@ public class MenuController implements Controller {
     c.setOnAction(e -> hideAndDelete(index, className));
     pop.getChildren().add(c);
 
-    if(className.equals(Task.class)) {
+    if (className.equals(Task.class)) {
       Button d = new Button("Mark as Complete");
       d.setPrefSize(100, 50);
       d.setOnAction(e -> {
@@ -423,6 +424,9 @@ public class MenuController implements Controller {
     run();
   }
 
+  /**
+   * Clears the dynamic board items
+   */
   private void clearBoardVisual() {
     tasks.getChildren().clear();
     monday.getChildren().clear();
@@ -432,7 +436,6 @@ public class MenuController implements Controller {
     friday.getChildren().clear();
     saturday.getChildren().clear();
     sunday.getChildren().clear();
-
     border.setText("");
   }
 }

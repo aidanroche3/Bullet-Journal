@@ -50,6 +50,9 @@ public class WeekController implements Controller {
     this.journal = journal;
   }
 
+  /**
+   * Runs the controller
+   */
   @Override
   public void run() {
     newPath.setOnAction(event -> getDirectory());
@@ -72,6 +75,9 @@ public class WeekController implements Controller {
     });
   }
 
+  /**
+   * Gets a directory from the user
+   */
   private void getDirectory() {
     DirectoryChooser chooser = new DirectoryChooser();
 
@@ -92,7 +98,6 @@ public class WeekController implements Controller {
     if (Objects.equals(name, "") || path == null) {
       return;
     }
-
     int taskLimit = (int) taskSlider.getValue();
     int eventLimit = (int) eventSlider.getValue();
     Preferences preferences = new Preferences(name, taskLimit, eventLimit);
