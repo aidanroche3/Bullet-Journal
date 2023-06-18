@@ -48,24 +48,24 @@
                <Font size="25.0" />
             </font>
          </Button>
-         <Slider fx:id="taskSlider" blockIncrement="1.0" layoutX="61.0" layoutY="400.0" majorTickUnit="4.0" max="20.0" min="1.0" prefHeight="16.0" prefWidth="202.0" showTickLabels="true" showTickMarks="true" />
+         <Slider fx:id="taskSlider" blockIncrement="1.0" layoutX="61.0" layoutY="400.0" majorTickUnit="4.0" max="20.0" min="1.0" prefHeight="16.0" prefWidth="202.0" showTickLabels="true" showTickMarks="true" value="1.0" />
          <Label layoutX="108.0" layoutY="363.0" text="Task Limit:">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="taskLimit" layoutX="198.0" layoutY="363.0" prefHeight="26.0" prefWidth="50.0">
+         <Label fx:id="taskLimit" layoutX="202.0" layoutY="364.0" prefHeight="26.0" prefWidth="50.0" text="1">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Slider fx:id="eventSlider" blockIncrement="1.0" layoutX="333.0" layoutY="400.0" majorTickUnit="4.0" max="20.0" min="1.0" prefHeight="16.0" prefWidth="202.0" showTickLabels="true" showTickMarks="true" />
+         <Slider fx:id="eventSlider" blockIncrement="1.0" layoutX="333.0" layoutY="400.0" majorTickUnit="4.0" max="20.0" min="1.0" prefHeight="16.0" prefWidth="202.0" showTickLabels="true" showTickMarks="true" value="1.0" />
          <Label layoutX="364.0" layoutY="363.0" text="Event Limit:">
             <font>
                <Font size="20.0" />
             </font>
          </Label>
-         <Label fx:id="eventLimit" layoutX="461.0" layoutY="363.0" prefHeight="26.0" prefWidth="50.0">
+         <Label fx:id="eventLimit" layoutX="464.0" layoutY="364.0" prefHeight="26.0" prefWidth="50.0" text="1">
             <font>
                <Font size="20.0" />
             </font>
