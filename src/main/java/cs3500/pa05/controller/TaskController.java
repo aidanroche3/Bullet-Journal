@@ -5,8 +5,10 @@ import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
 import java.awt.event.ActionEvent;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 
@@ -22,13 +24,13 @@ public class TaskController implements Controller {
   @FXML
   private Button confirm;
   @FXML
-  private MenuButton day;
+  private ComboBox<String> day;
   @FXML
   private TextField name;
   @FXML
   private TextField description;
   @FXML
-  private MenuButton status;
+  private ComboBox<String> status;
 
   /**
    * Instantiates a task controller
@@ -44,6 +46,9 @@ public class TaskController implements Controller {
    */
   @Override
   public void run() {
+    day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday",
+        "Friday", "Saturday", "Sunday"));
+    status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));
     cancel.setOnAction(event -> SceneChanger.switchToScene(event,
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(event -> updateJournal());
@@ -53,11 +58,10 @@ public class TaskController implements Controller {
    * Updates the journal with the new event
    */
   private void updateJournal() {
-
-    Day chosenDay = Day.valueOf(day.getItems().toString().toUpperCase());
+    Day chosenDay = Day.valueOf(day.getValue().toString().toUpperCase());
     String chosenName = name.getText();
     String chosenDesc = description.getText();
-    CompletionStatus chosenStatus = CompletionStatus.valueOf(status.getItems().toString().toUpperCase());
+    CompletionStatus chosenStatus = CompletionStatus.valueOf(status.getValue().toString().toUpperCase());
     Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
     journal.addTask(task);
     //SceneChanger.switchToScene(e, "WeekView.fxml", new MenuController(journal));
