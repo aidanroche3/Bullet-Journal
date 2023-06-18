@@ -19,7 +19,7 @@
                <Font size="28.0" />
             </font>
          </Button>
-         <Button layoutX="11.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" text="Create New Week">
+         <Button fx:id="create" layoutX="11.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" text="Create New Week">
             <font>
                <Font size="28.0" />
             </font>
