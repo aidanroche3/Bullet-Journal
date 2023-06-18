@@ -50,6 +50,14 @@ public class Journal {
     this.events.add(event);
   }
 
+  public void removeEvent(int index) {
+    this.events.remove(index);
+  }
+
+  public void removeTask(int index) {
+    this.tasks.remove(index);
+  }
+
   public Path getPath() {
     return this.path;
   }

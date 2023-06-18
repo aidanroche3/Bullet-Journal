@@ -401,7 +401,7 @@ public class MenuController implements Controller {
     thursday.getChildren().clear();
     friday.getChildren().clear();
     saturday.getChildren().clear();
-    monday.getChildren().clear();
+    sunday.getChildren().clear();
 
     run();
   }
