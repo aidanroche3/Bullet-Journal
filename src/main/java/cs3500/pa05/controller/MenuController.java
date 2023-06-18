@@ -3,8 +3,8 @@ package cs3500.pa05.controller;
 import cs3500.pa05.model.BujoReader;
 import cs3500.pa05.model.BujoWriter;
 import cs3500.pa05.model.Event;
+import cs3500.pa05.model.Item;
 import cs3500.pa05.model.Journal;
-import cs3500.pa05.model.Preferences;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.json.JournalJson;
@@ -13,7 +13,6 @@ import cs3500.pa05.view.FxmlViewLoader;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
@@ -22,6 +21,11 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCharacterCombination;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -46,7 +50,7 @@ public class MenuController implements Controller {
   private static final Color INCOMPLETE_TASK_COLOR = Color.rgb(233, 153, 152);
   private static final CornerRadii CORNER_RADII = new CornerRadii(2);
   private static final Insets INSETS = new Insets(2);
-  private Journal journal;
+  private final Journal journal;
   @FXML
   private Button task;
   @FXML
@@ -95,6 +99,18 @@ public class MenuController implements Controller {
    */
   @FXML
   public void run() {
+    setBorder();
+    setMenubar();
+    setShortcuts();
+    addTasksToView();
+    addEventsToView();
+    addTasksToQueue();
+  }
+
+  /**
+   * Sets the warning border
+   */
+  private void setBorder() {
     border.setFont(LABEL_FONT);
     if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
       task.setOnAction(event -> SceneChanger.switchToScene(
@@ -108,20 +124,56 @@ public class MenuController implements Controller {
     } else {
       border.setText("Maximum Amount of Events Reached for this Week.");
     }
+  }
+
+  /**
+   * Sets the menubar
+   */
+  private void setMenubar() {
     save.setOnAction(event -> fileSaver());
-    open.setOnAction(this::fileChooser);
+    open.setOnAction(event -> fileChooser());
+    week.setOnAction(event -> SceneChanger.switchToScene("NewWeek.fxml",
+        new WeekController(journal), "New Week"));
     name.setText(journal.getPreferences().getName());
     name.setFont(WEEK_NAME_FONT);
-    addTasksToView();
-    addEventsToView();
-    addTasksToQueue();
+  }
+
+  /**
+   * Sets the menu shortcuts
+   */
+  private void setShortcuts() {
+    Scene scene = border.getScene();
+
+    KeyCombination saveCombo = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+    Runnable saveRunnable = this::fileSaver;
+    scene.getAccelerators().put(saveCombo, saveRunnable);
+
+    KeyCombination openCombo = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN);
+    Runnable openRunnable = this::fileChooser;
+    scene.getAccelerators().put(openCombo, openRunnable);
+
+    KeyCombination weekCombo = new KeyCodeCombination(KeyCode.W, KeyCombination.CONTROL_DOWN);
+    Runnable weekRunnable = () -> SceneChanger.switchToScene("NewWeek.fxml",
+        new WeekController(journal), "New Week");
+    scene.getAccelerators().put(weekCombo, weekRunnable);
+
+    KeyCombination taskCombo = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
+    Runnable taskRunnable = () -> SceneChanger.switchToScene(
+        "NewTask.fxml", new TaskController(journal), "Add a new task");
+    scene.getAccelerators().put(taskCombo, taskRunnable);
+
+    KeyCombination eventCombo = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+    Runnable eventRunnable = () -> SceneChanger.switchToScene(
+        "NewEvent.fxml", new EventController(journal), "Add a new event");
+    scene.getAccelerators().put(eventCombo, eventRunnable);
+
   }
 
   /**
    * Prompts the user to choose a .bujo file
    */
   @FXML
-  private void fileChooser(javafx.event.ActionEvent event) {
+  private void fileChooser() {
     FileChooser chooser = new FileChooser();
     chooser.getExtensionFilters().add(
         new FileChooser.ExtensionFilter("BUJO File", "*.bujo"));
@@ -132,7 +184,8 @@ public class MenuController implements Controller {
         JournalJson journalJson = BujoReader.produceJournal(f.toPath());
         Journal journal = JournalAdapter.toJournal(journalJson, f.toPath());
         Controller menuController = new MenuController(journal);
-        SceneChanger.switchToScene("WeekView.fxml", menuController, "Bujo's Bullet Journal");
+        SceneChanger.switchToScene("WeekView.fxml",
+            menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
         //ignore for now
       }
@@ -152,8 +205,9 @@ public class MenuController implements Controller {
     JournalJson journalJson = JournalAdapter.toJson(journal);
     try {
       BujoWriter.writeJournal(journal.getPath(), journalJson);
+      border.setText("Journal saved.");
     } catch (IOException e) {
-      //ignore
+      border.setText("Journal could not be saved.");
     }
   }
 
@@ -162,16 +216,16 @@ public class MenuController implements Controller {
    */
   @FXML
   private void addTasksToView() {
-
-    for (Task task : journal.getTasks()) {
-      switch (task.getDay()) {
-        case MONDAY -> monday.getChildren().add(generateTask(task));
-        case TUESDAY -> tuesday.getChildren().add(generateTask(task));
-        case WEDNESDAY -> wednesday.getChildren().add(generateTask(task));
-        case THURSDAY -> thursday.getChildren().add(generateTask(task));
-        case FRIDAY -> friday.getChildren().add(generateTask(task));
-        case SATURDAY -> saturday.getChildren().add(generateTask(task));
-        case SUNDAY -> sunday.getChildren().add(generateTask(task));
+    List<Task> tasks = journal.getTasks();
+    for (int i = 0; i < tasks.size(); i++) {
+      switch (tasks.get(i).getDay()) {
+        case MONDAY -> monday.getChildren().add(generateTask(tasks.get(i), i));
+        case TUESDAY -> tuesday.getChildren().add(generateTask(tasks.get(i), i));
+        case WEDNESDAY -> wednesday.getChildren().add(generateTask(tasks.get(i), i));
+        case THURSDAY -> thursday.getChildren().add(generateTask(tasks.get(i), i));
+        case FRIDAY -> friday.getChildren().add(generateTask(tasks.get(i), i));
+        case SATURDAY -> saturday.getChildren().add(generateTask(tasks.get(i), i));
+        case SUNDAY -> sunday.getChildren().add(generateTask(tasks.get(i), i));
         default -> {
 
         }
@@ -185,8 +239,8 @@ public class MenuController implements Controller {
    */
   @FXML
   private void addTasksToQueue() {
-    for (Task task : journal.getTasks()) {
-      tasks.getChildren().add(generateTask(task));
+    for(int i = 0; i < journal.getTasks().size(); i++) {
+      tasks.getChildren().add(generateTask(journal.getTasks().get(i), i));
     }
   }
 
@@ -195,22 +249,20 @@ public class MenuController implements Controller {
    */
   @FXML
   private void addEventsToView() {
-
-    for (Event event : journal.getEvents()) {
-      switch (event.getDay()) {
-        case MONDAY -> monday.getChildren().add(generateEvent(event));
-        case TUESDAY -> tuesday.getChildren().add(generateEvent(event));
-        case WEDNESDAY -> wednesday.getChildren().add(generateEvent(event));
-        case THURSDAY -> thursday.getChildren().add(generateEvent(event));
-        case FRIDAY -> friday.getChildren().add(generateEvent(event));
-        case SATURDAY -> saturday.getChildren().add(generateEvent(event));
-        case SUNDAY -> sunday.getChildren().add(generateEvent(event));
+    List<Event> events = journal.getEvents();
+    for(int i = 0; i < events.size(); i++) {
+      switch (events.get(i).getDay()) {
+        case MONDAY -> monday.getChildren().add(generateEvent(events.get(i), i));
+        case TUESDAY -> tuesday.getChildren().add(generateEvent(events.get(i), i));
+        case WEDNESDAY -> wednesday.getChildren().add(generateEvent(events.get(i), i));
+        case THURSDAY -> thursday.getChildren().add(generateEvent(events.get(i), i));
+        case FRIDAY -> friday.getChildren().add(generateEvent(events.get(i), i));
+        case SATURDAY -> saturday.getChildren().add(generateEvent(events.get(i), i));
+        case SUNDAY -> sunday.getChildren().add(generateEvent(events.get(i), i));
         default -> {
-
         }
       }
     }
-
   }
 
   /**
@@ -219,7 +271,7 @@ public class MenuController implements Controller {
    * @param task a task
    * @return the task as a vbox
    */
-  private VBox generateTask(Task task) {
+  private VBox generateTask(Task task, int index) {
 
     VBox taskBox = new VBox();
     Color color;
@@ -246,7 +298,7 @@ public class MenuController implements Controller {
               "Task: " + task.getName(),
               "Description: " + task.getDescription(),
               "Status: " + task.getStatus().toString()),
-          color);
+          color, index, Task.class);
     });
     return taskBox;
   }
@@ -257,7 +309,7 @@ public class MenuController implements Controller {
    * @param event an event
    * @return the event as a vbox
    */
-  private VBox generateEvent(Event event) {
+  private VBox generateEvent(Event event, int index) {
 
     VBox eventBox = new VBox();
     eventBox.setBackground(new Background(
@@ -283,7 +335,7 @@ public class MenuController implements Controller {
               "Description: " + formattedDesc,
               "Start Time: " + event.getStart(),
               "Duration: " + event.getDuration() + " hours"),
-          EVENT_COLOR);
+          EVENT_COLOR, index, Event.class);
     });
 
     return eventBox;
@@ -296,7 +348,7 @@ public class MenuController implements Controller {
    * @param data a list of the item's data
    * @param color the color of the item
    */
-  private void makePopup(MouseEvent event, List<String> data, Color color) {
+  private <T> void makePopup(MouseEvent event, List<String> data, Color color, int index, Class<? extends Item> className) {
     if (popup != null && popup.isShowing()) {
       return;
     }
@@ -314,11 +366,43 @@ public class MenuController implements Controller {
     }
 
     Button b = new Button("Done!");
-    b.setPrefSize(200, 200);
+    b.setPrefSize(100, 50);
     b.setOnAction(e -> popup.hide());
     pop.getChildren().add(b);
+
+    Button c = new Button("Delete!");
+    c.setPrefSize(100, 50);
+    c.setOnAction(e -> hideAndDelete(index, className));
+    pop.getChildren().add(c);
+
     popup.getContent().add(pop);
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     popup.show(stage);
+  }
+
+  /**
+   * Hides and deletes this task from the popup menu
+   *
+   * @param index         index to delete from
+   * @param className     class of the Task/Event to delete
+   */
+  private void hideAndDelete(int index, Class<? extends Item> className) {
+    popup.hide();
+    if(className.equals(Task.class)) {
+      journal.removeTask(index);
+    } else if(className.equals(Event.class)) {
+      journal.removeEvent(index);
+    }
+
+    tasks.getChildren().clear();
+    monday.getChildren().clear();
+    tuesday.getChildren().clear();
+    wednesday.getChildren().clear();
+    thursday.getChildren().clear();
+    friday.getChildren().clear();
+    saturday.getChildren().clear();
+    monday.getChildren().clear();
+
+    run();
   }
 }
