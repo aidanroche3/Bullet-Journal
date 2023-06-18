@@ -31,12 +31,30 @@ public class Preferences {
   }
 
   /**
+   * Sets the name of the week
+   *
+   * @param name a name
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
    * Gets the task limit
    *
    * @return the task limit
    */
   public int getTaskLimit() {
     return this.taskLimit;
+  }
+
+  /**
+   * Sets the task limit
+   *
+   * @param taskLimit a task limit
+   */
+  public void setTaskLimit(int taskLimit) {
+    this.taskLimit = taskLimit;
   }
 
   /**
@@ -48,15 +66,14 @@ public class Preferences {
     return eventLimit;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
 
+  /**
+   * Sets the event limit
+   *
+   * @param eventLimit an event limit
+   */
   public void setEventLimit(int eventLimit) {
     this.eventLimit = eventLimit;
   }
 
-  public void setTaskLimit(int taskLimit) {
-    this.taskLimit = taskLimit;
-  }
 }

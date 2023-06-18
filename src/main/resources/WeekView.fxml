@@ -115,7 +115,7 @@
                   <Font size="78.0" />
                </font>
             </Label>
-            <Label fx:id="stats" alignment="TOP_LEFT" layoutX="825.0" layoutY="596.0" prefHeight="110.0" prefWidth="199.0" style="-fx-background-color: gray;" text="Label" />
+            <Label fx:id="stats" alignment="TOP_LEFT" layoutX="820.0" layoutY="596.0" prefHeight="110.0" prefWidth="255" style="-fx-background-color: gray;" text="Label" />
          </children>
       </AnchorPane>
    </root>

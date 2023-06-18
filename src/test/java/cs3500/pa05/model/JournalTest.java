@@ -1,6 +1,7 @@
 package cs3500.pa05.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;

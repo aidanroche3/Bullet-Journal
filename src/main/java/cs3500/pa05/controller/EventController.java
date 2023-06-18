@@ -83,7 +83,7 @@ public class EventController implements Controller {
           eventsOnThisDay++;
         }
       }
-      if(journal.getPreferences().getEventLimit() > eventsOnThisDay) {
+      if (journal.getPreferences().getEventLimit() > eventsOnThisDay) {
         if (!(chosenName.equals("")
             || enteredStart.equals("")
             || enteredDuration.equals(""))) {

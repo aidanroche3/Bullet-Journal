@@ -67,15 +67,15 @@ public class TaskController implements Controller {
     String chosenName = name.getText();
     String compStatus = status.getValue();
 
-    if(enteredDay != null) {
+    if (enteredDay != null) {
       int tasksOnThisDay = 0;
       Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
-      for(Task t : journal.getTasks()) {
-        if(t.getDay().equals(chosenDay)) {
+      for (Task t : journal.getTasks()) {
+        if (t.getDay().equals(chosenDay)) {
           tasksOnThisDay++;
         }
       }
-      if(journal.getPreferences().getTaskLimit() > tasksOnThisDay) {
+      if (journal.getPreferences().getTaskLimit() > tasksOnThisDay) {
         if (!(chosenName.equals("") || compStatus == null)) {
           String chosenDesc = description.getText();
           CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());

@@ -84,6 +84,8 @@ public class MenuController implements Controller {
   private VBox tasks;
   @FXML
   private Label border;
+  @FXML
+  private Label stats;
 
   /**
    * Controls the menu scene
@@ -99,12 +101,14 @@ public class MenuController implements Controller {
    */
   @FXML
   public void run() {
+    clearBoardVisual();
     setBorder();
     setMenubar();
     setShortcuts();
     addTasksToView();
     addEventsToView();
     addTasksToQueue();
+    updateStats();
   }
 
   /**
@@ -132,7 +136,7 @@ public class MenuController implements Controller {
   }
 
   /**
-   * Sets the menubar
+   * Sets the menubar actions
    */
   private void setMenubar() {
     save.setOnAction(event -> fileSaver());
@@ -143,6 +147,8 @@ public class MenuController implements Controller {
     name.setFont(WEEK_NAME_FONT);
     edit.setOnAction(event -> SceneChanger.switchToScene("Edit.fxml",
         new EditController(journal), "Edit Tasks"));
+    about.setOnAction(event -> SceneChanger.switchToScene("About.fxml",
+        new AboutController(journal), "About"));
   }
 
   /**
@@ -150,38 +156,36 @@ public class MenuController implements Controller {
    */
   private void setShortcuts() {
     Scene scene = SceneChanger.getScene();
-
     KeyCombination saveCombo = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
     Runnable saveRunnable = this::fileSaver;
     scene.getAccelerators().put(saveCombo, saveRunnable);
-
     KeyCombination openCombo = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN);
     Runnable openRunnable = this::fileChooser;
     scene.getAccelerators().put(openCombo, openRunnable);
-
     KeyCombination weekCombo = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
     Runnable weekRunnable = () -> SceneChanger.switchToScene("NewWeek.fxml",
         new WeekController(journal), "New Week");
     scene.getAccelerators().put(weekCombo, weekRunnable);
-
     if (journal.getTasks().size() < journal.getPreferences().getTaskLimit() * 7) {
       KeyCombination taskCombo = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
       Runnable taskRunnable = () -> SceneChanger.switchToScene(
           "NewTask.fxml", new TaskController(journal), "Add a new task");
       scene.getAccelerators().put(taskCombo, taskRunnable);
     }
-
     if (journal.getEvents().size() < journal.getPreferences().getEventLimit() * 7) {
       KeyCombination eventCombo = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
       Runnable eventRunnable = () -> SceneChanger.switchToScene(
           "NewEvent.fxml", new EventController(journal), "Add a new event");
       scene.getAccelerators().put(eventCombo, eventRunnable);
     }
-
     KeyCombination editCombo = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN);
     Runnable editRunnable = () -> SceneChanger.switchToScene("Edit.fxml",
         new EditController(journal), "Edit Tasks");
     scene.getAccelerators().put(editCombo, editRunnable);
+    KeyCombination aboutCombo = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
+    Runnable aboutRunnable = () -> SceneChanger.switchToScene("About.fxml",
+        new AboutController(journal), "About");
+    scene.getAccelerators().put(aboutCombo, aboutRunnable);
 
   }
 
@@ -379,6 +383,20 @@ public class MenuController implements Controller {
       pop.getChildren().add(label);
     }
 
+    addButtonsToPopup(index, className);
+
+    popup.getContent().add(pop);
+    Stage stage = SceneChanger.getStage();
+    popup.show(stage);
+  }
+
+  /**
+   * Adds buttons to the popup window
+   *
+   * @param index   index of this task/events position in the journal lists
+   * @param className   is this item a task or event
+   */
+  private void addButtonsToPopup(int index, Class<? extends Item> className) {
     Button b = new Button("Done!");
     b.setPrefSize(100, 50);
     b.setOnAction(e -> popup.hide());
@@ -394,7 +412,6 @@ public class MenuController implements Controller {
       d.setPrefSize(100, 50);
       d.setOnAction(e -> {
         journal.getTasks().get(index).setStatus(CompletionStatus.COMPLETE);
-        clearBoardVisual();
         pop.setBackground(new Background(
             new BackgroundFill(COMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
         run();
@@ -403,7 +420,6 @@ public class MenuController implements Controller {
       f.setPrefSize(100, 50);
       f.setOnAction(e -> {
         journal.getTasks().get(index).setStatus(CompletionStatus.INCOMPLETE);
-        clearBoardVisual();
         pop.setBackground(new Background(
             new BackgroundFill(INCOMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
         run();
@@ -411,10 +427,6 @@ public class MenuController implements Controller {
       pop.getChildren().add(d);
       pop.getChildren().add(f);
     }
-
-    popup.getContent().add(pop);
-    Stage stage = SceneChanger.getStage();
-    popup.show(stage);
   }
 
   /**
@@ -430,7 +442,6 @@ public class MenuController implements Controller {
     } else if (className.equals(Event.class)) {
       journal.removeEvent(index);
     }
-    clearBoardVisual();
 
     run();
   }
@@ -448,5 +459,34 @@ public class MenuController implements Controller {
     saturday.getChildren().clear();
     sunday.getChildren().clear();
     border.setText("");
+  }
+
+  /**
+   * When called, updates the statistics for this object's journal
+   */
+  private void updateStats() {
+    int completeTasks = 0;
+    int incompleteTasks = 0;
+    int numEvents = journal.getEvents().size();
+
+    for (Task t : journal.getTasks()) {
+      if (t.getStatus().equals(CompletionStatus.COMPLETE)) {
+        completeTasks++;
+      } else {
+        incompleteTasks++;
+      }
+    }
+
+    double percent = ((0.0 + completeTasks) / (completeTasks + incompleteTasks)) * 100;
+    String percentString = Double.toString(percent);
+
+    //TODO: truncate to 2 decm
+
+    String statistics = "Percentage of Tasks Complete: " + percent + "%"
+        + "\nCompleted Tasks: " + completeTasks
+        + "\nIncomplete Tasks: " + incompleteTasks
+        + "\nEvents: this week: " + numEvents;
+
+    stats.setText(statistics);
   }
 }

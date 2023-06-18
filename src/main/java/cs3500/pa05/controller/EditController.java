@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for the edit window
+ */
 public class EditController implements Controller {
   private final Journal journal;
 
