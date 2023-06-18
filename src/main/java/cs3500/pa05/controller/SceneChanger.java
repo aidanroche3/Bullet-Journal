@@ -1,7 +1,6 @@
 package cs3500.pa05.controller;
 
 import cs3500.pa05.view.FxmlViewLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -12,14 +11,29 @@ public class SceneChanger {
 
   private static Stage stage;
 
+  /**
+   * Sets the stage
+   *
+   * @param s a stage
+   */
   public static void setStage(Stage s) {
     stage = s;
   }
 
+  /**
+   * Gets the stage
+   *
+   * @return the stage
+   */
   public static Stage getStage() {
     return stage;
   }
 
+  /**
+   * Gets the scene
+   *
+   * @return the scene
+   */
   public static Scene getScene() {
     return stage.getScene();
   }

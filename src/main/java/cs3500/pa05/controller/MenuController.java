@@ -17,14 +17,12 @@ import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -299,15 +297,14 @@ public class MenuController implements Controller {
     Label empty = new Label();
     empty.setFont(LABEL_FONT);
     taskBox.getChildren().addAll(name, description, status, empty);
-    taskBox.setOnMouseClicked(e -> {
-      makePopup(e,
+    taskBox.setOnMouseClicked(event ->
+      makePopup(
           Arrays.asList(
               "Day: " + task.getDay(),
               "Task: " + task.getName(),
               "Description: " + task.getDescription(),
               "Status: " + task.getStatus().toString()),
-          color, index, Task.class);
-    });
+          color, index, Task.class));
     return taskBox;
   }
 
@@ -335,16 +332,14 @@ public class MenuController implements Controller {
     String desc = event.getDescription();
     String formattedDesc = desc.replaceAll("(.{25})", "$1\n");
 
-    eventBox.setOnMouseClicked(e -> {
-      makePopup(e,
-          Arrays.asList(
+    eventBox.setOnMouseClicked(e ->
+      makePopup(Arrays.asList(
               "Day: " + event.getDay(),
               "Event: " + event.getName(),
               "Description: " + formattedDesc,
               "Start Time: " + event.getStart(),
               "Duration: " + event.getDuration() + " hours"),
-          EVENT_COLOR, index, Event.class);
-    });
+          EVENT_COLOR, index, Event.class));
 
     return eventBox;
   }
@@ -352,19 +347,17 @@ public class MenuController implements Controller {
   /**
    * Makes a mini-viewer popup when an item is clicked
    *
-   * @param event the mouse event
    * @param data a list of the item's data
    * @param color the color of the item
    */
-  private void makePopup(MouseEvent event, List<String> data, Color color,
-                         int index, Class<? extends Item> className) {
+  private void makePopup(List<String> data, Color color, int index, Class<? extends Item> className) {
     if (popup != null && popup.isShowing()) {
       return;
     }
     popup = new Popup();
     FxmlViewLoader loader = new FxmlViewLoader("Popup.fxml", this);
     Scene s = loader.load();
-    popup.getContent().add((Node) s.getRoot());
+    popup.getContent().add(s.getRoot());
     pop.setBackground(new Background(
         new BackgroundFill(color, CORNER_RADII, INSETS)));
 
@@ -384,8 +377,31 @@ public class MenuController implements Controller {
     c.setOnAction(e -> hideAndDelete(index, className));
     pop.getChildren().add(c);
 
+    if(className.equals(Task.class)) {
+      Button d = new Button("Mark as Complete");
+      d.setPrefSize(100, 50);
+      d.setOnAction(e -> {
+        journal.getTasks().get(index).setStatus(CompletionStatus.COMPLETE);
+        clearBoardVisual();
+        pop.setBackground(new Background(
+            new BackgroundFill(COMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
+        run();
+      });
+      Button f = new Button("Mark as Incomplete");
+      f.setPrefSize(100, 50);
+      f.setOnAction(e -> {
+        journal.getTasks().get(index).setStatus(CompletionStatus.INCOMPLETE);
+        clearBoardVisual();
+        pop.setBackground(new Background(
+            new BackgroundFill(INCOMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
+        run();
+      });
+      pop.getChildren().add(d);
+      pop.getChildren().add(f);
+    }
+
     popup.getContent().add(pop);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    Stage stage = SceneChanger.getStage();
     popup.show(stage);
   }
 
@@ -402,7 +418,12 @@ public class MenuController implements Controller {
     } else if (className.equals(Event.class)) {
       journal.removeEvent(index);
     }
+    clearBoardVisual();
 
+    run();
+  }
+
+  private void clearBoardVisual() {
     tasks.getChildren().clear();
     monday.getChildren().clear();
     tuesday.getChildren().clear();
@@ -413,6 +434,5 @@ public class MenuController implements Controller {
     sunday.getChildren().clear();
 
     border.setText("");
-    run();
   }
 }

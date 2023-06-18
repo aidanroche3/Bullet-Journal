@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
  */
 public class TaskController implements Controller {
 
-  private Journal journal;
+  private final Journal journal;
 
   @FXML
   private Button cancel;

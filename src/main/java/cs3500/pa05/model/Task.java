@@ -23,8 +23,22 @@ public class Task extends Item {
     this.status = status;
   }
 
+  /**
+   * Gets the status
+   *
+   * @return the completion status
+   */
   public CompletionStatus getStatus() {
     return this.status;
+  }
+
+  /**
+   * Sets the status
+   *
+   * @param cs a completion status
+   */
+  public void setStatus(CompletionStatus cs) {
+    this.status = cs;
   }
 
 }

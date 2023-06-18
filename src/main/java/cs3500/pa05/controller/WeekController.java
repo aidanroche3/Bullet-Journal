@@ -18,7 +18,7 @@ import javafx.stage.Stage;
  * Controller for the create week window
  */
 public class WeekController implements Controller {
-  private Journal journal;
+  private final Journal journal;
 
   @FXML
   private TextField newName;
@@ -92,7 +92,7 @@ public class WeekController implements Controller {
     if (Objects.equals(name, "") || path == null) {
       return;
     }
-    
+
     int taskLimit = (int) taskSlider.getValue();
     int eventLimit = (int) eventSlider.getValue();
     Preferences preferences = new Preferences(name, taskLimit, eventLimit);
