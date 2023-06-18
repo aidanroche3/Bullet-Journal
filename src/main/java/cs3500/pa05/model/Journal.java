@@ -53,4 +53,8 @@ public class Journal {
   public Path getPath() {
     return this.path;
   }
+
+  public void setPath(Path path) {
+    this.path = path;
+  }
 }

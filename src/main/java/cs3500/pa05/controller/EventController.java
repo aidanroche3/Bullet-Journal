@@ -58,7 +58,7 @@ public class EventController implements Controller {
   public void run() {
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday", "Sunday"));
-    cancel.setOnAction(event -> SceneChanger.switchToScene(event,
+    cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(this::updateJournal);
   }
@@ -85,7 +85,7 @@ public class EventController implements Controller {
         Event newEvent = new Event(chosenName, desc, chosenDay,
             enteredStart, duration);
         journal.addEvent(newEvent);
-        SceneChanger.switchToScene(event, "WeekView.fxml",
+        SceneChanger.switchToScene( "WeekView.fxml",
             new MenuController(journal), "Bujo's Bullet Journal");
       } catch (NumberFormatException e) {
         //TODO: Send a message back to the user saying invalid duration.

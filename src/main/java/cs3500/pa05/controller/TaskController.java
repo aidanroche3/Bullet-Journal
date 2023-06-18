@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 
@@ -31,6 +32,8 @@ public class TaskController implements Controller {
   private TextField description;
   @FXML
   private ComboBox<String> status;
+  @FXML
+  private Label message;
 
   /**
    * Instantiates a task controller
@@ -49,7 +52,7 @@ public class TaskController implements Controller {
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday", "Sunday"));
     status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));
-    cancel.setOnAction(event -> SceneChanger.switchToScene(event,
+    cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(this::updateJournal);
   }
@@ -71,10 +74,10 @@ public class TaskController implements Controller {
       CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());
       Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
       journal.addTask(task);
-      SceneChanger.switchToScene(event, "WeekView.fxml",
+      SceneChanger.switchToScene( "WeekView.fxml",
           new MenuController(journal), "Bujo's Bullet Journal");
     } else {
-      //TODO: Send a message to the user saying invalid entry
+      message.setText("Invalid Entry. Please check fields again.");
     }
   }
 }

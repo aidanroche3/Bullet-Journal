@@ -97,13 +97,13 @@ public class MenuController implements Controller {
   public void run() {
     border.setFont(LABEL_FONT);
     if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
-      task.setOnAction(event -> SceneChanger.switchToScene(event,
+      task.setOnAction(event -> SceneChanger.switchToScene(
           "NewTask.fxml", new TaskController(journal), "Add a new task"));
     } else {
       border.setText("Maximum Amount of Tasks Reached for this Week.");
     }
     if (journal.getEvents().size() < journal.getPreferences().getEventLimit()) {
-      event.setOnAction(event -> SceneChanger.switchToScene(event,
+      event.setOnAction(event -> SceneChanger.switchToScene(
           "NewEvent.fxml", new EventController(journal), "Add a new event"));
     } else {
       border.setText("Maximum Amount of Events Reached for this Week.");
@@ -132,7 +132,7 @@ public class MenuController implements Controller {
         JournalJson journalJson = BujoReader.produceJournal(f.toPath());
         Journal journal = JournalAdapter.toJournal(journalJson, f.toPath());
         Controller menuController = new MenuController(journal);
-        SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
+        SceneChanger.switchToScene("WeekView.fxml", menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
         //ignore for now
       }
@@ -143,24 +143,18 @@ public class MenuController implements Controller {
    * Saves the journal
    */
   private void fileSaver() {
+    if (!journal.getPath().toFile().isFile()) {
+      Path p = journal.getPath();
+      String newPath = p.toString() + "\\" + journal.getPreferences().getName() + ".bujo";
+      journal.setPath(Path.of(newPath));
+      border.setText("Journal saved in new file: " + journal.getPreferences().getName() + ".bujo");
+    }
     JournalJson journalJson = JournalAdapter.toJson(journal);
     try {
       BujoWriter.writeJournal(journal.getPath(), journalJson);
     } catch (IOException e) {
       //ignore
     }
-  }
-
-
-
-  /**
-   * Creates new week
-   */
-  private void createNewWeek(javafx.event.ActionEvent event, String name, Path path) {
-    Preferences preferences = new Preferences(name, 0, 0);
-    Journal newJournal = new Journal(preferences, new ArrayList<>(), new ArrayList<>(), path);
-    Controller menuController = new MenuController(newJournal);
-    SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
   }
 
   /**
