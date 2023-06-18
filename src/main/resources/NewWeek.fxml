@@ -22,18 +22,16 @@
             </font>
          </Label>
          <TextField fx:id="newName" layoutX="215.0" layoutY="153.0" />
-         <Label layoutX="209.0" layoutY="191.0" text="Select New Path">
+         <Label layoutX="208.0" layoutY="214.0" text="Select New Path">
             <font>
                <Font size="25.0" />
             </font>
          </Label>
-         <Button fx:id="newPath" layoutX="241.0" layoutY="229.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="108.0" />
-         <Label layoutX="253.0" layoutY="286.0" text="New Path:">
+         <Button fx:id="newPath" layoutX="546.0" layoutY="264.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="...">
             <font>
-               <Font size="20.0" />
-            </font>
-         </Label>
-         <Label fx:id="pathLabel" layoutX="33.0" layoutY="323.0" prefHeight="29.0" prefWidth="526.0" style="-fx-background-color: gray;" textFill="WHITE">
+               <Font size="15.0" />
+            </font></Button>
+         <Label fx:id="pathLabel" layoutX="11.0" layoutY="264.0" prefHeight="29.0" prefWidth="526.0" style="-fx-background-color: gray;" textFill="WHITE">
             <font>
                <Font size="15.0" />
             </font>
