@@ -11,7 +11,6 @@ import cs3500.pa05.model.json.adapter.JournalAdapter;
 import cs3500.pa05.view.FxmlViewLoader;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import javafx.fxml.FXML;
@@ -37,11 +36,11 @@ import javafx.stage.Stage;
  */
 public class MenuController implements Controller {
 
-  private static final Font WEEK_NAME_FONT = Font.font("Verdana", FontWeight.BOLD, 10);
+  private static final Font WEEK_NAME_FONT = Font.font("Verdana", FontWeight.BOLD, 20);
   private static final Font LABEL_FONT = Font.font("Verdana", FontWeight.MEDIUM, 10);
-  private static final Color EVENT_COLOR = Color.rgb(180,166,213);
-  private static final Color COMPLETE_TASK_COLOR = Color.rgb(146,196,125);
-  private static final Color INCOMPLETE_TASK_COLOR = Color.rgb(233,153,152);
+  private static final Color EVENT_COLOR = Color.rgb(180, 166, 213);
+  private static final Color COMPLETE_TASK_COLOR = Color.rgb(146, 196, 125);
+  private static final Color INCOMPLETE_TASK_COLOR = Color.rgb(233, 153, 152);
   private static final CornerRadii CORNER_RADII = new CornerRadii(2);
   private static final Insets INSETS = new Insets(2);
   private Journal journal;
@@ -49,6 +48,8 @@ public class MenuController implements Controller {
   private Button task;
   @FXML
   private Button event;
+  @FXML
+  private Button week;
   @FXML
   private Button save;
   @FXML
@@ -72,6 +73,10 @@ public class MenuController implements Controller {
   private Popup popup;
   @FXML
   private VBox pop;
+  @FXML
+  private VBox tasks;
+  @FXML
+  private Label border;
 
   /**
    * Controls the menu scene
@@ -87,13 +92,18 @@ public class MenuController implements Controller {
    */
   @FXML
   public void run() {
+    border.setFont(LABEL_FONT);
     if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
       task.setOnAction(event -> SceneChanger.switchToScene(event,
           "NewTask.fxml", new TaskController(journal), "Add a new task"));
+    } else {
+      border.setText("Maximum Amount of Tasks Reached for this Week.");
     }
     if (journal.getEvents().size() < journal.getPreferences().getEventLimit()) {
       event.setOnAction(event -> SceneChanger.switchToScene(event,
           "NewEvent.fxml", new EventController(journal), "Add a new event"));
+    } else {
+      border.setText("Maximum Amount of Events Reached for this Week.");
     }
     save.setOnAction(event -> fileSaver());
     open.setOnAction(this::fileChooser);
@@ -101,6 +111,7 @@ public class MenuController implements Controller {
     name.setFont(WEEK_NAME_FONT);
     addTasksToView();
     addEventsToView();
+    addTasksToQueue();
   }
 
   /**
@@ -138,6 +149,15 @@ public class MenuController implements Controller {
   }
 
   /**
+   * Creates new week
+   */
+  private void createNewWeek(javafx.event.ActionEvent event) {
+    Journal journal
+    Controller menuController = new MenuController(journal);
+    SceneChanger.switchToScene(event, "WeekView.fxml", menuController, "Bujo's Bullet Journal");
+  }
+
+  /**
    * Adds the tasks in the journal to the week view
    */
   @FXML
@@ -152,7 +172,21 @@ public class MenuController implements Controller {
         case FRIDAY -> friday.getChildren().add(generateTask(task));
         case SATURDAY -> saturday.getChildren().add(generateTask(task));
         case SUNDAY -> sunday.getChildren().add(generateTask(task));
+        default -> {
+
+        }
       }
+    }
+
+  }
+
+  /**
+   * Adds tasks to task queue
+   */
+  @FXML
+  private void addTasksToQueue() {
+    for (Task task : journal.getTasks()) {
+      tasks.getChildren().add(generateTask(task));
     }
 
   }
@@ -172,6 +206,9 @@ public class MenuController implements Controller {
         case FRIDAY -> friday.getChildren().add(generateEvent(event));
         case SATURDAY -> saturday.getChildren().add(generateEvent(event));
         case SUNDAY -> sunday.getChildren().add(generateEvent(event));
+        default -> {
+
+        }
       }
     }
 
@@ -261,11 +298,13 @@ public class MenuController implements Controller {
    * @param color the color of the item
    */
   private void makePopup(MouseEvent event, List<String> data, Color color) {
+    if (popup != null && popup.isShowing()) {
+      return;
+    }
     popup = new Popup();
     FxmlViewLoader loader = new FxmlViewLoader("Popup.fxml", this);
     Scene s = loader.load();
-    popup.getContent().add((Node)s.getRoot());
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    popup.getContent().add((Node) s.getRoot());
     pop.setBackground(new Background(
         new BackgroundFill(color, CORNER_RADII, INSETS)));
 
@@ -279,8 +318,8 @@ public class MenuController implements Controller {
     b.setPrefSize(200, 200);
     b.setOnAction(e -> popup.hide());
     pop.getChildren().add(b);
-
     popup.getContent().add(pop);
+    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     popup.show(stage);
   }
 }

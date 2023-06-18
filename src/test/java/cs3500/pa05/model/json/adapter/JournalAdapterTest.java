@@ -40,7 +40,7 @@ class JournalAdapterTest {
       fail();
     }
 
-    journal1 = new Journal(p, Arrays.asList(t1, t2), Arrays.asList(e1, e2));
+    journal1 = new Journal(p, Arrays.asList(t1, t2), Arrays.asList(e1, e2), Path.of(""));
 
     mapper = new ObjectMapper();
   }
@@ -48,10 +48,8 @@ class JournalAdapterTest {
   @Test
   void toJournal() {
     JsonNode node = this.mapper.convertValue(json1, JsonNode.class);
-    //System.out.println(JournalAdapter.toJournal(node));
-
-    assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":8,\"eventLimit\""
-        + ":16},\"tasks\":[{\"name\":\"Name\",\"description\":\"Desc\",\"day\":\""
+    assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":5,\"eventLimit\""
+        + ":6},\"tasks\":[{\"name\":\"Name\",\"description\":\"Desc\",\"day\":\""
         + "MONDAY\",\"status\":\"COMPLETE\"}],\"events\":[{\"name\":\"Name\",\"des"
         + "cription\":\"Desc\",\"day\":\"MONDAY\",\"start\":\"\",\"duration\":7.7}"
         + "]}", node.toString());
@@ -59,6 +57,8 @@ class JournalAdapterTest {
 
   @Test
   void toJson() {
+    JournalJson json = JournalAdapter.toJson(journal1);
+    JsonNode node = this.mapper.convertValue(json, JsonNode.class);
     assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":5,\"eventLimit"
         + "\":6},\"tasks\":[{\"name\":\"Task 1\",\"description\":\"Description\",\"d"
         + "ay\":\"FRIDAY\",\"status\":\"INCOMPLETE\"},{\"name\":\"Task 2\",\"descrip"
@@ -66,6 +66,6 @@ class JournalAdapterTest {
         + "nts\":[{\"name\":\"Event 1\",\"description\":\"Description\",\"day\":\"MO"
         + "NDAY\",\"start\":\"\",\"duration\":2.5},{\"name\":\"Event 2\",\"descripti"
         + "on\":\"Description\",\"day\":\"TUESDAY\",\"start\":\"\",\"duration\":3.0}]}",
-        JournalAdapter.toJson(journal1).toString());
+        node.toString());
   }
 }

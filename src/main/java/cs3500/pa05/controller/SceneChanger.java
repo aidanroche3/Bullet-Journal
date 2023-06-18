@@ -16,6 +16,7 @@ public class SceneChanger {
    * @param event an event
    * @param fxmlFile a string of the desired FXML file to switch to
    * @param controller a controller
+   * @param sceneName the name of the scene to change to
    */
   public static void switchToScene(javafx.event.ActionEvent event,
                                    String fxmlFile, Controller controller,
@@ -28,5 +29,4 @@ public class SceneChanger {
     stage.show();
     controller.run();
   }
-
 }

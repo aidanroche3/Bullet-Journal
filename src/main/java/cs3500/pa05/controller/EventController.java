@@ -1,8 +1,18 @@
 package cs3500.pa05.controller;
 
-import cs3500.pa05.model.Journal;
+import cs3500.pa05.model.BujoWriter;
+import cs3500.pa05.model.Event;
+import  cs3500.pa05.model.Journal;
+import cs3500.pa05.model.enumerations.Day;
+import cs3500.pa05.model.json.JournalJson;
+import cs3500.pa05.model.json.adapter.JournalAdapter;
+import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * Controller for handle the event window
@@ -16,6 +26,21 @@ public class EventController implements Controller {
 
   @FXML
   private Button confirm;
+
+  @FXML
+  private TextField name;
+
+  @FXML
+  private TextField start;
+
+  @FXML
+  private TextField duration;
+
+  @FXML
+  private TextField description;
+
+  @FXML
+  private ComboBox<String> day;
 
   /**
    * Instantiates an EventController
@@ -31,9 +56,41 @@ public class EventController implements Controller {
    */
   @Override
   public void run() {
+    day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday", "Sunday"));
     cancel.setOnAction(event -> SceneChanger.switchToScene(event,
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(event -> SceneChanger.switchToScene(event,
-        "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
+    confirm.setOnAction(this::updateJournal);
   }
+
+  /**
+   * Updates the journal with a new event
+   *
+   * @param event an action event
+   */
+  public void updateJournal(ActionEvent event) {
+    String enteredDay = day.getValue();
+    String chosenName = name.getText();
+    String enteredStart = start.getText();
+    String enteredDuration = duration.getText();
+
+    if (!(enteredDay == null
+        || chosenName.equals("")
+        || enteredStart.equals("")
+        || enteredDuration.equals(""))) {
+      try {
+        Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
+        String desc = description.getText();
+        double duration = Double.parseDouble(enteredDuration);
+        Event newEvent = new Event(chosenName, desc, chosenDay,
+            enteredStart, duration);
+        journal.addEvent(newEvent);
+        SceneChanger.switchToScene(event, "WeekView.fxml",
+            new MenuController(journal), "Bujo's Bullet Journal");
+      } catch (NumberFormatException e) {
+        //TODO: Send a message back to the user saying invalid duration.
+      }
+    }
+  }
+
 }

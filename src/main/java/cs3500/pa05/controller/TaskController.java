@@ -73,6 +73,8 @@ public class TaskController implements Controller {
       journal.addTask(task);
       SceneChanger.switchToScene(event, "WeekView.fxml",
           new MenuController(journal), "Bujo's Bullet Journal");
+    } else {
+      //TODO: Send a message to the user saying invalid entry
     }
   }
 }

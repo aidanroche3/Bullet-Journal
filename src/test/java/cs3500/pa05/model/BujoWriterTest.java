@@ -33,20 +33,26 @@ class BujoWriterTest {
         new EventJson("Name", "Desc", Day.MONDAY, "", 7.7)};
     TaskJson[] tasks = new TaskJson[]{
         new TaskJson("Name", "Desc", Day.MONDAY, CompletionStatus.COMPLETE)};
-    PreferencesJson preferences = new PreferencesJson("Week 1", 8, 16);
+    PreferencesJson preferences = new PreferencesJson("Week 1", 5, 6);
     journal = new JournalJson(preferences, tasks, events);
     
     TaskJson[] newTasks = new TaskJson[] {
-        new TaskJson("Finish Project", "Finish all the tests and fix style changes", Day.MONDAY, CompletionStatus.INCOMPLETE),
-        new TaskJson("Get dinner", "Suffer through IV food", Day.WEDNESDAY, CompletionStatus.COMPLETE),
-        new TaskJson("Go to Hokkaido Ramen", "Don't bring Ray with us", Day.MONDAY, CompletionStatus.COMPLETE),
-        new TaskJson("Win Battle Salvo", "Make a good AI", Day.SUNDAY, CompletionStatus.INCOMPLETE) };
+        new TaskJson("Finish Project", "Finish all the tests and fix style changes",
+            Day.MONDAY, CompletionStatus.INCOMPLETE),
+        new TaskJson("Get dinner", "Suffer through IV food",
+            Day.WEDNESDAY, CompletionStatus.COMPLETE),
+        new TaskJson("Go to Hokkaido Ramen", "Don't bring Ray with us",
+            Day.MONDAY, CompletionStatus.COMPLETE),
+        new TaskJson("Win Battle Salvo", "Make a good AI",
+            Day.SUNDAY, CompletionStatus.INCOMPLETE) };
     EventJson[] newEvents = new EventJson[] {
-        new EventJson("Go to Goodge Street", "Make sure it's not closed this time", Day.MONDAY, "12:00pm", 1.5),
-        new EventJson("Khoury College Welcome day", "Meet new people", Day.SATURDAY, "1:00pm", 2.3)};
+        new EventJson("Go to Goodge Street", "Make sure it's not closed this time",
+            Day.MONDAY, "12:00pm", 1.5),
+        new EventJson("Khoury College Welcome day", "Meet new people",
+            Day.SATURDAY, "1:00pm", 2.3)};
     PreferencesJson newPreferences = new PreferencesJson("Busy Week", 4, 3);
     newJo = new JournalJson(newPreferences, newTasks, newEvents);
-    }
+  }
 
   /**
    * Tests the write journal method

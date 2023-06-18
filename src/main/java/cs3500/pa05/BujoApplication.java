@@ -26,6 +26,7 @@ public class BujoApplication extends Application {
     try {
       primaryStage.setScene(loader.load());
       primaryStage.setTitle("Welcome!");
+      primaryStage.setResizable(false);
 
       controller.run();
 

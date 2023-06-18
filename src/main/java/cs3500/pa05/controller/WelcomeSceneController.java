@@ -4,11 +4,11 @@ import cs3500.pa05.model.BujoReader;
 import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.adapter.JournalAdapter;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
 import java.io.File;
 import java.io.IOException;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 
 /**
