@@ -15,7 +15,7 @@
                <Font size="40.0" />
             </font>
          </Label>
-         <Label layoutX="218.0" layoutY="103.0" text="Name of Week">
+         <Label layoutX="218.0" layoutY="98.0" text="Name of Week">
             <font>
                <Font size="25.0" />
             </font>
