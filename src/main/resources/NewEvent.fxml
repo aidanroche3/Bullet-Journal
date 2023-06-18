@@ -49,7 +49,7 @@
                <Font size="20.0" />
             </font>
          </Label>
-         <Label layoutX="23.0" layoutY="252.0" prefHeight="27.0" prefWidth="80.0" text="Duration:">
+         <Label layoutX="19.0" layoutY="252.0" prefHeight="27.0" prefWidth="87.0" text="Duration:">
             <font>
                <Font size="20.0" />
             </font>
