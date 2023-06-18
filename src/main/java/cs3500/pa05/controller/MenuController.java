@@ -21,11 +21,9 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCharacterCombination;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -124,6 +122,11 @@ public class MenuController implements Controller {
     } else {
       border.setText("Maximum Amount of Events Reached for this Week.");
     }
+
+    if (journal.getTasks().size() >= journal.getPreferences().getTaskLimit()
+        && journal.getEvents().size() >= journal.getPreferences().getEventLimit()) {
+      border.setText("Maximum Amount of Tasks and Events Reached for this Week.");
+    }
   }
 
   /**
@@ -142,7 +145,7 @@ public class MenuController implements Controller {
    * Sets the menu shortcuts
    */
   private void setShortcuts() {
-    Scene scene = border.getScene();
+    Scene scene = SceneChanger.getScene();
 
     KeyCombination saveCombo = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
     Runnable saveRunnable = this::fileSaver;
@@ -157,15 +160,19 @@ public class MenuController implements Controller {
         new WeekController(journal), "New Week");
     scene.getAccelerators().put(weekCombo, weekRunnable);
 
-    KeyCombination taskCombo = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
-    Runnable taskRunnable = () -> SceneChanger.switchToScene(
-        "NewTask.fxml", new TaskController(journal), "Add a new task");
-    scene.getAccelerators().put(taskCombo, taskRunnable);
+    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit()) {
+      KeyCombination taskCombo = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
+      Runnable taskRunnable = () -> SceneChanger.switchToScene(
+          "NewTask.fxml", new TaskController(journal), "Add a new task");
+      scene.getAccelerators().put(taskCombo, taskRunnable);
+    }
 
-    KeyCombination eventCombo = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
-    Runnable eventRunnable = () -> SceneChanger.switchToScene(
-        "NewEvent.fxml", new EventController(journal), "Add a new event");
-    scene.getAccelerators().put(eventCombo, eventRunnable);
+    if (journal.getEvents().size() < journal.getPreferences().getEventLimit()) {
+      KeyCombination eventCombo = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
+      Runnable eventRunnable = () -> SceneChanger.switchToScene(
+          "NewEvent.fxml", new EventController(journal), "Add a new event");
+      scene.getAccelerators().put(eventCombo, eventRunnable);
+    }
 
   }
 
@@ -187,7 +194,8 @@ public class MenuController implements Controller {
         SceneChanger.switchToScene("WeekView.fxml",
             menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
-        //ignore for now
+        //TODO: what does this even catch bro
+        border.setText("");
       }
     }
   }
@@ -200,12 +208,12 @@ public class MenuController implements Controller {
       Path p = journal.getPath();
       String newPath = p.toString() + "\\" + journal.getPreferences().getName() + ".bujo";
       journal.setPath(Path.of(newPath));
-      border.setText("Journal saved in new file: " + journal.getPreferences().getName() + ".bujo");
+
     }
     JournalJson journalJson = JournalAdapter.toJson(journal);
     try {
       BujoWriter.writeJournal(journal.getPath(), journalJson);
-      border.setText("Journal saved.");
+      border.setText("Journal saved in new file: " + journal.getPreferences().getName() + ".bujo");
     } catch (IOException e) {
       border.setText("Journal could not be saved.");
     }
@@ -239,7 +247,7 @@ public class MenuController implements Controller {
    */
   @FXML
   private void addTasksToQueue() {
-    for(int i = 0; i < journal.getTasks().size(); i++) {
+    for (int i = 0; i < journal.getTasks().size(); i++) {
       tasks.getChildren().add(generateTask(journal.getTasks().get(i), i));
     }
   }
@@ -250,7 +258,7 @@ public class MenuController implements Controller {
   @FXML
   private void addEventsToView() {
     List<Event> events = journal.getEvents();
-    for(int i = 0; i < events.size(); i++) {
+    for (int i = 0; i < events.size(); i++) {
       switch (events.get(i).getDay()) {
         case MONDAY -> monday.getChildren().add(generateEvent(events.get(i), i));
         case TUESDAY -> tuesday.getChildren().add(generateEvent(events.get(i), i));
@@ -348,7 +356,8 @@ public class MenuController implements Controller {
    * @param data a list of the item's data
    * @param color the color of the item
    */
-  private <T> void makePopup(MouseEvent event, List<String> data, Color color, int index, Class<? extends Item> className) {
+  private void makePopup(MouseEvent event, List<String> data, Color color,
+                         int index, Class<? extends Item> className) {
     if (popup != null && popup.isShowing()) {
       return;
     }
@@ -388,9 +397,9 @@ public class MenuController implements Controller {
    */
   private void hideAndDelete(int index, Class<? extends Item> className) {
     popup.hide();
-    if(className.equals(Task.class)) {
+    if (className.equals(Task.class)) {
       journal.removeTask(index);
-    } else if(className.equals(Event.class)) {
+    } else if (className.equals(Event.class)) {
       journal.removeEvent(index);
     }
 
@@ -403,6 +412,7 @@ public class MenuController implements Controller {
     saturday.getChildren().clear();
     sunday.getChildren().clear();
 
+    border.setText("");
     run();
   }
 }

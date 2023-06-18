@@ -1,6 +1,5 @@
 package cs3500.pa05.model.json.adapter;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;

@@ -1,17 +1,14 @@
 package cs3500.pa05.controller;
 
-import cs3500.pa05.model.BujoWriter;
 import cs3500.pa05.model.Event;
 import  cs3500.pa05.model.Journal;
 import cs3500.pa05.model.enumerations.Day;
-import cs3500.pa05.model.json.JournalJson;
-import cs3500.pa05.model.json.adapter.JournalAdapter;
-import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -41,6 +38,9 @@ public class EventController implements Controller {
 
   @FXML
   private ComboBox<String> day;
+
+  @FXML
+  private Label message;
 
   /**
    * Instantiates an EventController
@@ -85,12 +85,13 @@ public class EventController implements Controller {
         Event newEvent = new Event(chosenName, desc, chosenDay,
             enteredStart, duration);
         journal.addEvent(newEvent);
-        SceneChanger.switchToScene( "WeekView.fxml",
+        SceneChanger.switchToScene("WeekView.fxml",
             new MenuController(journal), "Bujo's Bullet Journal");
       } catch (NumberFormatException e) {
-        //TODO: Send a message back to the user saying invalid duration.
+        message.setText("Invalid duration. Enter a valid duration.");
       }
+    } else {
+      message.setText("Invalid Entry. Please check fields again.");
     }
   }
-
 }

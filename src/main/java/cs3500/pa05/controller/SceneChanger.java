@@ -16,6 +16,14 @@ public class SceneChanger {
     stage = s;
   }
 
+  public static Stage getStage() {
+    return stage;
+  }
+
+  public static Scene getScene() {
+    return stage.getScene();
+  }
+
   /**
    * Switches the scene to the task container
    *

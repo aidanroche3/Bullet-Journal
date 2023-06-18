@@ -4,13 +4,11 @@ import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
-import java.awt.event.ActionEvent;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
 
 /**
@@ -74,7 +72,7 @@ public class TaskController implements Controller {
       CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());
       Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
       journal.addTask(task);
-      SceneChanger.switchToScene( "WeekView.fxml",
+      SceneChanger.switchToScene("WeekView.fxml",
           new MenuController(journal), "Bujo's Bullet Journal");
     } else {
       message.setText("Invalid Entry. Please check fields again.");

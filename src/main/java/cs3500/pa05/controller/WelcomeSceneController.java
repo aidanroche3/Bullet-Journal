@@ -47,13 +47,15 @@ public class WelcomeSceneController implements Controller {
         new FileChooser.ExtensionFilter("BUJO File", "*.bujo"));
     File file = chooser.showOpenDialog(null);
 
-    try {
-      JournalJson journalJson = BujoReader.produceJournal(file.toPath());
-      Journal journal = JournalAdapter.toJournal(journalJson, file.toPath());
-      Controller menuController = new MenuController(journal);
-      SceneChanger.switchToScene( "WeekView.fxml", menuController, "Bujo's Bullet Journal");
-    } catch (IOException e) {
-      //TODO: find out what we need to do if invalid
+    if (file != null) {
+      try {
+        JournalJson journalJson = BujoReader.produceJournal(file.toPath());
+        Journal journal = JournalAdapter.toJournal(journalJson, file.toPath());
+        Controller menuController = new MenuController(journal);
+        SceneChanger.switchToScene("WeekView.fxml", menuController, "Bujo's Bullet Journal");
+      } catch (IOException e) {
+        //TODO: find out what we need to do if invalid
+      }
     }
   }
 }
