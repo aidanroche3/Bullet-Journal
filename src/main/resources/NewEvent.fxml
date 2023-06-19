@@ -13,7 +13,7 @@
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="390.0" prefWidth="389.0">
         <children>
-         <Label layoutX="134.0" layoutY="18.0" text="New Event">
+         <Label fx:id="title" layoutX="134.0" layoutY="18.0" text="New Event">
             <font>
                <Font size="27.0" />
             </font>
