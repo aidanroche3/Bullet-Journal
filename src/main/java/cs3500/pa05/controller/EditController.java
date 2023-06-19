@@ -1,6 +1,7 @@
 package cs3500.pa05.controller;
 
 import cs3500.pa05.model.Journal;
+import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,10 +29,18 @@ public class EditController implements Controller {
   @FXML
   private TextField name;
 
+  /**
+   * Instantiates an EditController
+   *
+   * @param journal a journal
+   */
   public EditController(Journal journal) {
     this.journal = journal;
   }
 
+  /**
+   * Runs the controller
+   */
   @Override
   public void run() {
     name.setText(journal.getPreferences().getName());
@@ -43,7 +52,6 @@ public class EditController implements Controller {
     taskSlider.setMin(journal.getTasks().size());
     eventSlider.setSnapToTicks(true);
     taskSlider.setSnapToTicks(true);
-
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
 
@@ -58,8 +66,11 @@ public class EditController implements Controller {
     confirm.setOnAction(event -> setNew());
   }
 
+  /**
+   * Sets the new preferences
+   */
   private void setNew() {
-    if (name.getText() == "") {
+    if (Objects.equals(name.getText(), "")) {
       return;
     }
     String newName = name.getText();
@@ -70,6 +81,6 @@ public class EditController implements Controller {
     journal.getPreferences().setTaskLimit(tasks);
     SceneChanger.switchToScene("WeekView.fxml",
         new MenuController(journal), "Bujo's Bullet Journal");
-
   }
+
 }

@@ -8,15 +8,23 @@ import javafx.scene.control.Button;
  * Controller for the About-window
  */
 public class AboutController implements Controller {
-  private Journal journal;
+  private final Journal journal;
 
   @FXML
   private Button back;
 
+  /**
+   * Instantiates an AboutController
+   * .
+   * @param journal a journal
+   */
   public AboutController(Journal journal) {
     this.journal = journal;
   }
 
+  /**
+   * Runs the controller
+   */
   @Override
   public void run() {
     back.setOnAction(event -> SceneChanger.switchToScene(
