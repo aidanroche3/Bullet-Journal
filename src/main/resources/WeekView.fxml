@@ -3,6 +3,7 @@
 <?import javafx.scene.Scene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -35,7 +36,11 @@
                         </Label>
                      </children>
                   </HBox>
-                  <VBox fx:id="tasks" prefHeight="479.0" prefWidth="194.0" />
+                  <ScrollPane fx:id="tasks" prefHeight="486.0" prefWidth="194.0" style="-fx-background-color: 6287c4;">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="476.0" prefWidth="194.0" style="-fx-background-color: #6287c4;" />
+                    </content>
+                  </ScrollPane>
                </children>
             </VBox>
             <HBox layoutX="194.0" prefHeight="37.0" prefWidth="833.0">
