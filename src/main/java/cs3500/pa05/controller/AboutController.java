@@ -17,6 +17,7 @@ public class AboutController implements Controller {
    * Instantiates an AboutController
    * .
    * @param journal a journal
+   *
    */
   public AboutController(Journal journal) {
     this.journal = journal;
