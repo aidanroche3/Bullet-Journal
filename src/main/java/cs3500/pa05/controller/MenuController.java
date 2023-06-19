@@ -476,13 +476,9 @@ public class MenuController implements Controller {
         incompleteTasks++;
       }
     }
-
     double percent = ((0.0 + completeTasks) / (completeTasks + incompleteTasks)) * 100;
-    String percentString = Double.toString(percent);
-
-    //TODO: truncate to 2 decm
-
-    String statistics = "Percentage of Tasks Complete: " + percent + "%"
+    String percentString = String.format("%.2f", percent);
+    String statistics = "Percentage of Tasks Complete: " + percentString + "%"
         + "\nCompleted Tasks: " + completeTasks
         + "\nIncomplete Tasks: " + incompleteTasks
         + "\nEvents: this week: " + numEvents;

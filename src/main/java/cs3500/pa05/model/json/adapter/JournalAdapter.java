@@ -22,6 +22,7 @@ public class JournalAdapter {
    * Converts a JsonNode to a Journal
    *
    * @param journalJson    journal to convert
+   * @param path a path to a journal
    * @return        Journal from JsonNode
    */
   public static Journal toJournal(JournalJson journalJson, Path path) {
