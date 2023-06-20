@@ -40,7 +40,7 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="482.0" prefWidth="194.0" style="-fx-background-color: #6287c4;">
                            <children>
-                              <VBox fx:id="queue" prefHeight="482.0" prefWidth="194.0" style="-fx-background-color: #6287c4;" />
+                              <VBox fx:id="queue" prefHeight="475.0" prefWidth="194.0" style="-fx-background-color: #6287c4;" />
                            </children>
                         </AnchorPane>
                     </content>
