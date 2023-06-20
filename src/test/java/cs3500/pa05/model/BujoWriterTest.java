@@ -62,7 +62,7 @@ class BujoWriterTest {
    */
   @Test
   void writeJournal() {
-    Path expected = Path.of("src/test/resources/writersample.bujo");
+    Path expected = Path.of("src/test/resources/writerSample.bujo");
     Path writeAt = Path.of("src/test/resources/BujoWriterTest.bujo");
     Path invalid = Path.of("invalid/");
     try {
