@@ -4,13 +4,12 @@ import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 /**
@@ -31,7 +30,7 @@ public class TaskController implements Controller {
   @FXML
   protected TextField name;
   @FXML
-  protected TextField description;
+  protected TextArea description;
   @FXML
   protected ComboBox<String> status;
   @FXML
@@ -51,7 +50,7 @@ public class TaskController implements Controller {
    */
   @Override
   public void run() {
-    taskTitle.setText("Create Event");
+    taskTitle.setText("New Task");
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday", "Sunday"));
     status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));

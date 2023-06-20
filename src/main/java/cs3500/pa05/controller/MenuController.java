@@ -39,6 +39,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -50,6 +51,7 @@ public class MenuController implements Controller {
 
   private static final Font WEEK_NAME_FONT = Font.font("Verdana", FontWeight.BOLD, 20);
   private static final Font LABEL_FONT = Font.font("Verdana", FontWeight.MEDIUM, 10);
+  private static final Font MINI_VIEWER_FONT = Font.font("Verdana", FontWeight.MEDIUM, 15);
   private static final Color EVENT_COLOR = Color.rgb(180, 166, 213);
   private static final Color COMPLETE_TASK_COLOR = Color.rgb(146, 196, 125);
   private static final Color INCOMPLETE_TASK_COLOR = Color.rgb(233, 153, 152);
@@ -116,8 +118,8 @@ public class MenuController implements Controller {
     setBorder();
     setMenubar();
     setShortcuts();
-    addTasksToView();
     addEventsToView();
+    addTasksToView();
     addTasksToQueue();
     updateStats();
   }
@@ -126,23 +128,27 @@ public class MenuController implements Controller {
    * Sets the warning border
    */
   private void setBorder() {
-    border.setFont(LABEL_FONT);
-    if (journal.getTasks().size() < journal.getPreferences().getTaskLimit() * 7) {
-      task.setOnAction(event -> SceneChanger.switchToScene(
-          "NewTask.fxml", new TaskController(journal), "Add a new task"));
-    } else {
-      border.setText("Maximum Amount of Tasks Reached for this Week.");
-    }
-    if (journal.getEvents().size() < journal.getPreferences().getEventLimit() * 7) {
-      event.setOnAction(event -> SceneChanger.switchToScene(
-          "NewEvent.fxml", new EventController(journal), "Add a new event"));
-    } else {
-      border.setText("Maximum Amount of Events Reached for this Week.");
-    }
+    if (popup == null || !popup.isShowing()) {
+      if (journal.getTasks().size() < journal.getPreferences().getTaskLimit() * 7) {
+        task.setOnAction(event -> SceneChanger.switchToScene(
+            "NewTask.fxml", new TaskController(journal), "Add a new task"));
+      } else {
+        border.setText("  Maximum Amount of Tasks Reached for this Week.");
+      }
+      if (journal.getEvents().size() < journal.getPreferences().getEventLimit() * 7) {
+        event.setOnAction(event -> SceneChanger.switchToScene(
+            "NewEvent.fxml", new EventController(journal), "Add a new event"));
+      } else {
+        border.setText("  Maximum Amount of Events Reached for this Week.");
+      }
 
-    if (journal.getTasks().size() >= journal.getPreferences().getTaskLimit() * 7
-        && journal.getEvents().size() >= journal.getPreferences().getEventLimit() * 7) {
-      border.setText("Maximum Amount of Tasks and Events Reached for this Week.");
+      if (journal.getTasks().size() >= journal.getPreferences().getTaskLimit() * 7
+          && journal.getEvents().size() >= journal.getPreferences().getEventLimit() * 7) {
+        border.setText("  Maximum Amount of Tasks and Events Reached for this Week.");
+      }
+    } else {
+      task.setOnAction(null);
+      event.setOnAction(null);
     }
   }
 
@@ -150,16 +156,24 @@ public class MenuController implements Controller {
    * Sets the menubar actions
    */
   private void setMenubar() {
-    save.setOnAction(event -> fileSaver());
-    open.setOnAction(event -> fileChooser());
-    week.setOnAction(event -> SceneChanger.switchToScene("NewWeek.fxml",
-        new WeekController(journal), "New Week"));
-    name.setText(journal.getPreferences().getName());
-    name.setFont(WEEK_NAME_FONT);
-    edit.setOnAction(event -> SceneChanger.switchToScene("Edit.fxml",
-        new EditController(journal), "Edit Tasks"));
-    about.setOnAction(event -> SceneChanger.switchToScene("About.fxml",
-        new AboutController(journal), "About"));
+    if (popup == null || !popup.isShowing()) {
+      save.setOnAction(event -> fileSaver());
+      open.setOnAction(event -> fileChooser());
+      week.setOnAction(event -> SceneChanger.switchToScene("NewWeek.fxml",
+          new WeekController(journal), "New Week"));
+      name.setText(journal.getPreferences().getName());
+      name.setFont(WEEK_NAME_FONT);
+      edit.setOnAction(event -> SceneChanger.switchToScene("Edit.fxml",
+          new EditController(journal), "Edit Preferences"));
+      about.setOnAction(event -> SceneChanger.switchToScene("About.fxml",
+          new AboutController(journal), "About"));
+    } else {
+      save.setOnAction(null);
+      open.setOnAction(null);
+      week.setOnAction(null);
+      edit.setOnAction(null);
+      about.setOnAction(null);
+    }
   }
 
   /**
@@ -169,35 +183,50 @@ public class MenuController implements Controller {
     Scene scene = SceneChanger.getScene();
     KeyCombination saveCombo = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
     Runnable saveRunnable = this::fileSaver;
-    scene.getAccelerators().put(saveCombo, saveRunnable);
+    addShortCut(scene, saveCombo, saveRunnable);
     KeyCombination openCombo = new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_DOWN);
     Runnable openRunnable = this::fileChooser;
-    scene.getAccelerators().put(openCombo, openRunnable);
+    addShortCut(scene, openCombo, openRunnable);
     KeyCombination weekCombo = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
     Runnable weekRunnable = () -> SceneChanger.switchToScene("NewWeek.fxml",
         new WeekController(journal), "New Week");
-    scene.getAccelerators().put(weekCombo, weekRunnable);
+    addShortCut(scene, weekCombo, weekRunnable);
     if (journal.getTasks().size() < journal.getPreferences().getTaskLimit() * 7) {
       KeyCombination taskCombo = new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_DOWN);
       Runnable taskRunnable = () -> SceneChanger.switchToScene(
           "NewTask.fxml", new TaskController(journal), "Add a new task");
-      scene.getAccelerators().put(taskCombo, taskRunnable);
+      addShortCut(scene, taskCombo, taskRunnable);
     }
     if (journal.getEvents().size() < journal.getPreferences().getEventLimit() * 7) {
       KeyCombination eventCombo = new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_DOWN);
       Runnable eventRunnable = () -> SceneChanger.switchToScene(
           "NewEvent.fxml", new EventController(journal), "Add a new event");
-      scene.getAccelerators().put(eventCombo, eventRunnable);
+      addShortCut(scene, eventCombo, eventRunnable);
     }
     KeyCombination editCombo = new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_DOWN);
     Runnable editRunnable = () -> SceneChanger.switchToScene("Edit.fxml",
         new EditController(journal), "Edit Tasks");
-    scene.getAccelerators().put(editCombo, editRunnable);
+    addShortCut(scene, editCombo, editRunnable);
     KeyCombination aboutCombo = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN);
     Runnable aboutRunnable = () -> SceneChanger.switchToScene("About.fxml",
         new AboutController(journal), "About");
-    scene.getAccelerators().put(aboutCombo, aboutRunnable);
+    addShortCut(scene, aboutCombo, aboutRunnable);
 
+  }
+
+  /**
+   * Adds a shortcut to the scene
+   *
+   * @param scene       the scene
+   * @param combination the shortcut combination
+   * @param runnable    what to run on the shortcut
+   */
+  private void addShortCut(Scene scene, KeyCombination combination, Runnable runnable) {
+    if (popup == null || !popup.isShowing()) {
+      scene.getAccelerators().put(combination, runnable);
+    } else {
+      scene.getAccelerators().remove(combination);
+    }
   }
 
   /**
@@ -218,7 +247,6 @@ public class MenuController implements Controller {
         SceneChanger.switchToScene("WeekView.fxml",
             menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
-        //TODO: what does this even catch bro
         border.setText("");
       }
     }
@@ -230,7 +258,12 @@ public class MenuController implements Controller {
   private void fileSaver() {
     if (!journal.getPath().toFile().isFile()) {
       Path p = journal.getPath();
-      String newPath = p.toString() + "\\" + journal.getPreferences().getName() + ".bujo";
+      String weekTitle = journal.getPreferences().getName();
+      String[] titleArray = weekTitle.split(" ");
+      for (String s : titleArray) {
+        fileName.append(s);
+      }
+      String newPath = p.toString() + "\\" + fileName + ".bujo";
       journal.setPath(Path.of(newPath));
 
     }
@@ -330,14 +363,16 @@ public class MenuController implements Controller {
     Label empty = new Label();
     empty.setFont(LABEL_FONT);
     taskBox.getChildren().addAll(name, description, status, empty);
-    taskBox.setOnMouseClicked(event ->
-        makePopup(
-            Arrays.asList(
-                "Day: " + task.getDay(),
-                "Task: " + task.getName(),
-                "Description: " + task.getDescription(),
-                "Status: " + task.getStatus().toString()),
-            color, index, Task.class));
+    taskBox.setOnMouseClicked(event -> {
+      makePopup(
+          Arrays.asList(
+              "Day: " + task.getDay(),
+              "Task: " + task.getName(),
+              "Description: " + task.getDescription(),
+              "Status: " + task.getStatus().toString()),
+          color, index, Task.class);
+      run();
+    });
     return taskBox;
   }
 
@@ -365,22 +400,24 @@ public class MenuController implements Controller {
     String desc = event.getDescription();
     String formattedDesc = desc.replaceAll("(.{25})", "$1\n");
 
-    eventBox.setOnMouseClicked(e ->
-        makePopup(
-            Arrays.asList(
-                "Day: " + event.getDay(),
-                "Event: " + event.getName(),
-                "Description: " + formattedDesc,
-                "Start Time: " + event.getStart().toString(),
-                "Duration: " + event.getDuration() + " hours"),
-            EVENT_COLOR, index, Event.class));
+    eventBox.setOnMouseClicked(e -> {
+      makePopup(
+          Arrays.asList(
+              "Day: " + event.getDay(),
+              "Event: " + event.getName(),
+              "Description: " + formattedDesc,
+              "Start Time: " + event.getStart().toString(),
+              "Duration: " + event.getDuration() + " hours"),
+          EVENT_COLOR, index, Event.class);
+      run();
+    });
     return eventBox;
   }
 
   /**
    * Makes a mini-viewer popup when an item is clicked
    *
-   * @param data a list of the item's data
+   * @param data  a list of the item's data
    * @param color the color of the item
    */
   private void makePopup(List<String> data, Color color,
@@ -409,7 +446,7 @@ public class MenuController implements Controller {
   /**
    * Given a string, add it to the popup's description as clickable
    *
-   * @param string    String to find links in
+   * @param string String to find links in
    */
   private void findAndProduceLinks(String string) {
     int currentIndex = 0;
@@ -439,20 +476,22 @@ public class MenuController implements Controller {
             Desktop desk = Desktop.getDesktop();
             URI url = new URI(l);
             desk.browse(url);
-          } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+          } catch (Exception exception) {
+            //Ignore invalid link
           }
         });
+        hyperLink.setFont(MINI_VIEWER_FONT);
 
         pop.getChildren().add(hyperLink);
         currentIndex += links.get(0).length();
         links.remove(0);
         linkIndexes.remove(0);
 
-      } else if(split.size() > 0){
+      } else if (split.size() > 0) {
         Label label = new Label(split.get(0));
         currentIndex += split.get(0).length();
-        label.setFont(LABEL_FONT);
+        label.setFont(MINI_VIEWER_FONT);
+        label.setTextAlignment(TextAlignment.CENTER);
         pop.getChildren().add(label);
         split.remove(0);
       }
@@ -462,8 +501,8 @@ public class MenuController implements Controller {
   /**
    * Adds buttons to the popup window
    *
-   * @param index   index of this task/events position in the journal lists
-   * @param className   is this item a task or event
+   * @param index     index of this task/events position in the journal lists
+   * @param className is this item a task or event
    */
   private void addButtonsToPopup(Class<? extends Item> className, int index) {
     if (className.equals(Task.class)) {
@@ -475,7 +514,6 @@ public class MenuController implements Controller {
             new BackgroundFill(COMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
         run();
       });
-      pop.getChildren().add(d);
       Button f = new Button("Mark as Incomplete");
       f.setPrefSize(150, 25);
       f.setOnAction(e -> {
@@ -484,19 +522,26 @@ public class MenuController implements Controller {
             new BackgroundFill(INCOMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
         run();
       });
-      pop.getChildren().add(f);
+      HBox markButtons = new HBox();
+      markButtons.getChildren().addAll(f, d);
+      markButtons.setAlignment(Pos.BOTTOM_CENTER);
+      markButtons.setPrefSize(400, 50);
+      pop.getChildren().add(markButtons);
     }
     pop.getChildren().add(produceButtonBox(className, index));
   }
 
   private HBox produceButtonBox(Class<? extends Item> className, int index) {
     HBox genericButtons = new HBox();
-    genericButtons.setPrefSize(400, 100);
+    genericButtons.setPrefSize(400, 50);
     genericButtons.setAlignment(Pos.BOTTOM_CENTER);
 
     Button b = new Button("Done");
     b.setPrefSize(80, 25);
-    b.setOnAction(e -> popup.hide());
+    b.setOnAction(e -> {
+      popup.hide();
+      run();
+    });
 
     Button c = new Button("Delete");
     c.setPrefSize(80, 25);
@@ -527,8 +572,8 @@ public class MenuController implements Controller {
   /**
    * Hides and deletes this task from the popup menu
    *
-   * @param index         index to delete from
-   * @param className     class of the Task/Event to delete
+   * @param index     index to delete from
+   * @param className class of the Task/Event to delete
    */
   private void hideAndDelete(int index, Class<? extends Item> className) {
     popup.hide();

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="725.0" prefWidth="1000.0">
+    <AnchorPane styleClass="page" prefHeight="725.0" prefWidth="1000.0" stylesheets="style.css">
       <children>
          <Label layoutX="411.0" layoutY="18.0" text="About BujoPig">
             <font>

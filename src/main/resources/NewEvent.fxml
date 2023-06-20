@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="390.0" prefWidth="389.0">
+    <AnchorPane styleClass="page" prefHeight="390.0" prefWidth="389.0" stylesheets="@style.css">
         <children>
          <Label layoutX="165.0" layoutY="240.0" text=":">
             <font>

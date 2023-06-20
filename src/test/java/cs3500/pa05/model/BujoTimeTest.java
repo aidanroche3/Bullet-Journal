@@ -1,6 +1,7 @@
 package cs3500.pa05.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa05.model.enumerations.Meridiem;
 import org.junit.jupiter.api.BeforeEach;

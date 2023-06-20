@@ -2,17 +2,11 @@ package cs3500.pa05.controller;
 
 import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.Event;
-import  cs3500.pa05.model.Journal;
+import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.enumerations.Day;
 import cs3500.pa05.model.enumerations.Meridiem;
-import java.util.ArrayList;
-import java.util.List;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -74,28 +68,14 @@ public class EventController implements Controller {
    */
   @Override
   public void run() {
-    startHour.focusedProperty().addListener(new ChangeListener<Boolean>()
-    {
-      @Override
-      public void changed(ObservableValue<? extends Boolean> arg0,
-                          Boolean oldPropertyValue, Boolean newPropertyValue)
-      {
-        if (!newPropertyValue)
-        {
-          enforceDoubleDigits(startHour);
-        }
+    startHour.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+      if (!newPropertyValue) {
+        enforceDoubleDigits(startHour);
       }
     });
-    startMinute.focusedProperty().addListener(new ChangeListener<Boolean>()
-    {
-      @Override
-      public void changed(ObservableValue<? extends Boolean> arg0,
-                          Boolean oldPropertyValue, Boolean newPropertyValue)
-      {
-        if (!newPropertyValue)
-        {
-          enforceDoubleDigits(startMinute);
-        }
+    startMinute.focusedProperty().addListener((arg0, oldPropertyValue, newPropertyValue) -> {
+      if (!newPropertyValue) {
+        enforceDoubleDigits(startMinute);
       }
     });
 
@@ -120,31 +100,31 @@ public class EventController implements Controller {
 
   /**
    * Updates the journal with a new event
-   *
    */
   protected void updateJournal() {
     //Checked Values
     String checkedName = Validator.validateName(name.getText());
-    String checkedDesc = description.getText();
+    String checkedDesc = Validator.validateDescription(description.getText());
     Day checkedDay = Validator.validateDay(day.getValue());
     Meridiem checkedMeridiem = Meridiem.valueOf(meridiem.getValue());
-    BujoTime checkedTime = Validator.validateTime(startHour.getText(), startMinute.getText(), checkedMeridiem);
+    BujoTime checkedTime =
+        Validator.validateTime(startHour.getText(), startMinute.getText(), checkedMeridiem);
     Double checkedDuration = Validator.validateDuration(duration.getText());
 
-     if (checkedDay == null) {
+    if (checkedDay == null) {
       message.setText("Please select a day.");
     } else if (journal.getPreferences().getEventLimit() <= getEventsOnThisDay(checkedDay)) {
       message.setText("Maximum number of events reached for today.");
     } else if (checkedName.equals("")) {
-       message.setText("Please enter a name for the event.");
+      message.setText("Please enter a name for the event.");
     } else if (checkedTime == null) {
-       message.setText("Please enter a valid start time.");
+      message.setText("Please enter a valid start time.");
     } else if (checkedDuration == null) {
       message.setText("Invalid duration. Enter a valid duration.");
     } else {
       updateEntry(checkedName, checkedDesc, checkedDay, checkedTime, checkedDuration);
-       SceneChanger.switchToScene("WeekView.fxml",
-           new MenuController(journal), "Bujo's Bullet Journal");
+      SceneChanger.switchToScene("WeekView.fxml",
+          new MenuController(journal), "Bujo's Bullet Journal");
     }
   }
 
@@ -167,10 +147,10 @@ public class EventController implements Controller {
   /**
    * Adds the new entry to the task list
    *
-   * @param name a name
-   * @param desc a description
-   * @param day a day
-   * @param start a start time
+   * @param name     a name
+   * @param desc     a description
+   * @param day      a day
+   * @param start    a start time
    * @param duration a duration
    */
   protected void updateEntry(String name, String desc, Day day, BujoTime start, double duration) {
@@ -185,14 +165,11 @@ public class EventController implements Controller {
    */
   protected void enforceDoubleDigits(TextField textField) {
     String numStr = textField.getText();
-    if(!numStr.equals("")) {
+    if (!numStr.equals("")) {
       try {
-        int num = Integer.parseInt(numStr);
-
-        //by here we know we have numbers
-        if(numStr.length() == 1) {
+        if (numStr.length() == 1) {
           textField.setText("0" + numStr);
-        } else if (numStr.length() > 2){
+        } else if (numStr.length() > 2) {
           textField.setText(numStr.substring(0, 2));
         }
       } catch (NumberFormatException e) {

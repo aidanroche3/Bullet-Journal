@@ -9,14 +9,14 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="415.0" prefWidth="454.0">
+    <AnchorPane styleClass="page" prefHeight="415.0" prefWidth="454.0" stylesheets="@style.css">
       <children>
          <Label layoutX="147.0" layoutY="27.0" text="Preferences">
             <font>
                <Font size="30.0" />
             </font>
          </Label>
-         <Button fx:id="cancel" layoutX="74.0" layoutY="335.0" mnemonicParsing="false" text="Cancel">
+         <Button fx:id="cancel" styleClass="btn" layoutX="74.0" layoutY="335.0" mnemonicParsing="false" text="Cancel">
             <font>
                <Font size="25.0" />
             </font>

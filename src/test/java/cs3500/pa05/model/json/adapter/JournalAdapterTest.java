@@ -55,8 +55,8 @@ class JournalAdapterTest {
     assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":5,\"eventLimit\""
         + ":6},\"tasks\":[{\"name\":\"Name\",\"description\":\"Desc\",\"day\":\""
         + "MONDAY\",\"status\":\"COMPLETE\"}],\"events\":[{\"name\":\"Name\",\"des"
-        + "cription\":\"Desc\",\"day\":\"MONDAY\",\"start\":{\"hour\":1,\"minute\":16,\"meridiem\":\"PM\"},\"duration\":7.7}"
-        + "]}", node.toString());
+        + "cription\":\"Desc\",\"day\":\"MONDAY\",\"start\":{\"hour\":1,\"minute\":16,"
+        + "\"meridiem\":\"PM\"},\"duration\":7.7}]}", node.toString());
   }
 
   @Test
@@ -68,8 +68,8 @@ class JournalAdapterTest {
         + "ay\":\"FRIDAY\",\"status\":\"INCOMPLETE\"},{\"name\":\"Task 2\",\"descrip"
         + "tion\":\"Description\",\"day\":\"SUNDAY\",\"status\":\"COMPLETE\"}],\"eve"
         + "nts\":[{\"name\":\"Event 1\",\"description\":\"Description\",\"day\":\"MO"
-        + "NDAY\",\"start\":{\"hour\":4,\"minute\":53,\"meridiem\":\"PM\"},\"duration\":2.5},{\"name\":\"Event 2\",\"descripti"
-        + "on\":\"Description\",\"day\":\"TUESDAY\",\"start\":{\"hour\":7,\"minute\":26,\"meridiem\":\"AM\"},"
-        + "\"duration\":3.0}]}", node.toString());
+        + "NDAY\",\"start\":{\"hour\":4,\"minute\":53,\"meridiem\":\"PM\"},\"duration\":2.5},"
+        + "{\"name\":\"Event 2\",\"description\":\"Description\",\"day\":\"TUESDAY\",\"start\""
+        + ":{\"hour\":7,\"minute\":26,\"meridiem\":\"AM\"},\"duration\":3.0}]}", node.toString());
   }
 }
