@@ -49,7 +49,10 @@ public class Validator {
         int hour = Integer.parseInt(givenHour);
         int minute = Integer.parseInt(givenMinute);
 
-        return new BujoTime(hour, minute, meridiem);
+        if(hour <= 12 && hour >= 1 && minute <= 59 && minute >= 0) {
+          return new BujoTime(hour, minute, meridiem);
+        }
+        return null;
       } catch (NumberFormatException e) {
         return null;
       }
