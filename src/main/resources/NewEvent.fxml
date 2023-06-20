@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -30,7 +31,7 @@
                <Font size="20.0" />
             </font>
          </Label>
-         <TextField fx:id="description" alignment="TOP_LEFT" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" />
+         <TextArea fx:id="description" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" />
          <TextField fx:id="startHour" layoutX="118.0" layoutY="246.0" prefHeight="26.0" prefWidth="46.0" />
          <TextField fx:id="duration" layoutX="118.0" layoutY="290.0" />
          <Label layoutX="17.0" layoutY="245.0" prefHeight="27.0" prefWidth="96.0" text="Start Time:">
