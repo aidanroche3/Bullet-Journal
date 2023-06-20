@@ -5,8 +5,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="603.0" prefWidth="609.0">
+    <AnchorPane prefHeight="400" prefWidth="400">
       <children>
-         <VBox fx:id="pop" alignment="TOP_CENTER" prefHeight="603.0" prefWidth="609.0" />
-      </children></AnchorPane>
+         <VBox fx:id="pop" alignment="TOP_CENTER" prefHeight="400" prefWidth="400" />
+      </children>
+    </AnchorPane>
 </Scene>

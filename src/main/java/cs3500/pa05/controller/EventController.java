@@ -12,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -97,6 +98,7 @@ public class EventController implements Controller {
         }
       }
     });
+
     setFxmlItems();
   }
 
@@ -111,6 +113,9 @@ public class EventController implements Controller {
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(event -> updateJournal());
+    description.setOnKeyReleased(e -> Validator.enforceDescriptionLimit(
+        description.getText(), description, message));
+    name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
   }
 
   /**
@@ -130,7 +135,7 @@ public class EventController implements Controller {
       message.setText("Please select a day.");
     } else if (journal.getPreferences().getEventLimit() <= getEventsOnThisDay(checkedDay)) {
       message.setText("Maximum number of events reached for today.");
-    } else if (checkedName == null) {
+    } else if (checkedName.equals("")) {
        message.setText("Please enter a name for the event.");
     } else if (checkedTime == null) {
        message.setText("Please enter a valid start time.");

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
+import cs3500.pa05.model.enumerations.Meridiem;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,9 +34,9 @@ class JournalTest {
   public void setup() {
     preferences = new Preferences("Week name", 5, 7);
     eventOne = new Event("Go to the movies", "Seeing Memento",
-        Day.SATURDAY, "12:00pm", 2.5);
+        Day.SATURDAY, new BujoTime(12, 0, Meridiem.AM), 2.5);
     Event eventTwo = new Event("Get dinner", "",
-        Day.WEDNESDAY, "7:30pm", 1.4);
+        Day.WEDNESDAY, new BujoTime(7, 30, Meridiem.PM), 1.4);
     taskOne = new Task("Do the dishes", "Use soap",
         Day.MONDAY, CompletionStatus.INCOMPLETE);
     taskTwo = new Task("Finish the project", "Write tests",
@@ -101,7 +102,7 @@ class JournalTest {
   @Test
   public void testAddEvent() {
     Event newEvent = new Event("Added event", "", Day.THURSDAY,
-        "12:00pm", 1.6);
+        new BujoTime(12, 0, Meridiem.AM), 1.6);
     journal.addEvent(newEvent);
     assertEquals(3, journal.getEvents().size());
     assertTrue(journal.getEvents().contains(newEvent));

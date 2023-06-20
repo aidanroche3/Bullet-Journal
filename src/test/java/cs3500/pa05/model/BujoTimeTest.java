@@ -32,7 +32,7 @@ class BujoTimeTest {
    */
   @Test
   public void testConstructor() {
-    assertThrows(IllegalAccessException.class,
+    assertThrows(IllegalArgumentException.class,
         () -> new BujoTime(-1, 25, Meridiem.PM));
     assertThrows(IllegalArgumentException.class,
         () -> new BujoTime(0, -1, Meridiem.PM));
@@ -102,6 +102,16 @@ class BujoTimeTest {
     assertEquals(meridiem, bujoTime.getMeridiem());
     bujoTime.setMeridiem(Meridiem.AM);
     assertEquals(Meridiem.AM, bujoTime.getMeridiem());
+  }
+
+  /**
+   * Tests the toString method
+   */
+  @Test
+  public void testToString() {
+    assertEquals("8:25pm", bujoTime.toString());
+    bujoTime.setMinute(2);
+    assertEquals("8:02pm", bujoTime.toString());
   }
 
 }

@@ -4,11 +4,16 @@ import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
 import cs3500.pa05.model.enumerations.Meridiem;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  * Class for validating inputs
  */
 public class Validator {
+
+  private static final int NAME_LIMIT = 20;
+  private static final int DESCRIPTION_LIMIT = 200;
 
   /**
    * Validates the given name
@@ -88,5 +93,23 @@ public class Validator {
       return null;
     }
     return CompletionStatus.valueOf(givenStatus.toUpperCase());
+  }
+
+  public static void enforceDescriptionLimit(String desc, TextField description, Label message) {
+    if(desc.length() > DESCRIPTION_LIMIT) {
+      description.setText(desc.substring(0, DESCRIPTION_LIMIT));
+      message.setText("Description limit of " + DESCRIPTION_LIMIT + " char reached.");
+    } else {
+      message.setText("Description Characters Remaining: " + (DESCRIPTION_LIMIT - desc.length()));
+    }
+  }
+
+  public static void enforceTitleLimit(String name, TextField nameField, Label message) {
+    if (name.length() > NAME_LIMIT) {
+      nameField.setText(name.substring(0, NAME_LIMIT));
+      message.setText("Name limit of " + NAME_LIMIT + " char reached.");
+    } else {
+      message.setText("Name Characters Remaining: " + (NAME_LIMIT - name.length()));
+    }
   }
 }

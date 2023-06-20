@@ -31,6 +31,16 @@ class ItemTest {
   }
 
   /**
+   * Tests the setName method
+   */
+  @Test
+  public void testSetName() {
+    assertEquals("item name", item.getName());
+    item.setName("new name");
+    assertEquals("new name", item.getName());
+  }
+
+  /**
    * Tests the getDescription method
    */
   @Test
@@ -39,11 +49,31 @@ class ItemTest {
   }
 
   /**
+   * Tests the setDescription method
+   */
+  @Test
+  public void testSetDescription() {
+    assertEquals("desc", item.getDescription());
+    item.setDescription("new desc");
+    assertEquals("new desc", item.getDescription());
+  }
+
+  /**
    * Tests the getDay method
    */
   @Test
   public void testGetDay() {
     assertEquals(Day.MONDAY, item.getDay());
+  }
+
+  /**
+   * Tests the setDay method
+   */
+  @Test
+  public void testSetDay() {
+    assertEquals(Day.MONDAY, item.getDay());
+    item.setDay(Day.THURSDAY);
+    assertEquals(Day.THURSDAY, item.getDay());
   }
 
 }

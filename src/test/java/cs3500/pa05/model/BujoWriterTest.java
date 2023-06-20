@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
+import cs3500.pa05.model.enumerations.Meridiem;
+import cs3500.pa05.model.json.BujoTimeJson;
 import cs3500.pa05.model.json.EventJson;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.PreferencesJson;
@@ -30,7 +32,8 @@ class BujoWriterTest {
   @BeforeEach
   void setUp() {
     EventJson[] events = new EventJson[] {
-        new EventJson("Name", "Desc", Day.MONDAY, "", 7.7)};
+        new EventJson("Name", "Desc", Day.MONDAY,
+            new BujoTimeJson(12, 0, Meridiem.PM), 7.7)};
     TaskJson[] tasks = new TaskJson[]{
         new TaskJson("Name", "Desc", Day.MONDAY, CompletionStatus.COMPLETE)};
     PreferencesJson preferences = new PreferencesJson("Week 1", 5, 6);
@@ -47,9 +50,9 @@ class BujoWriterTest {
             Day.SUNDAY, CompletionStatus.INCOMPLETE) };
     EventJson[] newEvents = new EventJson[] {
         new EventJson("Go to Goodge Street", "Make sure it's not closed this time",
-            Day.MONDAY, "12:00pm", 1.5),
+            Day.MONDAY, new BujoTimeJson(1, 12, Meridiem.AM), 1.5),
         new EventJson("Khoury College Welcome day", "Meet new people",
-            Day.SATURDAY, "1:00pm", 2.3)};
+            Day.SATURDAY, new BujoTimeJson(1, 0, Meridiem.PM), 2.3)};
     PreferencesJson newPreferences = new PreferencesJson("Busy Week", 4, 3);
     newJo = new JournalJson(newPreferences, newTasks, newEvents);
   }
@@ -59,12 +62,11 @@ class BujoWriterTest {
    */
   @Test
   void writeJournal() {
-    Path expected = Path.of("src/test/resources/BujoReaderTest.bujo");
+    Path expected = Path.of("src/test/resources/writersample.bujo");
     Path writeAt = Path.of("src/test/resources/BujoWriterTest.bujo");
     Path invalid = Path.of("invalid/");
     try {
-      BujoWriter.writeJournal(writeAt, journal);
-      BujoWriter.writeJournal(Path.of("src/test/resources/Test.bujo"), newJo);
+      BujoWriter.writeJournal(writeAt, newJo);
       assertEquals(-1, Files.mismatch(expected, writeAt));
     } catch (IOException e) {
       fail();

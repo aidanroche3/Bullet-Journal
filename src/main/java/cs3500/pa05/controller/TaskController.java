@@ -58,6 +58,9 @@ public class TaskController implements Controller {
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(event -> updateJournal());
+    description.setOnKeyReleased(e -> Validator.enforceDescriptionLimit(
+        description.getText(), description, message));
+    name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
   }
 
   /**

@@ -37,7 +37,7 @@ class BujoReaderTest {
     assertEquals("{\"preferences\":{\"name\":\"Week 1\",\"taskLimit\":5,\"eventLimit\""
         + ":6},\"tasks\":[{\"name\":\"Name\",\"description\":\"Desc\",\"day\":\""
         + "MONDAY\",\"status\":\"COMPLETE\"}],\"events\":[{\"name\":\"Name\",\"des"
-        + "cription\":\"Desc\",\"day\":\"MONDAY\",\"start\":\"\",\"duration\":7.7}"
+        + "cription\":\"Desc\",\"day\":\"MONDAY\",\"start\":{\"hour\":1,\"minute\":16,\"meridiem\":\"PM\"},\"duration\":7.7}"
         + "]}", node.toString());
     assertThrows(IOException.class, () -> BujoReader.produceJournal(Path.of("fake path")));
   }
