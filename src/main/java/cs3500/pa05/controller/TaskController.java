@@ -18,8 +18,10 @@ import javafx.scene.control.TextField;
  */
 public class TaskController implements Controller {
 
-  private final Journal journal;
+  protected final Journal journal;
 
+  @FXML
+  protected Label taskTitle;
   @FXML
   private Button cancel;
   @FXML
@@ -49,6 +51,7 @@ public class TaskController implements Controller {
    */
   @Override
   public void run() {
+    taskTitle.setText("Create Event");
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday", "Thursday",
         "Friday", "Saturday", "Sunday"));
     status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));
