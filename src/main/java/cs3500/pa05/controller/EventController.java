@@ -7,6 +7,8 @@ import cs3500.pa05.model.enumerations.Day;
 import cs3500.pa05.model.enumerations.Meridiem;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -71,6 +73,28 @@ public class EventController implements Controller {
    */
   @Override
   public void run() {
+    startHour.focusedProperty().addListener(new ChangeListener<Boolean>()
+    {
+      @Override
+      public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+      {
+        if (!newPropertyValue)
+        {
+          enforceDoubleDigits(startHour);
+        }
+      }
+    });
+    startMinute.focusedProperty().addListener(new ChangeListener<Boolean>()
+    {
+      @Override
+      public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+      {
+        if (!newPropertyValue)
+        {
+          enforceDoubleDigits(startMinute);
+        }
+      }
+    });
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday", "Sunday"));
     meridiem.setItems(FXCollections.observableArrayList("AM", "PM"));
@@ -140,4 +164,25 @@ public class EventController implements Controller {
     journal.addEvent(e);
   }
 
+  /**
+   * Enforces double digits on the given textfield
+   * @param textField
+   */
+  protected void enforceDoubleDigits(TextField textField) {
+    String numStr = textField.getText();
+    if(!numStr.equals("")) {
+      try {
+        int num = Integer.parseInt(numStr);
+
+        //by here we know we have numbers
+        if(numStr.length() == 1) {
+          textField.setText("0" + numStr);
+        } else if (numStr.length() > 2){
+          textField.setText(numStr.substring(0, 2));
+        }
+      } catch (NumberFormatException e) {
+        textField.setText("");
+      }
+    }
+  }
 }

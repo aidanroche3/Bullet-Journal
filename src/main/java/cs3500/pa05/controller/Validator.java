@@ -48,6 +48,7 @@ public class Validator {
       try {
         int hour = Integer.parseInt(givenHour);
         int minute = Integer.parseInt(givenMinute);
+
         return new BujoTime(hour, minute, meridiem);
       } catch (NumberFormatException e) {
         return null;
