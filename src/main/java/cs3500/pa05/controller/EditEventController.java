@@ -1,8 +1,10 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.enumerations.Day;
+import cs3500.pa05.model.enumerations.Meridiem;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -60,7 +62,7 @@ public class EditEventController implements Controller {
         "Thursday", "Friday", "Saturday", "Sunday"));
     day.setValue(event.getDay().toString());
     name.setText(event.getName());
-    start.setText(event.getStart());
+    start.setText(event.getStart().toString());
     duration.setText("" + event.getDuration());
     description.setText(event.getDescription());
     cancel.setOnAction(event -> SceneChanger.switchToScene(
@@ -75,7 +77,10 @@ public class EditEventController implements Controller {
   public void updateJournal() {
     String enteredDay = day.getValue();
     String chosenName = name.getText();
+
+    //TODO: refactor inputs to get all necessary data to make a BujoTime
     String enteredStart = start.getText();
+
     String enteredDuration = duration.getText();
 
     int eventsOnThisDay = 0;
@@ -92,7 +97,7 @@ public class EditEventController implements Controller {
         try {
           String desc = description.getText();
           double duration = Double.parseDouble(enteredDuration);
-          event.setStart(enteredStart);
+          event.setStart(new BujoTime(1, 1, Meridiem.AM));
           event.setDuration(duration);
           event.setDay(chosenDay);
           event.setName(chosenName);

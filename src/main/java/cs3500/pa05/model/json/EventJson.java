@@ -1,6 +1,7 @@
 package cs3500.pa05.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.enumerations.Day;
 
 /**
@@ -10,6 +11,6 @@ public record EventJson(
     @JsonProperty("name") String name,
     @JsonProperty("description") String description,
     @JsonProperty("day") Day day,
-    @JsonProperty("start") String start,
+    @JsonProperty("start") BujoTime start,
     @JsonProperty("duration") Double duration) {
 }

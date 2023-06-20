@@ -7,7 +7,7 @@ import cs3500.pa05.model.enumerations.Day;
  */
 public class Event extends Item {
 
-  private String start;
+  private BujoTime start;
   private double duration;
 
   /**
@@ -19,7 +19,7 @@ public class Event extends Item {
    * @param start the start time of the event
    * @param duration the duration of the event
    */
-  public Event(String name, String description, Day day, String start, double duration) {
+  public Event(String name, String description, Day day, BujoTime start, double duration) {
     super(name, description, day);
     this.start = start;
     this.duration = duration;
@@ -30,7 +30,7 @@ public class Event extends Item {
    *
    * @return the start
    */
-  public String getStart() {
+  public BujoTime getStart() {
     return this.start;
   }
 
@@ -39,7 +39,7 @@ public class Event extends Item {
    *
    * @param start a start time
    */
-  public void setStart(String start) {
+  public void setStart(BujoTime start) {
     this.start = start;
   }
 
