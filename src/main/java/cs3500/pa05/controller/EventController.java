@@ -1,10 +1,14 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.Event;
 import  cs3500.pa05.model.Journal;
 import cs3500.pa05.model.enumerations.Day;
+import cs3500.pa05.model.enumerations.Meridiem;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,31 +22,42 @@ import javafx.scene.control.TextField;
  */
 public class EventController implements Controller {
 
-  private final Journal journal;
+  protected final Journal journal;
 
   @FXML
-  private Button cancel;
+  protected Label title;
+  @FXML
+  protected Button cancel;
 
   @FXML
-  private Button confirm;
+  protected Button confirm;
 
   @FXML
-  private TextField name;
+  protected TextField name;
 
   @FXML
-  private TextField start;
+  protected TextField start;
 
   @FXML
-  private TextField duration;
+  protected TextField duration;
 
   @FXML
-  private TextField description;
+  protected TextField description;
 
   @FXML
-  private ComboBox<String> day;
+  protected ComboBox<String> day;
 
   @FXML
-  private Label message;
+  protected TextField startHour;
+
+  @FXML
+  protected TextField startMinute;
+
+  @FXML
+  protected ComboBox<String> meridiem;
+
+  @FXML
+  protected Label message;
 
   /**
    * Instantiates an EventController
@@ -58,8 +73,32 @@ public class EventController implements Controller {
    */
   @Override
   public void run() {
+    startHour.focusedProperty().addListener(new ChangeListener<Boolean>()
+    {
+      @Override
+      public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+      {
+        if (!newPropertyValue)
+        {
+          enforceDoubleDigits(startHour);
+        }
+      }
+    });
+    startMinute.focusedProperty().addListener(new ChangeListener<Boolean>()
+    {
+      @Override
+      public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+      {
+        if (!newPropertyValue)
+        {
+          enforceDoubleDigits(startMinute);
+        }
+      }
+    });
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday", "Sunday"));
+    meridiem.setItems(FXCollections.observableArrayList("AM", "PM"));
+    meridiem.setValue("AM");
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
     confirm.setOnAction(event -> updateJournal());
@@ -69,43 +108,81 @@ public class EventController implements Controller {
    * Updates the journal with a new event
    *
    */
-  public void updateJournal() {
-    String enteredDay = day.getValue();
-    String chosenName = name.getText();
-    String enteredStart = start.getText();
-    String enteredDuration = duration.getText();
+  protected void updateJournal() {
+    //Checked Values
+    String checkedName = Validator.validateName(name.getText());
+    String checkedDesc = description.getText();
+    Day checkedDay = Validator.validateDay(day.getValue());
+    Meridiem checkedMeridiem = Meridiem.valueOf(meridiem.getValue());
+    BujoTime checkedTime = Validator.validateTime(startHour.getText(), startMinute.getText(), checkedMeridiem);
+    Double checkedDuration = Validator.validateDuration(duration.getText());
 
-    if (enteredDay != null) {
-      int eventsOnThisDay = 0;
-      Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
-      for (Event e : journal.getEvents()) {
-        if (e.getDay().equals(chosenDay)) {
-          eventsOnThisDay++;
-        }
-      }
-      if (journal.getPreferences().getEventLimit() > eventsOnThisDay) {
-        if (!(chosenName.equals("")
-            || enteredStart.equals("")
-            || enteredDuration.equals(""))) {
-          try {
-            String desc = description.getText();
-            double duration = Double.parseDouble(enteredDuration);
-            Event newEvent = new Event(chosenName, desc, chosenDay,
-                enteredStart, duration);
-            journal.addEvent(newEvent);
-            SceneChanger.switchToScene("WeekView.fxml",
-                new MenuController(journal), "Bujo's Bullet Journal");
-          } catch (NumberFormatException err) {
-            message.setText("Invalid duration. Enter a valid duration.");
-          }
-        } else {
-          message.setText("Invalid Entry. Please check fields again.");
-        }
-      } else {
-        message.setText("Maximum number of events reached for today.");
-      }
-    } else {
+     if (checkedDay == null) {
       message.setText("Please select a day.");
+    } else if (journal.getPreferences().getEventLimit() <= getEventsOnThisDay(checkedDay)) {
+      message.setText("Maximum number of events reached for today.");
+    } else if (checkedName == null) {
+       message.setText("Please enter a name for the event.");
+    } else if (checkedTime == null) {
+       message.setText("Please enter a valid start time.");
+    } else if (checkedDuration == null) {
+      message.setText("Invalid duration. Enter a valid duration.");
+    } else {
+      updateEntry(checkedName, checkedDesc, checkedDay, checkedTime, checkedDuration);
+       SceneChanger.switchToScene("WeekView.fxml",
+           new MenuController(journal), "Bujo's Bullet Journal");
+    }
+  }
+
+  /**
+   * Gets the number of events on this day
+   *
+   * @param day a day
+   * @return the number of events on this day
+   */
+  private int getEventsOnThisDay(Day day) {
+    int eventsOnThisDay = 0;
+    for (Event e : journal.getEvents()) {
+      if (e.getDay().equals(day)) {
+        eventsOnThisDay++;
+      }
+    }
+    return eventsOnThisDay;
+  }
+
+  /**
+   * Adds the new entry to the task list
+   *
+   * @param name a name
+   * @param desc a description
+   * @param day a day
+   * @param start a start time
+   * @param duration a duration
+   */
+  protected void updateEntry(String name, String desc, Day day, BujoTime start, double duration) {
+    Event e = new Event(name, desc, day, start, duration);
+    journal.addEvent(e);
+  }
+
+  /**
+   * Enforces double digits on the given textfield
+   * @param textField
+   */
+  protected void enforceDoubleDigits(TextField textField) {
+    String numStr = textField.getText();
+    if(!numStr.equals("")) {
+      try {
+        int num = Integer.parseInt(numStr);
+
+        //by here we know we have numbers
+        if(numStr.length() == 1) {
+          textField.setText("0" + numStr);
+        } else if (numStr.length() > 2){
+          textField.setText(numStr.substring(0, 2));
+        }
+      } catch (NumberFormatException e) {
+        textField.setText("");
+      }
     }
   }
 }

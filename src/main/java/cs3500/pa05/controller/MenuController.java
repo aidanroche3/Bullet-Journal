@@ -354,7 +354,7 @@ public class MenuController implements Controller {
     name.setFont(LABEL_FONT);
     Label description = new Label(" " + event.getDescription());
     description.setFont(LABEL_FONT);
-    Label start = new Label(" " + event.getStart());
+    Label start = new Label(" " + event.getStart().toString());
     start.setFont(LABEL_FONT);
     Label duration = new Label(" " + event.getDuration());
     duration.setFont(LABEL_FONT);
@@ -369,7 +369,7 @@ public class MenuController implements Controller {
                 "Day: " + event.getDay(),
                 "Event: " + event.getName(),
                 "Description: " + formattedDesc,
-                "Start Time: " + event.getStart(),
+                "Start Time: " + event.getStart().toString(),
                 "Duration: " + event.getDuration() + " hours"),
             EVENT_COLOR, index, Event.class));
     return eventBox;

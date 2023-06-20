@@ -1,10 +1,12 @@
 package cs3500.pa05.model.json.adapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.Preferences;
 import cs3500.pa05.model.Task;
+import cs3500.pa05.model.json.BujoTimeJson;
 import cs3500.pa05.model.json.EventJson;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.PreferencesJson;
@@ -40,7 +42,10 @@ public class JournalAdapter {
     }
 
     for (EventJson ej : eventsJson) {
-      events.add(new Event(ej.name(), ej.description(), ej.day(), ej.start(), ej.duration()));
+      BujoTimeJson bujoTimeJson = ej.start();
+      BujoTime time =
+          new BujoTime(bujoTimeJson.hour(), bujoTimeJson.minute(), bujoTimeJson.meridiem());
+      events.add(new Event(ej.name(), ej.description(), ej.day(), time, ej.duration()));
     }
 
     return new Journal(preferences, tasks, events, path);
