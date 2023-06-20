@@ -96,6 +96,9 @@ public class BujoTime {
    */
   @Override
   public String toString() {
+    if(this.minute < 10) {
+      return this.hour + ":0" + this.minute + this.meridiem.toString();
+    }
     return this.hour + ":" + this.minute + this.meridiem.toString();
   }
 }
