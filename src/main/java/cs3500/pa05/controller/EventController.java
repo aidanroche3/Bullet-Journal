@@ -20,38 +20,69 @@ public class EventController implements Controller {
 
   protected final Journal journal;
 
+  /**
+   * Window title label
+   */
   @FXML
   protected Label title;
+
+  /**
+   * Event cancel button
+   */
   @FXML
   protected Button cancel;
 
+  /**
+   * Event confirm button
+   */
   @FXML
   protected Button confirm;
 
+  /**
+   * Event name text field
+   */
   @FXML
   protected TextField name;
 
-  @FXML
-  protected TextField start;
-
+  /**
+   * Event duration text field
+   */
   @FXML
   protected TextField duration;
 
+  /**
+   * Event description text area
+   */
   @FXML
   protected TextArea description;
 
+  /**
+   * Event day combo box
+   */
   @FXML
   protected ComboBox<String> day;
 
+  /**
+   * Event start hour text field
+   */
   @FXML
   protected TextField startHour;
 
+  /**
+   * Event start minute text field
+   */
   @FXML
   protected TextField startMinute;
 
+  /**
+   * Event start meridiem combo box
+   */
   @FXML
   protected ComboBox<String> meridiem;
 
+  /**
+   * Event warning message label
+   */
   @FXML
   protected Label message;
 

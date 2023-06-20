@@ -19,20 +19,51 @@ public class TaskController implements Controller {
 
   protected final Journal journal;
 
+  /**
+   * Task window title
+   */
   @FXML
   protected Label taskTitle;
+
+  /**
+   * Task cancel button
+   */
   @FXML
   protected Button cancel;
+
+  /**
+   * Task confirm button
+   */
   @FXML
   protected Button confirm;
+
+  /**
+   * Task day combo box
+   */
   @FXML
   protected ComboBox<String> day;
+
+  /**
+   * Task name text field
+   */
   @FXML
   protected TextField name;
+
+  /**
+   * Task description text area
+   */
   @FXML
   protected TextArea description;
+
+  /**
+   * Task status combo box
+   */
   @FXML
   protected ComboBox<String> status;
+
+  /**
+   * Task message label
+   */
   @FXML
   protected Label message;
 
