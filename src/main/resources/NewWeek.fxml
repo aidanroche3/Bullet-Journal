@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="571.0" prefWidth="590.0">
+<Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" stylesheets="@style.css">
+    <AnchorPane styleClass="page" prefHeight="571.0" prefWidth="590.0" stylesheets="@style.css">
       <children>
          <Label layoutX="143.0" layoutY="34.0" text="Create New Week">
             <font>
@@ -27,7 +27,7 @@
                <Font size="25.0" />
             </font>
          </Label>
-         <Button fx:id="newPath" layoutX="546.0" layoutY="264.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="...">
+         <Button fx:id="newPath" styleClass="btn" layoutX="546.0" layoutY="264.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="0.0" text="...">
             <font>
                <Font size="15.0" />
             </font></Button>
@@ -36,12 +36,12 @@
                <Font size="15.0" />
             </font>
          </Label>
-         <Button fx:id="newCancel" layoutX="162.0" layoutY="463.0" mnemonicParsing="false" text="Cancel">
+         <Button fx:id="newCancel" styleClass="btn" layoutX="162.0" layoutY="463.0" mnemonicParsing="false" text="Cancel">
             <font>
                <Font size="25.0" />
             </font>
          </Button>
-         <Button fx:id="newConfirm" layoutX="316.0" layoutY="463.0" mnemonicParsing="false" text="Confirm">
+         <Button fx:id="newConfirm" styleClass="btn" layoutX="316.0" layoutY="463.0" mnemonicParsing="false" text="Confirm">
             <font>
                <Font size="25.0" />
             </font>
@@ -58,5 +58,8 @@
                <Font size="20.0" />
             </font>
          </Label>
-      </children></AnchorPane>
+      </children>
+       <stylesheets>
+       </stylesheets>
+    </AnchorPane>
 </Scene>

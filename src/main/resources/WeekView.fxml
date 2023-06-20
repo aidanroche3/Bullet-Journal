@@ -13,7 +13,7 @@
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <root>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1026.0" style="-fx-background-color: lightblue;">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="712.0" prefWidth="1026.0" style="-fx-background-color: lightblue;" stylesheets="@style.css">
          <children>
             <VBox prefHeight="590.0" prefWidth="194.0" style="-fx-background-color: #6287c4;">
                <children>
@@ -49,13 +49,13 @@
             </VBox>
             <HBox layoutX="194.0" prefHeight="37.0" prefWidth="833.0">
                <children>
-                  <Button fx:id="save" mnemonicParsing="false" prefHeight="37.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Save" textFill="WHITE" />
-                  <Button fx:id="open" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Open" textFill="WHITE" />
-                  <Button fx:id="week" mnemonicParsing="false" prefHeight="61.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Week" textFill="WHITE" />
-                  <Button fx:id="task" mnemonicParsing="false" prefHeight="53.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Task" textFill="WHITE" />
-                  <Button fx:id="event" mnemonicParsing="false" prefHeight="70.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="New Event" textFill="WHITE" />
-                  <Button fx:id="edit" mnemonicParsing="false" prefHeight="37.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="Edit" textFill="WHITE" />
-                  <Button fx:id="about" mnemonicParsing="false" prefHeight="37.0" prefWidth="119.0" style="-fx-background-color: #4C4E52; -fx-border-color: black;" text="About" textFill="WHITE" />
+                  <Button fx:id="save" styleClass="menu-btn" mnemonicParsing="false" prefHeight="37.0" prefWidth="119.0" text="Save" textFill="WHITE" />
+                  <Button fx:id="open" styleClass="menu-btn" mnemonicParsing="false" prefHeight="39.0" prefWidth="119.0" text="Open" textFill="WHITE" />
+                  <Button fx:id="week" styleClass="menu-btn" mnemonicParsing="false" prefHeight="61.0" prefWidth="119.0" text="New Week" textFill="WHITE" />
+                  <Button fx:id="task" styleClass="menu-btn" mnemonicParsing="false" prefHeight="53.0" prefWidth="119.0" text="New Task" textFill="WHITE" />
+                  <Button fx:id="event" styleClass="menu-btn" mnemonicParsing="false" prefHeight="70.0" prefWidth="119.0" text="New Event" textFill="WHITE" />
+                  <Button fx:id="edit" styleClass="menu-btn" mnemonicParsing="false" prefHeight="37.0" prefWidth="119.0" text="Edit" textFill="WHITE" />
+                  <Button fx:id="about" styleClass="menu-btn" mnemonicParsing="false" prefHeight="37.0" prefWidth="119.0" text="About" textFill="WHITE" />
                </children>
             </HBox>
             <VBox fx:id="monday" layoutX="194.0" layoutY="108.0" prefHeight="482.0" prefWidth="119.0" style="-fx-background-color: #9ec8f1;" />
@@ -65,9 +65,9 @@
             <VBox fx:id="friday" layoutX="669.0" layoutY="108.0" prefHeight="482.0" prefWidth="119.0" style="-fx-background-color: #9ec8f1;" />
             <VBox fx:id="saturday" layoutX="788.0" layoutY="108.0" prefHeight="482.0" prefWidth="119.0" style="-fx-background-color: #b8d7f4;" />
             <VBox fx:id="sunday" layoutX="907.0" layoutY="108.0" prefHeight="482.0" prefWidth="119.0" style="-fx-background-color: #9ec8f1;" />
-            <Label fx:id="border" layoutX="-1.0" layoutY="588.0" prefHeight="126.0" prefWidth="1027.0" style="-fx-background-color: #6287c4;" text="TO USER: ">
+            <Label fx:id="border" layoutX="-1.0" layoutY="588.0" prefHeight="126.0" prefWidth="1027.0" style="-fx-background-color: #6287c4;" text="">
                <font>
-                  <Font size="78.0" />
+                  <Font name="Verdana" size="20.0" />
                </font>
             </Label>
             <Label fx:id="stats" alignment="TOP_LEFT" layoutX="746.0" layoutY="596.0" prefHeight="110.0" prefWidth="272.0" style="-fx-background-color: gray;" text="Label" wrapText="true" />

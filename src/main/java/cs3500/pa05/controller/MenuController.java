@@ -256,6 +256,7 @@ public class MenuController implements Controller {
    * Saves the journal
    */
   private void fileSaver() {
+    StringBuilder fileName = new StringBuilder();
     if (!journal.getPath().toFile().isFile()) {
       Path p = journal.getPath();
       String weekTitle = journal.getPreferences().getName();
@@ -270,9 +271,9 @@ public class MenuController implements Controller {
     JournalJson journalJson = JournalAdapter.toJson(journal);
     try {
       BujoWriter.writeJournal(journal.getPath(), journalJson);
-      border.setText("Journal saved in new file: " + journal.getPreferences().getName() + ".bujo");
+      border.setText("  Journal saved in file: " + journal.getPath().getFileName().toString());
     } catch (IOException e) {
-      border.setText("Journal could not be saved.");
+      border.setText("  Journal could not be saved.");
     }
   }
 

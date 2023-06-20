@@ -43,7 +43,7 @@
                     <Font size="10.0" />
                 </font>
             </Label>
-            <Button fx:id="cancel" layoutX="125.0" layoutY="315.0" mnemonicParsing="false" text="Cancel" />
-            <Button fx:id="confirm" layoutX="215.0" layoutY="315.0" mnemonicParsing="false" text="Confirm" />
+            <Button fx:id="cancel" styleClass="btn" layoutX="125.0" layoutY="315.0" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="confirm" styleClass="btn" layoutX="215.0" layoutY="315.0" mnemonicParsing="false" text="Confirm" />
         </children></AnchorPane>
 </Scene>
