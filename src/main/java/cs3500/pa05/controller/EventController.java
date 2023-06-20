@@ -76,7 +76,8 @@ public class EventController implements Controller {
     startHour.focusedProperty().addListener(new ChangeListener<Boolean>()
     {
       @Override
-      public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+      public void changed(ObservableValue<? extends Boolean> arg0,
+                          Boolean oldPropertyValue, Boolean newPropertyValue)
       {
         if (!newPropertyValue)
         {
@@ -87,7 +88,8 @@ public class EventController implements Controller {
     startMinute.focusedProperty().addListener(new ChangeListener<Boolean>()
     {
       @Override
-      public void changed(ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue)
+      public void changed(ObservableValue<? extends Boolean> arg0,
+                          Boolean oldPropertyValue, Boolean newPropertyValue)
       {
         if (!newPropertyValue)
         {
@@ -95,6 +97,13 @@ public class EventController implements Controller {
         }
       }
     });
+    setFxmlItems();
+  }
+
+  /**
+   * Sets the fxml items
+   */
+  protected void setFxmlItems() {
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday", "Sunday"));
     meridiem.setItems(FXCollections.observableArrayList("AM", "PM"));
@@ -165,8 +174,9 @@ public class EventController implements Controller {
   }
 
   /**
-   * Enforces double digits on the given textfield
-   * @param textField
+   * Enforces double digits on the given text field
+   *
+   * @param textField a text field
    */
   protected void enforceDoubleDigits(TextField textField) {
     String numStr = textField.getText();

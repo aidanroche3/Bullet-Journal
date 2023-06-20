@@ -28,6 +28,14 @@ public class EditEventController extends EventController {
    */
   @Override
   public void run() {
+    setFxmlItems();
+  }
+
+  /**
+   * Sets the fxml items
+   */
+  @Override
+  protected void setFxmlItems() {
     title.setText("Edit Event");
     day.setItems(FXCollections.observableArrayList("Monday", "Tuesday", "Wednesday",
         "Thursday", "Friday", "Saturday", "Sunday"));
