@@ -1,6 +1,5 @@
 package cs3500.pa05.controller;
 
-import com.sun.javafx.application.HostServicesDelegate;
 import cs3500.pa05.model.BujoReader;
 import cs3500.pa05.model.BujoWriter;
 import cs3500.pa05.model.Event;
@@ -21,18 +20,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javafx.application.Application;
-import javafx.application.HostServices;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
@@ -279,6 +272,11 @@ public class MenuController implements Controller {
     for (int i = 0; i < journal.getTasks().size(); i++) {
       queue.getChildren().add(generateTask(journal.getTasks().get(i), i));
     }
+    if (journal.getTasks().size() >= 10) {
+      queue.setPrefWidth(177);
+    } else {
+      queue.setPrefWidth(192);
+    }
     tasks.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     tasks.setContent(queue);
   }
@@ -441,11 +439,6 @@ public class MenuController implements Controller {
           split.remove(0);
         }
       }
-//
-//
-//      Label label = new Label(string);
-//      label.setFont(LABEL_FONT);
-//      pop.getChildren().add(label);
     }
 
     addButtonsToPopup(index, className);
