@@ -31,5 +31,10 @@
                <Image url="@images/BujoPig.PNG" />
             </image>
          </ImageView>
+         <Label layoutX="176.0" layoutY="206.0" text="To BujoPig's Bujo Journal">
+            <font>
+               <Font name="Verdana" size="25.0" />
+            </font>
+         </Label>
       </children></AnchorPane>
 </Scene>
