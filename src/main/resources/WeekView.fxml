@@ -36,9 +36,9 @@
                         </Label>
                      </children>
                   </HBox>
-                  <ScrollPane fx:id="tasks" prefHeight="570.0" prefWidth="194.0" style="-fx-background-color: #6287c4;">
+                  <ScrollPane fx:id="tasks" prefHeight="520.0" prefWidth="194.0" style="-fx-background-color: #6287c4;">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="486.0" prefWidth="194.0" style="-fx-background-color: #6287c4;" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="495.0" prefWidth="194.0" style="-fx-background-color: #6287c4;" />
                     </content>
                   </ScrollPane>
                </children>
