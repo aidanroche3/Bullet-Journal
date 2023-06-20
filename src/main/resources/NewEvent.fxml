@@ -31,7 +31,7 @@
                <Font size="20.0" />
             </font>
          </Label>
-         <TextArea fx:id="description" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" />
+         <TextArea fx:id="description" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" wrapText="true" />
          <TextField fx:id="startHour" layoutX="118.0" layoutY="246.0" prefHeight="26.0" prefWidth="46.0" />
          <TextField fx:id="duration" layoutX="118.0" layoutY="290.0" />
          <Label layoutX="17.0" layoutY="245.0" prefHeight="27.0" prefWidth="96.0" text="Start Time:">
