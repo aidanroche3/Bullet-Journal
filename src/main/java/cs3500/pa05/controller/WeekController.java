@@ -65,6 +65,8 @@ public class WeekController implements Controller {
       newCancel.setOnAction(event -> SceneChanger.switchToScene(
           "Welcome.fxml", new WelcomeSceneController(), "Welcome!"));
     }
+    eventSlider.setSnapToTicks(true);
+    taskSlider.setSnapToTicks(true);
     taskSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
       int tasks = (int) taskSlider.getValue();
       taskLimit.setText("Task Limit: " + tasks);

@@ -7,9 +7,9 @@ import cs3500.pa05.model.enumerations.Day;
  */
 public abstract class Item {
 
-  private final String name;
-  private final String description;
-  private final Day day;
+  private String name;
+  private String description;
+  private Day day;
 
   /**
    * Instantiates an Item
@@ -34,6 +34,15 @@ public abstract class Item {
   }
 
   /**
+   * Sets the name of the item
+   *
+   * @param name a name
+   */
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  /**
    * Gets the description of the item
    *
    * @return the description
@@ -43,12 +52,30 @@ public abstract class Item {
   }
 
   /**
+   * Sets the description
+   *
+   * @param description a description
+   */
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  /**
    * Gets the day of the item
    *
    * @return the day
    */
   public Day getDay() {
     return this.day;
+  }
+
+  /**
+   * Sets the day of the item
+   *
+   * @param day a day
+   */
+  public void setDay(Day day) {
+    this.day = day;
   }
 
 }

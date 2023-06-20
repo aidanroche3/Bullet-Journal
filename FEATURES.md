@@ -1,4 +1,5 @@
 ## Section 1: Requirements
+
 - Week View
 - Event and Task Creation
 - Commitment Warnings
@@ -17,5 +18,7 @@
 
 ## Section 4: Quality of Life
 
+- Links
+- Mind Changes
 
 ## Section 5: Extra Credit

@@ -1,5 +1,6 @@
 package cs3500.pa05.controller;
 
+import com.sun.javafx.application.HostServicesDelegate;
 import cs3500.pa05.model.BujoReader;
 import cs3500.pa05.model.BujoWriter;
 import cs3500.pa05.model.Event;
@@ -10,16 +11,29 @@ import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.adapter.JournalAdapter;
 import cs3500.pa05.view.FxmlViewLoader;
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javafx.application.Application;
+import javafx.application.HostServices;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
@@ -81,11 +95,13 @@ public class MenuController implements Controller {
   @FXML
   private VBox pop;
   @FXML
-  private VBox tasks;
+  private ScrollPane tasks;
   @FXML
   private Label border;
   @FXML
   private Label stats;
+  @FXML
+  private VBox queue;
 
   /**
    * Controls the menu scene
@@ -261,8 +277,10 @@ public class MenuController implements Controller {
   @FXML
   private void addTasksToQueue() {
     for (int i = 0; i < journal.getTasks().size(); i++) {
-      tasks.getChildren().add(generateTask(journal.getTasks().get(i), i));
+      queue.getChildren().add(generateTask(journal.getTasks().get(i), i));
     }
+    tasks.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+    tasks.setContent(queue);
   }
 
   /**
@@ -377,10 +395,57 @@ public class MenuController implements Controller {
     pop.setBackground(new Background(
         new BackgroundFill(color, CORNER_RADII, INSETS)));
 
-    for (String s1 : data) {
-      Label label = new Label(s1);
-      label.setFont(LABEL_FONT);
-      pop.getChildren().add(label);
+    for (String string : data) {
+      int currentIndex = 0;
+      String regex = "(https:\\/\\/|http:\\/\\/)([A-Za-z0-9]+)((?<!\\.)\\.(?!\\.))([A-Za-z0-9\\/]+)";
+      Pattern p = Pattern.compile(regex);
+      Matcher m = p.matcher(string);
+
+      List<String> links = new ArrayList<>();
+      List<Integer> linkIndexes = new ArrayList<>();
+
+      while (m.find()) {
+        links.add(m.group());
+        linkIndexes.add(m.start());
+      }
+
+      List<String> split = new ArrayList<>(Arrays.asList(string.split(regex)));
+
+      int numTimes = split.size() + links.size();
+      for (int i = 0; i < numTimes; i++) {
+        if (links.size() > 0 && linkIndexes.get(0) == currentIndex) {
+
+          Hyperlink hyperLink = new Hyperlink(links.get(0));
+
+          String l = links.get(0);
+          hyperLink.setOnAction(e -> {
+            try {
+              Desktop desk = Desktop.getDesktop();
+              URI url = new URI(l);
+              desk.browse(url);
+            } catch (Exception ex) {
+              System.out.println(ex.getMessage());
+            }
+          });
+
+          pop.getChildren().add(hyperLink);
+          currentIndex += links.get(0).length();
+          links.remove(0);
+          linkIndexes.remove(0);
+
+        } else if(split.size() > 0){
+          Label label = new Label(split.get(0));
+          currentIndex += split.get(0).length();
+          label.setFont(LABEL_FONT);
+          pop.getChildren().add(label);
+          split.remove(0);
+        }
+      }
+//
+//
+//      Label label = new Label(string);
+//      label.setFont(LABEL_FONT);
+//      pop.getChildren().add(label);
     }
 
     addButtonsToPopup(index, className);
@@ -427,6 +492,23 @@ public class MenuController implements Controller {
       pop.getChildren().add(d);
       pop.getChildren().add(f);
     }
+    Button g = new Button("Edit");
+    g.setPrefSize(100, 50);
+    if (className.equals(Task.class)) {
+      g.setOnAction(event -> {
+        popup.hide();
+        SceneChanger.switchToScene("NewTask.fxml",
+            new EditTaskController(journal, index), "Edit");
+      });
+    }
+    if (className.equals(Event.class)) {
+      g.setOnAction(event -> {
+        popup.hide();
+        SceneChanger.switchToScene("NewEvent.fxml",
+            new EditEventController(journal, index), "Edit");
+      });
+    }
+    pop.getChildren().add(g);
   }
 
   /**
@@ -450,7 +532,7 @@ public class MenuController implements Controller {
    * Clears the dynamic board items
    */
   private void clearBoardVisual() {
-    tasks.getChildren().clear();
+    queue.getChildren().clear();
     monday.getChildren().clear();
     tuesday.getChildren().clear();
     wednesday.getChildren().clear();
@@ -476,7 +558,10 @@ public class MenuController implements Controller {
         incompleteTasks++;
       }
     }
-    double percent = ((0.0 + completeTasks) / (completeTasks + incompleteTasks)) * 100;
+    double percent = 0;
+    if (journal.getTasks().size() > 0) {
+      percent = ((0.0 + completeTasks) / (completeTasks + incompleteTasks)) * 100;
+    }
     String percentString = String.format("%.2f", percent);
     String statistics = "Percentage of Tasks Complete: " + percentString + "%"
         + "\nCompleted Tasks: " + completeTasks

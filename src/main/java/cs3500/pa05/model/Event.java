@@ -7,8 +7,8 @@ import cs3500.pa05.model.enumerations.Day;
  */
 public class Event extends Item {
 
-  private final String start;
-  private final double duration;
+  private String start;
+  private double duration;
 
   /**
    * Instantiates an event
@@ -35,12 +35,30 @@ public class Event extends Item {
   }
 
   /**
+   * Sets the start of the event
+   *
+   * @param start a start time
+   */
+  public void setStart(String start) {
+    this.start = start;
+  }
+
+  /**
    * Gets the duration of the event
    *
    * @return the duration
    */
   public double getDuration() {
     return this.duration;
+  }
+
+  /**
+   * Sets the duration
+   *
+   * @param duration a duration
+   */
+  public void setDuration(double duration) {
+    this.duration = duration;
   }
 
 }
