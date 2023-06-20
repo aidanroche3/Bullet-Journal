@@ -4,7 +4,6 @@ import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;
 import cs3500.pa05.model.enumerations.Day;
-import cs3500.pa05.model.enumerations.Meridiem;
 import javafx.collections.FXCollections;
 
 /**

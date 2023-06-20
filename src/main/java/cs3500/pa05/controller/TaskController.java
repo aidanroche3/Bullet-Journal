@@ -23,19 +23,19 @@ public class TaskController implements Controller {
   @FXML
   protected Label taskTitle;
   @FXML
-  private Button cancel;
+  protected Button cancel;
   @FXML
-  private Button confirm;
+  protected Button confirm;
   @FXML
-  private ComboBox<String> day;
+  protected ComboBox<String> day;
   @FXML
-  private TextField name;
+  protected TextField name;
   @FXML
-  private TextField description;
+  protected TextField description;
   @FXML
-  private ComboBox<String> status;
+  protected ComboBox<String> status;
   @FXML
-  private Label message;
+  protected Label message;
 
   /**
    * Instantiates a task controller
@@ -61,39 +61,55 @@ public class TaskController implements Controller {
   }
 
   /**
-   * Updates the journal with the new event
-   *
+   * Updates the journal with the new task
    */
-  private void updateJournal() {
+  protected void updateJournal() {
+    String checkedName = Validator.validateName(name.getText());
+    Day checkedDay = Validator.validateDay(day.getValue());
+    String checkedDesc = description.getText();
+    CompletionStatus checkedStatus = Validator.validateStatus(status.getValue());
 
-    String enteredDay = day.getValue();
-    String chosenName = name.getText();
-    String compStatus = status.getValue();
-
-    if (enteredDay != null) {
-      int tasksOnThisDay = 0;
-      Day chosenDay = Day.valueOf(enteredDay.toUpperCase());
-      for (Task t : journal.getTasks()) {
-        if (t.getDay().equals(chosenDay)) {
-          tasksOnThisDay++;
-        }
-      }
-      if (journal.getPreferences().getTaskLimit() > tasksOnThisDay) {
-        if (!(chosenName.equals("") || compStatus == null)) {
-          String chosenDesc = description.getText();
-          CompletionStatus chosenStatus = CompletionStatus.valueOf(compStatus.toUpperCase());
-          Task task = new Task(chosenName, chosenDesc, chosenDay, chosenStatus);
-          journal.addTask(task);
-          SceneChanger.switchToScene("WeekView.fxml",
-              new MenuController(journal), "Bujo's Bullet Journal");
-        } else {
-          message.setText("Invalid Entry. Please check fields again.");
-        }
-      } else {
-        message.setText("Maximum number of tasks reached for today.");
-      }
-    } else {
+    if (checkedDay == null) {
       message.setText("Please select a day.");
+    } else if (journal.getPreferences().getTaskLimit() <= getTasksOnThisDay(checkedDay)) {
+      message.setText("Maximum number of tasks reached for today.");
+    } else if (checkedName == null) {
+      message.setText("Please enter a name for the task.");
+    } else if (checkedStatus == null) {
+      message.setText("Please select a status.");
+    } else {
+      updateEntry(checkedName, checkedDesc, checkedDay, checkedStatus);
+      SceneChanger.switchToScene("WeekView.fxml",
+          new MenuController(journal), "Bujo's Bullet Journal");
     }
+  }
+
+  /**
+   * Gets the number of tasks on this day
+   *
+   * @param day a day
+   * @return the number of tasks on this day
+   */
+  private int getTasksOnThisDay(Day day) {
+    int tasksOnThisDay = 0;
+    for (Task t : journal.getTasks()) {
+      if (t.getDay().equals(day)) {
+        tasksOnThisDay++;
+      }
+    }
+    return tasksOnThisDay;
+  }
+
+  /**
+   * Adds a new entry to the journal's list of entries
+   *
+   * @param name    name of the task
+   * @param desc    description of the task
+   * @param day     day of the task
+   * @param status  status of the task
+   */
+  protected void updateEntry(String name, String desc, Day day, CompletionStatus status) {
+    Task task = new Task(name, desc, day, status);
+    journal.addTask(task);
   }
 }

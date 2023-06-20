@@ -11,9 +11,7 @@ import javafx.scene.control.Label;
 /**
  * Controller for editing a task
  */
-public class EditTaskController implements Controller {
-
-  private final Journal journal;
+public class EditTaskController extends TaskController {
   private final Task task;
 
   /**
@@ -23,7 +21,7 @@ public class EditTaskController implements Controller {
    * @param index   the index of the task to edit
    */
   public EditTaskController(Journal journal, int index) {
-    this.journal = journal;
+    super(journal);
     this.task = journal.getTasks().get(index);
   }
 
