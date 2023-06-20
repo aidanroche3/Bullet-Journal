@@ -17,6 +17,9 @@ import javafx.scene.control.TextField;
  */
 public class TaskController implements Controller {
 
+  /**
+   * Journal to create task in
+   */
   protected final Journal journal;
 
   /**

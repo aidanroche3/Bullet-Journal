@@ -18,6 +18,9 @@ import javafx.scene.control.TextField;
  */
 public class EventController implements Controller {
 
+  /**
+   * Journal to create event in
+   */
   protected final Journal journal;
 
   /**
