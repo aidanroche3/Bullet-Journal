@@ -13,12 +13,12 @@
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <AnchorPane prefHeight="390.0" prefWidth="389.0">
         <children>
-         <Label fx:id="title" layoutX="134.0" layoutY="18.0" text="New Event">
+         <Label layoutX="150.0" layoutY="239.0" text=":">
             <font>
                <Font size="27.0" />
             </font>
          </Label>
-         <ComboBox fx:id="day" layoutX="147.0" layoutY="64.0" prefHeight="26.0" prefWidth="110.0" promptText="Day" />
+         <ComboBox fx:id="meridiem" layoutX="201.0" layoutY="245.0" prefHeight="26.0" prefWidth="76.0" promptText="AM" />
          <Label layoutX="33.0" layoutY="121.0" prefHeight="27.0" prefWidth="59.0" text="Name:">
             <font>
                <Font size="20.0" />
@@ -31,7 +31,7 @@
             </font>
          </Label>
          <TextField fx:id="description" alignment="TOP_LEFT" layoutX="116.0" layoutY="161.0" prefHeight="71.0" prefWidth="160.0" />
-         <TextField fx:id="start" layoutX="118.0" layoutY="246.0" />
+         <TextField fx:id="starthour" layoutX="118.0" layoutY="246.0" prefHeight="26.0" prefWidth="27.0" />
          <TextField fx:id="duration" layoutX="118.0" layoutY="290.0" />
          <Label layoutX="17.0" layoutY="245.0" prefHeight="27.0" prefWidth="96.0" text="Start Time:">
             <font>
@@ -55,6 +55,7 @@
          </Label>
             <Button fx:id="cancel" layoutX="125.0" layoutY="340.0" mnemonicParsing="false" text="Cancel" />
             <Button fx:id="confirm" layoutX="215.0" layoutY="340.0" mnemonicParsing="false" text="Confirm" />
+         <TextField fx:id="startminute" layoutX="161.0" layoutY="246.0" prefHeight="26.0" prefWidth="27.0" />
         </children>
     </AnchorPane>
 </Scene>
