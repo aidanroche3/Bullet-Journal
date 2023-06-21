@@ -201,7 +201,6 @@ public class MenuController implements Controller {
     Runnable aboutRunnable = () -> SceneChanger.switchToScene("About.fxml",
         new AboutController(journal), "About");
     addShortCut(scene, aboutCombo, aboutRunnable);
-
   }
 
   /**

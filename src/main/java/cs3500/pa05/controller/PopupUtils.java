@@ -69,17 +69,7 @@ public class PopupUtils {
 
         Hyperlink hyperLink = new Hyperlink(links.get(0));
         String l = links.get(0);
-        hyperLink.setOnAction(e -> {
-          try {
-            Desktop desk = Desktop.getDesktop();
-            URI url = new URI(l);
-            desk.browse(url);
-          } catch (Exception exception) {
-            //Ignore invalid link
-          }
-        });
-        hyperLink.setFont(MINI_VIEWER_FONT);
-
+        hyperLink.setOnAction(e -> setHyperlinkAction(l));
         popupTextNodes.add(hyperLink);
         currentIndex += links.get(0).length();
         links.remove(0);
@@ -88,16 +78,48 @@ public class PopupUtils {
       } else if (split.size() > 0) {
         Label label = new Label(split.get(0));
         currentIndex += split.get(0).length();
-        label.setFont(MINI_VIEWER_FONT);
-        label.setTextAlignment(TextAlignment.CENTER);
-        label.setWrapText(true);
         popupTextNodes.add(label);
         split.remove(0);
       }
     }
-    return popupTextNodes;
+    return styleLinksAndLabels(popupTextNodes);
   }
 
+  /**
+   * Sets the hyperlink to this string
+   *
+   * @param l link
+   */
+  private static void setHyperlinkAction(String l) {
+    try {
+      Desktop desk = Desktop.getDesktop();
+      URI url = new URI(l);
+      desk.browse(url);
+    } catch (Exception exception) {
+      //Ignore invalid link
+    }
+  }
+
+  /**
+   * adds style to the hyperlinks and labels
+   *
+   * @param nodes   list of nodes to style
+   * @return        list of styled nodes
+   */
+  private static List<Node> styleLinksAndLabels(List<Node> nodes) {
+    for(Node n : nodes) {
+      if(n.getClass().equals(Hyperlink.class)) {
+        Hyperlink h = (Hyperlink) n;
+        h.setFont(MINI_VIEWER_FONT);
+      } else {
+        Label l = (Label) n;
+        l.setFont(MINI_VIEWER_FONT);
+        l.setTextAlignment(TextAlignment.CENTER);
+        l.setWrapText(true);
+      }
+    }
+    return nodes;
+  }
 
   /**
    * Adds buttons to the popup window
