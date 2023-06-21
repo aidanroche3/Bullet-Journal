@@ -4,7 +4,6 @@ import cs3500.pa05.model.BujoTime;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
 import cs3500.pa05.model.enumerations.Meridiem;
-import java.util.Arrays;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -60,12 +59,9 @@ public class Validator {
         withBreaks.append("\r\n");
         count = 0;
       }
-      System.out.println(withBreaks);
       withBreaks.append(reformatted.charAt(i));
       count++;
     }
-    System.out.println("FINAL: " + withBreaks);
-    //return withBreaks.toString();
     return withBreaks.toString();
   }
 
