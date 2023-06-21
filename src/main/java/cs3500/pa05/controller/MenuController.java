@@ -10,22 +10,15 @@ import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.adapter.JournalAdapter;
 import cs3500.pa05.view.FxmlViewLoader;
-import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.KeyCode;
@@ -34,12 +27,10 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -51,7 +42,6 @@ public class MenuController implements Controller {
 
   private static final Font WEEK_NAME_FONT = Font.font("Verdana", FontWeight.BOLD, 20);
   private static final Font LABEL_FONT = Font.font("Verdana", FontWeight.MEDIUM, 10);
-  private static final Font MINI_VIEWER_FONT = Font.font("Verdana", FontWeight.MEDIUM, 15);
   private static final Color EVENT_COLOR = Color.rgb(180, 166, 213);
   private static final Color COMPLETE_TASK_COLOR = Color.rgb(146, 196, 125);
   private static final Color INCOMPLETE_TASK_COLOR = Color.rgb(233, 153, 152);
@@ -433,158 +423,15 @@ public class MenuController implements Controller {
         new BackgroundFill(color, CORNER_RADII, INSETS)));
 
     for (String string : data) {
-      findAndProduceLinks(string);
+      pop.getChildren().addAll(PopupUtils.linksAndLabels(string));
     }
 
-    addButtonsToPopup(className, index);
+    PopupUtils.addTaskButtons(className, journal, index, this.pop, this);
+    pop.getChildren().add(PopupUtils.buttons(className, index, journal, popup, this));
 
     popup.getContent().add(pop);
     Stage stage = SceneChanger.getStage();
     popup.show(stage);
-  }
-
-  /**
-   * Given a string, add it to the popup's description as clickable
-   *
-   * @param string String to find links in
-   */
-  private void findAndProduceLinks(String string) {
-    int currentIndex = 0;
-    String regex =
-        "(https:\\/\\/|http:\\/\\/)([A-Za-z0-9\\n\\r]+)((?<!\\.)\\.(?!\\.))([A-Za-z0-9\\/\\n\\r]+)";
-    Pattern p = Pattern.compile(regex);
-    Matcher m = p.matcher(string);
-
-    List<String> links = new ArrayList<>();
-    List<Integer> linkIndexes = new ArrayList<>();
-
-    while (m.find()) {
-      links.add(m.group());
-      linkIndexes.add(m.start());
-    }
-
-    List<String> split = new ArrayList<>(Arrays.asList(string.split(regex)));
-
-    int numTimes = split.size() + links.size();
-    for (int i = 0; i < numTimes; i++) {
-      if (links.size() > 0 && linkIndexes.get(0) == currentIndex) {
-
-        Hyperlink hyperLink = new Hyperlink(links.get(0));
-        String l = links.get(0);
-        hyperLink.setOnAction(e -> {
-          try {
-            Desktop desk = Desktop.getDesktop();
-            URI url = new URI(l);
-            desk.browse(url);
-          } catch (Exception exception) {
-            //Ignore invalid link
-          }
-        });
-        hyperLink.setFont(MINI_VIEWER_FONT);
-
-        pop.getChildren().add(hyperLink);
-        currentIndex += links.get(0).length();
-        links.remove(0);
-        linkIndexes.remove(0);
-
-      } else if (split.size() > 0) {
-        Label label = new Label(split.get(0));
-        currentIndex += split.get(0).length();
-        label.setFont(MINI_VIEWER_FONT);
-        label.setTextAlignment(TextAlignment.CENTER);
-        label.setWrapText(true);
-        pop.getChildren().add(label);
-        split.remove(0);
-      }
-    }
-  }
-
-  /**
-   * Adds buttons to the popup window
-   *
-   * @param index     index of this task/events position in the journal lists
-   * @param className is this item a task or event
-   */
-  private void addButtonsToPopup(Class<? extends Item> className, int index) {
-    if (className.equals(Task.class)) {
-      Button d = new Button("Mark as Complete");
-      d.setPrefSize(150, 25);
-      d.setOnAction(e -> {
-        journal.getTasks().get(index).setStatus(CompletionStatus.COMPLETE);
-        pop.setBackground(new Background(
-            new BackgroundFill(COMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
-        run();
-      });
-      Button f = new Button("Mark as Incomplete");
-      f.setPrefSize(150, 25);
-      f.setOnAction(e -> {
-        journal.getTasks().get(index).setStatus(CompletionStatus.INCOMPLETE);
-        pop.setBackground(new Background(
-            new BackgroundFill(INCOMPLETE_TASK_COLOR, CORNER_RADII, INSETS)));
-        run();
-      });
-      HBox markButtons = new HBox();
-      markButtons.getChildren().addAll(f, d);
-      markButtons.setAlignment(Pos.BOTTOM_CENTER);
-      markButtons.setPrefSize(400, 50);
-      pop.getChildren().add(markButtons);
-    }
-    pop.getChildren().add(produceButtonBox(className, index));
-  }
-
-  private HBox produceButtonBox(Class<? extends Item> className, int index) {
-    HBox genericButtons = new HBox();
-    genericButtons.setPrefSize(400, 50);
-    genericButtons.setAlignment(Pos.BOTTOM_CENTER);
-
-    Button b = new Button("Done");
-    b.setPrefSize(80, 25);
-    b.setOnAction(e -> {
-      popup.hide();
-      run();
-    });
-
-    Button c = new Button("Delete");
-    c.setPrefSize(80, 25);
-    c.setOnAction(e -> hideAndDelete(index, className));
-
-    Button g = new Button("Edit");
-    g.setPrefSize(80, 25);
-    if (className.equals(Task.class)) {
-      g.setOnAction(event -> {
-        popup.hide();
-        SceneChanger.switchToScene("NewTask.fxml",
-            new EditTaskController(journal, index), "Edit");
-      });
-    } else {
-      g.setOnAction(event -> {
-        popup.hide();
-        SceneChanger.switchToScene("NewEvent.fxml",
-            new EditEventController(journal, index), "Edit");
-      });
-    }
-
-    genericButtons.getChildren().add(c);
-    genericButtons.getChildren().add(g);
-    genericButtons.getChildren().add(b);
-    return genericButtons;
-  }
-
-  /**
-   * Hides and deletes this task from the popup menu
-   *
-   * @param index     index to delete from
-   * @param className class of the Task/Event to delete
-   */
-  private void hideAndDelete(int index, Class<? extends Item> className) {
-    popup.hide();
-    if (className.equals(Task.class)) {
-      journal.removeTask(index);
-    } else if (className.equals(Event.class)) {
-      journal.removeEvent(index);
-    }
-
-    run();
   }
 
   /**
