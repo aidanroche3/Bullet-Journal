@@ -107,8 +107,8 @@ public class PopupUtils {
    * @return        list of styled nodes
    */
   private static List<Node> styleLinksAndLabels(List<Node> nodes) {
-    for(Node n : nodes) {
-      if(n.getClass().equals(Hyperlink.class)) {
+    for (Node n : nodes) {
+      if (n.getClass().equals(Hyperlink.class)) {
         Hyperlink h = (Hyperlink) n;
         h.setFont(MINI_VIEWER_FONT);
       } else {
@@ -124,8 +124,11 @@ public class PopupUtils {
   /**
    * Adds buttons to the popup window
    *
-   * @param index     index of this task/events position in the journal lists
-   * @param className is this item a task or event
+   * @param className the type of item
+   * @param journal a journal
+   * @param index the index of the item
+   * @param popBox the popup
+   * @param c the menu controller
    */
   public static void addTaskButtons(Class<? extends Item> className, Journal journal, int index,
                            VBox popBox, Controller c) {
@@ -159,9 +162,13 @@ public class PopupUtils {
    *
    * @param className   what type of item is this
    * @param index       what index does this popup correspond to
+   * @param journal     a journal
+   * @param popup       the popup
+   * @param controller  the menu controller
    * @return            HBox with the correct data.
    */
-  public static HBox buttons(Class<? extends Item> className, int index, Journal journal, Popup popup, Controller controller) {
+  public static HBox buttons(Class<? extends Item> className, int index,
+                             Journal journal, Popup popup, Controller controller) {
     HBox genericButtons = new HBox();
     genericButtons.setPrefSize(400, 50);
     genericButtons.setAlignment(Pos.BOTTOM_CENTER);
@@ -205,7 +212,8 @@ public class PopupUtils {
    * @param index     index to delete from
    * @param className class of the Task/Event to delete
    */
-  private static void hideAndDelete(int index, Class<? extends Item> className, Journal journal, Popup popup, Controller c) {
+  private static void hideAndDelete(int index, Class<? extends Item> className,
+                                    Journal journal, Popup popup, Controller c) {
     popup.hide();
     if (className.equals(Task.class)) {
       journal.removeTask(index);
