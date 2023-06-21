@@ -90,5 +90,7 @@ simply open the file with a text editor to ascertain the password.
 </p>
 
 # Attributions
-https://media.tenor.com/g1bZgt4-tL4AAAAC/skull.gif
+[Skull](https://media.tenor.com/g1bZgt4-tL4AAAAC/skull.gif)
+
 [Mr. Krabs](https://static.wikia.nocookie.net/spongebob/images/7/7b/Krabs_artwork.png/revision/latest/scale-to-width-down/350?cb=20220807045807)
+
