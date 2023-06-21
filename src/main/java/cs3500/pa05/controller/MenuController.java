@@ -308,11 +308,7 @@ public class MenuController implements Controller {
     for (int i = 0; i < journal.getTasks().size(); i++) {
       queue.getChildren().add(generateTask(journal.getTasks().get(i), i));
     }
-    if (journal.getTasks().size() >= 10) {
-      queue.setPrefWidth(177);
-    } else {
-      queue.setPrefWidth(192);
-    }
+    tasks.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     tasks.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
     tasks.setContent(queue);
   }
