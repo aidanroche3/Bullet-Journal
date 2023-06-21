@@ -450,7 +450,8 @@ public class MenuController implements Controller {
    */
   private void findAndProduceLinks(String string) {
     int currentIndex = 0;
-    String regex = "(https:\\/\\/|http:\\/\\/)([A-Za-z0-9\\n\\r]+)((?<!\\.)\\.(?!\\.))([A-Za-z0-9\\/\\n\\r]+)";
+    String regex =
+        "(https:\\/\\/|http:\\/\\/)([A-Za-z0-9\\n\\r]+)((?<!\\.)\\.(?!\\.))([A-Za-z0-9\\/\\n\\r]+)";
     Pattern p = Pattern.compile(regex);
     Matcher m = p.matcher(string);
 
