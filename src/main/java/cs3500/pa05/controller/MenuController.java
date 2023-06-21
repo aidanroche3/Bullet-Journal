@@ -350,8 +350,10 @@ public class MenuController implements Controller {
     Color color;
     if (task.getStatus().equals(CompletionStatus.COMPLETE)) {
       color = COMPLETE_TASK_COLOR;
+      taskBox.getStyleClass().add("complete-task");
     } else {
       color = INCOMPLETE_TASK_COLOR;
+      taskBox.getStyleClass().add("incomplete-task");
     }
     taskBox.setBackground(new Background(
         new BackgroundFill(color, CORNER_RADII, INSETS)));
@@ -412,6 +414,7 @@ public class MenuController implements Controller {
           EVENT_COLOR, index, Event.class);
       run();
     });
+    eventBox.getStyleClass().add("event");
     return eventBox;
   }
 
@@ -628,5 +631,6 @@ public class MenuController implements Controller {
         + "\nEvents: this week: " + numEvents;
 
     stats.setText(statistics);
+    stats.getStyleClass().add("stats");
   }
 }
