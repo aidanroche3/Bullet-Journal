@@ -1,6 +1,9 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.Event;
 import cs3500.pa05.model.Journal;
+import cs3500.pa05.model.Task;
+import cs3500.pa05.model.enumerations.Day;
 import java.util.Objects;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -48,8 +51,8 @@ public class EditController implements Controller {
     eventLimit.setText("New Event Limit: " + journal.getPreferences().getEventLimit());
     eventSlider.setValue(journal.getPreferences().getEventLimit());
     taskSlider.setValue(journal.getPreferences().getTaskLimit());
-    eventSlider.setMin(journal.getEvents().size());
-    taskSlider.setMin(journal.getTasks().size());
+    eventSlider.setMin(maxEvents());
+    taskSlider.setMin(maxTasks());
     eventSlider.setSnapToTicks(true);
     taskSlider.setSnapToTicks(true);
     cancel.setOnAction(event -> SceneChanger.switchToScene(
@@ -83,4 +86,63 @@ public class EditController implements Controller {
         new MenuController(journal), "Bujo's Bullet Journal");
   }
 
+  /**
+   * Gets the max amount of tasks for all days
+   *
+   * @return int of max tasks
+   */
+  private int maxTasks() {
+    int max = 0;
+    for (Day d : Day.asList()) {
+      int newMax = getTasksOnThisDay(d);
+      max = Math.max(max, newMax);
+    }
+    return max;
+  }
+
+  /**
+   * Gets the max amount of events for all days
+   *
+   * @return int of max events
+   */
+  private int maxEvents() {
+    int max = 0;
+    for (Day d : Day.asList()) {
+      int newMax = getEventsOnThisDay(d);
+      max = Math.max(max, newMax);
+    }
+    return max;
+  }
+
+  /**
+   * Gets the number of tasks on this day
+   *
+   * @param day a day
+   * @return the number of tasks on this day
+   */
+  private int getTasksOnThisDay(Day day) {
+    int tasksOnThisDay = 0;
+    for (Task t : journal.getTasks()) {
+      if (t.getDay().equals(day)) {
+        tasksOnThisDay++;
+      }
+    }
+    return tasksOnThisDay;
+  }
+
+  /**
+   * Gets the number of events on this day
+   *
+   * @param day a day
+   * @return the number of events on this day
+   */
+  private int getEventsOnThisDay(Day day) {
+    int eventsOnThisDay = 0;
+    for (Event e : journal.getEvents()) {
+      if (e.getDay().equals(day)) {
+        eventsOnThisDay++;
+      }
+    }
+    return eventsOnThisDay;
+  }
 }

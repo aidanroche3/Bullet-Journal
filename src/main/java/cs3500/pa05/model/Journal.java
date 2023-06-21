@@ -31,7 +31,6 @@ public class Journal {
     this.path = path;
   }
 
-  //TODO: should we return deep copies?
 
   /**
    * Gets the preferences
