@@ -90,10 +90,19 @@ public class TaskController implements Controller {
     status.setItems(FXCollections.observableArrayList("Complete", "Incomplete"));
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(event -> updateJournal());
+    confirm.setOnAction(event -> checkLimit());
     description.setOnKeyReleased(e -> Validator.enforceDescriptionLimit(
         description.getText(), description, message));
     name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
+  }
+
+  private void checkLimit() {
+    Day checkedDay = Validator.validateDay(day.getValue());
+    if (journal.getPreferences().getEventLimit() <= getTasksOnThisDay(checkedDay)) {
+      message.setText("Maximum number of tasks reached for today.");
+    } else {
+      updateJournal();
+    }
   }
 
   /**
@@ -107,9 +116,7 @@ public class TaskController implements Controller {
 
     if (checkedDay == null) {
       message.setText("Please select a day.");
-    } else if (journal.getPreferences().getTaskLimit() <= getTasksOnThisDay(checkedDay)) {
-      message.setText("Maximum number of tasks reached for today.");
-    } else if (checkedName == null) {
+    } else if (checkedName.equals("")) {
       message.setText("Please enter a name for the task.");
     } else if (checkedStatus == null) {
       message.setText("Please select a status.");

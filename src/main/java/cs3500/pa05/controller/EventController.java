@@ -127,10 +127,19 @@ public class EventController implements Controller {
     meridiem.setValue("AM");
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(event -> updateJournal());
+    confirm.setOnAction(event -> checkLimit());
     description.setOnKeyReleased(e -> Validator.enforceDescriptionLimit(
         description.getText(), description, message));
     name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
+  }
+
+  private void checkLimit() {
+    Day checkedDay = Validator.validateDay(day.getValue());
+    if (journal.getPreferences().getEventLimit() <= getEventsOnThisDay(checkedDay)) {
+      message.setText("Maximum number of events reached for today.");
+    } else {
+      updateJournal();
+    }
   }
 
   /**
@@ -148,8 +157,6 @@ public class EventController implements Controller {
 
     if (checkedDay == null) {
       message.setText("Please select a day.");
-    } else if (journal.getPreferences().getEventLimit() <= getEventsOnThisDay(checkedDay)) {
-      message.setText("Maximum number of events reached for today.");
     } else if (checkedName.equals("")) {
       message.setText("Please enter a name for the event.");
     } else if (checkedTime == null) {
@@ -202,6 +209,7 @@ public class EventController implements Controller {
     String numStr = textField.getText();
     if (!numStr.equals("")) {
       try {
+        Integer.parseInt(numStr);
         if (numStr.length() == 1) {
           textField.setText("0" + numStr);
         } else if (numStr.length() > 2) {
