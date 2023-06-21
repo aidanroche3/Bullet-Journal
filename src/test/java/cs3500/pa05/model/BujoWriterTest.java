@@ -31,6 +31,7 @@ class BujoWriterTest {
    */
   @BeforeEach
   void setUp() {
+    BujoWriter bw = new BujoWriter();
     EventJson[] events = new EventJson[] {
         new EventJson("Name", "Desc", Day.MONDAY,
             new BujoTimeJson(12, 0, Meridiem.PM), 7.7)};

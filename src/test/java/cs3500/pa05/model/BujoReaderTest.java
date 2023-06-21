@@ -25,6 +25,7 @@ class BujoReaderTest {
   @BeforeEach
   public void setup() {
     try {
+      BujoReader br = new BujoReader();
       journal = BujoReader.produceJournal(Path.of("src/test/resources/BujoReaderTest.bujo"));
     } catch (IOException e) {
       fail();
