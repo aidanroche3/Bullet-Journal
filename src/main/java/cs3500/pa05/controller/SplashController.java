@@ -27,16 +27,16 @@ public class SplashController implements Controller {
       load.setText("LOADING" + dots[0]);
       dots[0] += ".";
     }));
+    loads.setCycleCount(16);
+    loads.play();
     Timeline bar = new Timeline(new KeyFrame(Duration.millis(50), e -> {
       progress.setWidth(progress.getWidth() + 2.1125);
     }));
+    bar.setCycleCount(160);
+    bar.play();
     Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(8), e -> {
       SceneChanger.switchToScene("Welcome.fxml", new WelcomeSceneController(), "Welcome");
     }));
-    loads.setCycleCount(16);
-    loads.play();
-    bar.setCycleCount(160);
-    bar.play();
     timeline.setCycleCount(1);
     timeline.play();
   }
