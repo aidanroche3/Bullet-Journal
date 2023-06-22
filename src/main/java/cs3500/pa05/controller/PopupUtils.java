@@ -49,8 +49,8 @@ public class PopupUtils {
     List<Node> popupTextNodes = new ArrayList<>();
     int currentIndex = 0;
     String regex =
-        "(https:\\/\\/|http:\\/\\/)(www\\.|)"
-            + "([A-Za-z0-9\\n\\r]+)((?<!\\.)\\.(?!\\.))([A-Za-z0-9\\/\\n\\r\\?\\=]+)";
+        "(http)(s|)(:\\/\\/)(www\\.|)([A-Za-z0-9\\n\\r]+)"
+            + "((?<!\\.)\\.(?!\\.))([A-Za-z0-9\\/\\n\\r\\?\\=]+)";
     Pattern p = Pattern.compile(regex);
     Matcher m = p.matcher(string);
 
