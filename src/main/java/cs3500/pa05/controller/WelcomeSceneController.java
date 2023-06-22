@@ -14,6 +14,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -71,9 +72,11 @@ public class WelcomeSceneController implements Controller {
    * Wink
    */
   private void wink() {
-    pig.toBack();
-    Timeline time = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-      pig.toFront();
+    Image wink = new Image("file:src/main/resources/images/wink.png");
+    pig.setImage(wink);
+    Timeline time = new Timeline(new KeyFrame(Duration.seconds(.5), e -> {
+      Image bujo = new Image("file:src/main/resources/images/BujoPig.PNG");
+      pig.setImage(bujo);
     }));
     time.setCycleCount(1);
     time.play();
