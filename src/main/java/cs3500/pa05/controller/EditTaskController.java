@@ -5,14 +5,13 @@ import cs3500.pa05.model.Task;
 import cs3500.pa05.model.enumerations.CompletionStatus;
 import cs3500.pa05.model.enumerations.Day;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
 /**
  * Controller for editing a task
  */
 public class EditTaskController extends TaskController {
   private final Task task;
+  private final Day initialDay;
 
   /**
    * Instantiates an EditTaskController
@@ -23,6 +22,7 @@ public class EditTaskController extends TaskController {
   public EditTaskController(Journal journal, int index) {
     super(journal);
     this.task = journal.getTasks().get(index);
+    initialDay = task.getDay();
   }
 
   /**
@@ -40,10 +40,21 @@ public class EditTaskController extends TaskController {
     status.setValue(task.getStatus().toString());
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(event -> updateJournal());
+    confirm.setOnAction(event -> checkDays());
     description.setOnKeyReleased(e -> Validator.enforceDescriptionLimit(
         description.getText(), description, message));
     name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
+  }
+
+  /**
+   * Checks if days are the same
+   */
+  private void checkDays() {
+    if (initialDay.equals(Validator.validateDay(day.getValue()))) {
+      updateJournal();
+    } else {
+      checkLimit();
+    }
   }
 
   /**

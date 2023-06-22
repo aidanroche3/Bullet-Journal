@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
  */
 public class EditEventController extends EventController {
   private final Event event;
+  private final Day initialDay;
 
   /**
    * Instantiates an EditEventController
@@ -21,6 +22,7 @@ public class EditEventController extends EventController {
   public EditEventController(Journal journal, int index) {
     super(journal);
     this.event = journal.getEvents().get(index);
+    initialDay = event.getDay();
   }
 
   /**
@@ -49,10 +51,21 @@ public class EditEventController extends EventController {
     description.setText(event.getDescription());
     cancel.setOnAction(event -> SceneChanger.switchToScene(
         "WeekView.fxml", new MenuController(journal), "Bujo's Bullet Journal"));
-    confirm.setOnAction(event -> this.updateJournal());
+    confirm.setOnAction(event -> checkDays());
     description.setOnKeyReleased(e -> Validator.enforceDescriptionLimit(
         description.getText(), description, message));
     name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
+  }
+
+  /**
+   * Checks if days are the same
+   */
+  private void checkDays() {
+    if (initialDay.equals(Validator.validateDay(day.getValue()))) {
+      updateJournal();
+    } else {
+      checkLimit();
+    }
   }
 
   /**

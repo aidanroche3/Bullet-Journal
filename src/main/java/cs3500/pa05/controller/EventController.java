@@ -133,7 +133,10 @@ public class EventController implements Controller {
     name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
   }
 
-  private void checkLimit() {
+  /**
+   * Checks the limit
+   */
+  protected void checkLimit() {
     Day checkedDay = Validator.validateDay(day.getValue());
     if (journal.getPreferences().getEventLimit() <= getEventsOnThisDay(checkedDay)) {
       message.setText("Maximum number of events reached for today.");

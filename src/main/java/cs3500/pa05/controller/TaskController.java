@@ -96,7 +96,10 @@ public class TaskController implements Controller {
     name.setOnKeyReleased(e -> Validator.enforceTitleLimit(name.getText(), name, message));
   }
 
-  private void checkLimit() {
+  /**
+   * Checks the limit
+   */
+  protected void checkLimit() {
     Day checkedDay = Validator.validateDay(day.getValue());
     if (journal.getPreferences().getEventLimit() <= getTasksOnThisDay(checkedDay)) {
       message.setText("Maximum number of tasks reached for today.");
