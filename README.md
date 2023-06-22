@@ -14,6 +14,9 @@ supporters on Patreon, we will release new features such as password lock, teste
 
 # Screenshots
 
+## Loading Splash Screen
+![loading](https://github.com/CS-3500-OOD/pa05-bujopig/assets/123038068/e086fe25-732e-4e87-93f6-d9d236f8efc8)
+
 ## Welcome Screen
 ![welcome](https://github.com/CS-3500-OOD/pa05-bujopig/assets/123038068/8cdec540-9532-4745-adaf-8609601dde21)
 
