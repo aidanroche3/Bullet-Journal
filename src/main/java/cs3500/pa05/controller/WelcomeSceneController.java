@@ -9,10 +9,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 /**
  * Controller for the welcome scene
@@ -25,6 +29,9 @@ public class WelcomeSceneController implements Controller {
   @FXML
   private Button create;
 
+  @FXML
+  private ImageView pig;
+
   /**
    * Runs the controller
    */
@@ -34,6 +41,7 @@ public class WelcomeSceneController implements Controller {
     create.setOnAction(event -> SceneChanger.switchToScene("NewWeek.fxml",
         new WeekController(journal), "New Week"));
     select.setOnAction(this::setAction);
+    pig.setOnMouseClicked(e -> wink());
   }
 
   /**
@@ -54,8 +62,20 @@ public class WelcomeSceneController implements Controller {
         Controller menuController = new MenuController(journal);
         SceneChanger.switchToScene("WeekView.fxml", menuController, "Bujo's Bullet Journal");
       } catch (IOException e) {
-        //TODO: find out what we need to do if invalid
+        // ignore
       }
     }
+  }
+
+  /**
+   * Wink
+   */
+  private void wink() {
+    pig.toBack();
+    Timeline time = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+      pig.toFront();
+    }));
+    time.setCycleCount(1);
+    time.play();
   }
 }

@@ -2,7 +2,7 @@ package cs3500.pa05;
 
 import cs3500.pa05.controller.Controller;
 import cs3500.pa05.controller.SceneChanger;
-import cs3500.pa05.controller.WelcomeSceneController;
+import cs3500.pa05.controller.SplashController;
 import cs3500.pa05.view.FxmlViewLoader;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -21,12 +21,12 @@ public class BujoApplication extends Application {
   @Override
   public void start(Stage primaryStage) {
     SceneChanger.setStage(primaryStage);
-    Controller controller = new WelcomeSceneController();
-    FxmlViewLoader loader = new FxmlViewLoader("Welcome.fxml", controller);
+    Controller controller = new SplashController();
+    FxmlViewLoader loader = new FxmlViewLoader("Splash.fxml", controller);
 
     try {
       primaryStage.setScene(loader.load());
-      primaryStage.setTitle("Welcome!");
+      primaryStage.setTitle("Loading");
       primaryStage.setResizable(false);
 
       controller.run();

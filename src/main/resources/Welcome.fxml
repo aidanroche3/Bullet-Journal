@@ -9,24 +9,29 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane styleClass="page" prefHeight="583.0" prefWidth="671.0" style="-fx-background-color: #6287c4;" stylesheets="@style.css">
+    <AnchorPane prefHeight="583.0" prefWidth="671.0" style="-fx-background-color: #6287c4;" styleClass="page" stylesheets="@style.css">
       <children>
          <Label layoutX="129.0" layoutY="102.0" text="WELCOME">
             <font>
                <Font name="Verdana" size="80.0" />
             </font>
          </Label>
-         <Button fx:id="select" styleClass="btn" layoutX="396.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" text="Select Journal">
+         <Button fx:id="select" layoutX="396.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" styleClass="btn" text="Select Journal">
             <font>
                <Font size="28.0" />
             </font>
          </Button>
-         <Button fx:id="create" styleClass="btn" layoutX="11.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" text="Create New Week">
+         <Button fx:id="create" layoutX="11.0" layoutY="330.0" mnemonicParsing="false" prefHeight="113.0" prefWidth="264.0" styleClass="btn" text="Create New Week">
             <font>
                <Font size="28.0" />
             </font>
          </Button>
-         <ImageView fitHeight="88.0" fitWidth="152.0" layoutX="289.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <ImageView fitHeight="88.0" fitWidth="154.0" layoutX="291.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@images/wink.png" />
+            </image>
+         </ImageView>
+         <ImageView fx:id="pig" fitHeight="88.0" fitWidth="152.0" layoutX="289.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@images/BujoPig.PNG" />
             </image>
