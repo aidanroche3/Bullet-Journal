@@ -101,7 +101,7 @@ public class TaskController implements Controller {
    */
   protected void checkLimit() {
     Day checkedDay = Validator.validateDay(day.getValue());
-    if (journal.getPreferences().getEventLimit() <= getTasksOnThisDay(checkedDay)) {
+    if (journal.getPreferences().getTaskLimit() <= getTasksOnThisDay(checkedDay)) {
       message.setText("Maximum number of tasks reached for today.");
     } else {
       updateJournal();
