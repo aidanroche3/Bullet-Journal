@@ -8,8 +8,7 @@ we have brought you his organizational skills as an application! You can keep tr
 through tasks and events. Modeled after BujoPig's journal, there is a taskbar on the left hand side. Unlike a
 written journal, you can edit your tasks and delete them at a whim. You can also keep track of how many commitments
 by viewing the stats block in the right hand corner. In addition, we designed a colorful UI for you to enjoy whilst
-journaling. To keep BujoPig's legacy alive, please support our application by buying and using the app! If we get 
-supporters on Patreon, we will release new features such as password lock, tested GUI, and custom themes!
+journaling. To keep BujoPig's legacy alive, please support our application by buying and using the app!
 </p>
 
 # Screenshots
